@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: queueless
+      POSTGRES_PASSWORD: queueless
+      POSTGRES_DB: queueless
+    ports:
+      - "5432:5432"
+    volumes:
+      - queueless_pg_data:/var/lib/postgresql/data
+
+  backend:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://queueless:queueless@db:5432/queueless
+      SECRET_KEY: change_me_in_production
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+volumes:
+  queueless_pg_data:
