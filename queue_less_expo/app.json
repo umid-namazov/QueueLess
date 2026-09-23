@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "QueueLess",
+    "slug": "queue_less_expo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "queueless",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/images/icon.png",
+      "bundleIdentifier": "com.consthurricane.queueless"
+    },
+    "android": {
+      "predictiveBackGestureEnabled": false,
+      "package": "com.consthurricane.queueless"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#208AEF",
+          "image": "./assets/images/icon.png",
+          "imageWidth": 76
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "QueueLess navbat QR kodlarini skanerlash uchun kameradan foydalanadi.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": true
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "QueueLess yaqin filiallarni ko‘rsatish uchun joylashuvingizdan foydalanadi."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "QueueLess needs access to your photos to set a profile image."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "57f8f114-da5d-4187-871a-91f6b3fb9077"
+      }
+    }
+  }
+}

@@ -1,0 +1,168 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { ArrowRight, CheckCircle2, Clock3, ScanLine, Users } from 'lucide-react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, RefreshControl } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { apiGetMe, apiGetBranch, apiGetBranchQueue, User, Branch, QueueItem } from '../../src/services/api';
+
+export default function SellerDashboard() {
+  const router = useRouter();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+
+  const [user, setUser] = useState<User | null>(null);
+  const [branch, setBranch] = useState<Branch | null>(null);
+  const [queue, setQueue] = useState<QueueItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Sotuvchi hozircha 1-filialga biriktirilgan deb hisoblaymiz (MVP)
+  const BRANCH_ID = 1;
+
+  const fetchData = async () => {
+    try {
+      const [userData, branchData, queueData] = await Promise.all([
+        apiGetMe().catch(() => null),
+        apiGetBranch(BRANCH_ID).catch(() => null),
+        apiGetBranchQueue(BRANCH_ID).catch(() => [])
+      ]);
+      if (userData) setUser(userData);
+      if (branchData) setBranch(branchData);
+      setQueue(queueData || []);
+    } catch (e) {
+      console.log('Seller dash error:', e);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
+  if (loading && !refreshing) {
+    return (
+      <View style={[styles.container, { backgroundColor: color.background, justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color={color.primary} />
+      </View>
+    );
+  }
+
+  const waitingQueue = queue.filter(q => q.status === 'waiting');
+  const confirmedQueue = queue.filter(q => q.status === 'confirmed');
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <ScrollView 
+        contentContainerStyle={styles.content} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={color.primary} />}
+      >
+        <View style={styles.header}>
+          <View>
+            <Text style={[styles.eyebrow, { color: color.primary }]}>SOTUVCHI PANELI</Text>
+            <Text style={[styles.title, { color: color.text }]}>Xush kelibsiz, {user?.full_name?.split(' ')[0] || 'Xodim'}</Text>
+            <Text style={[styles.branch, { color: color.textSecondary }]}>{branch?.name || 'Filial'}</Text>
+          </View>
+          <View style={[styles.status, { backgroundColor: color.success + '18' }]}>
+            <View style={[styles.statusDot, { backgroundColor: color.success }]} />
+            <Text style={[styles.statusText, { color: color.success }]}>Ochiq</Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          style={[styles.scanButton, { backgroundColor: color.primary }]}
+          onPress={() => router.push('/seller/scanner')}>
+          <View style={styles.scanIcon}><ScanLine color="#fff" size={25} /></View>
+          <View style={styles.scanCopy}>
+            <Text style={styles.scanTitle}>QR kodni skanerlash</Text>
+            <Text style={styles.scanSubtitle}>Mijoz navbatini tasdiqlash</Text>
+          </View>
+          <ArrowRight color="#fff" size={22} />
+        </TouchableOpacity>
+
+        <View style={styles.statsRow}>
+          <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <Users color={color.primary} size={20} />
+            <Text style={[styles.statNumber, { color: color.text }]}>{queue.length}</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Jami navbatlar</Text>
+          </View>
+          <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <Clock3 color={color.warning} size={20} />
+            <Text style={[styles.statNumber, { color: color.text }]}>{waitingQueue.length}</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Kutilmoqda</Text>
+          </View>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { color: color.text }]}>Navbatdagi mijozlar</Text>
+          <Text style={[styles.liveText, { color: color.success }]}>Jonli</Text>
+        </View>
+
+        {queue.length === 0 ? (
+          <Text style={{ color: color.textSecondary, marginTop: 10 }}>Hozircha navbatda hech kim yo'q.</Text>
+        ) : (
+          queue.map((item) => {
+            const isActive = item.status === 'confirmed';
+            return (
+              <View key={item.id} style={[styles.queueCard, { backgroundColor: color.surface, borderColor: isActive ? color.primary : color.border }]}>
+                <View style={[styles.ticket, { backgroundColor: isActive ? color.primary : color.border }]}>
+                  <Text style={[styles.ticketText, { color: isActive ? '#fff' : color.text }]}>A-{(item.queue_number).toString().padStart(3, '0')}</Text>
+                </View>
+                <View style={styles.customerCopy}>
+                  <Text style={[styles.customerName, { color: color.text }]}>{isActive ? 'Tasdiqlangan mijoz' : 'Kutayotgan mijoz'}</Text>
+                  <Text style={[styles.service, { color: color.textSecondary }]}>Umumiy xizmat</Text>
+                </View>
+                <View style={styles.waitCopy}>
+                  {isActive ? <CheckCircle2 color={color.success} size={18} /> : <Clock3 color={color.textSecondary} size={17} />}
+                  <Text style={[styles.wait, { color: color.textSecondary }]}>{item.estimated_wait_minutes} daqiqa</Text>
+                </View>
+              </View>
+            );
+          })
+        )}
+
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  content: { padding: 24, paddingTop: 60, paddingBottom: 100 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 },
+  eyebrow: { fontSize: 11, fontWeight: '800', letterSpacing: 1.2, marginBottom: 8 },
+  title: { fontSize: 25, fontWeight: '800', marginBottom: 6 },
+  branch: { fontSize: 13 },
+  status: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 7, borderRadius: 20 },
+  statusDot: { width: 7, height: 7, borderRadius: 4, marginRight: 6 },
+  statusText: { fontSize: 12, fontWeight: '700' },
+  scanButton: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: 18, marginBottom: 18 },
+  scanIcon: { width: 46, height: 46, borderRadius: 13, backgroundColor: '#ffffff25', alignItems: 'center', justifyContent: 'center' },
+  scanCopy: { flex: 1, marginLeft: 14 },
+  scanTitle: { color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 4 },
+  scanSubtitle: { color: '#DBEAFE', fontSize: 12 },
+  statsRow: { flexDirection: 'row', gap: 12, marginBottom: 30 },
+  statCard: { flex: 1, padding: 16, borderRadius: 16, borderWidth: 1 },
+  statNumber: { fontSize: 27, fontWeight: '800', marginTop: 12, marginBottom: 2 },
+  statLabel: { fontSize: 12 },
+  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+  sectionTitle: { fontSize: 19, fontWeight: '800' },
+  liveText: { fontSize: 12, fontWeight: '700' },
+  queueCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 16, borderWidth: 1, marginBottom: 10 },
+  ticket: { width: 57, height: 57, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+  ticketText: { fontSize: 14, fontWeight: '800' },
+  customerCopy: { flex: 1, marginLeft: 13 },
+  customerName: { fontSize: 15, fontWeight: '700', marginBottom: 5 },
+  service: { fontSize: 12 },
+  waitCopy: { alignItems: 'flex-end', gap: 5 },
+  wait: { fontSize: 11 },
+});

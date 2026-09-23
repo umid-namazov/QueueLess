@@ -20,6 +20,8 @@ class BranchOut(BaseModel):
     longitude: float | None
     avg_service_minutes: int
     working_hours: str
+    is_approved: bool
+    owner_id: int | None
 
     model_config = ConfigDict(from_attributes=True)
 

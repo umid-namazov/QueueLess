@@ -1,0 +1,8 @@
+queue_less_expo/node_modules/
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+queueless.db
+.git/
