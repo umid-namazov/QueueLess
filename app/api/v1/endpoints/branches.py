@@ -68,6 +68,15 @@ def request_branch(
     return branch
 
 
+@router.get("/my", response_model=list[BranchOut])
+def my_branches(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    """
+    Joriy foydalanuvchining o'z bizneslarini qaytaradi.
+    Shu orqali foydalanuvchi "seller" ekanligini aniqlaymiz.
+    """
+    return db.query(Branch).filter(Branch.owner_id == current_user.id).all()
+
+
 @router.get("/admin/pending", response_model=list[BranchOut])
 def pending_branches(db: Session = Depends(get_db), admin=Depends(get_current_admin)):
     """

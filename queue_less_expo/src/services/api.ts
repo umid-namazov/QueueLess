@@ -25,12 +25,14 @@ client.interceptors.response.use(
     }
 
     if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
-      Toast.show({
-        type: 'error',
-        text1: 'Sessiya yakunlandi',
-        text2: 'Iltimos, qaytadan tizimga kiring',
-      });
+      if (!error.config?.url?.includes('/auth/login')) {
+        useAuthStore.getState().logout();
+        Toast.show({
+          type: 'error',
+          text1: 'Sessiya yakunlandi',
+          text2: 'Iltimos, qaytadan tizimga kiring',
+        });
+      }
     } else if (error.response?.status >= 500) {
       Toast.show({
         type: 'error',
@@ -67,7 +69,7 @@ export async function apiLogin(phone: string, password: string) {
   const body = new URLSearchParams({ username: phone, password });
   return request<{ access_token: string }>('/auth/login', {
     method: 'post',
-    data: body.toString(),
+    data: body,
   });
 }
 

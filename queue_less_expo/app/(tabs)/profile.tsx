@@ -4,7 +4,7 @@ import { useRouter, useFocusEffect } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
 import { useAuthStore } from '../../src/store/authStore';
 import * as SecureStore from 'expo-secure-store';
-import { User as UserIcon, Bell, Moon, Globe, LogOut, ChevronRight, Building2, ShieldCheck } from 'lucide-react-native';
+import { User as UserIcon, Bell, Moon, Globe, LogOut, ChevronRight, Building2, ShieldCheck, Briefcase } from 'lucide-react-native';
 import { useSettingsStore, AppLanguage } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n';
 import { apiGetMe, User } from '../../src/services/api';
@@ -126,8 +126,14 @@ export default function ProfileScreen() {
         />
         <MenuItem
           icon={<Building2 color={color.textSecondary} size={24} />}
-          title="Biznes sifatida qo'shilish"
+          title="Biznes sifatida qo'shilish (Ariza)"
           onPress={() => router.push('/business' as never)}
+          color={color}
+        />
+        <MenuItem
+          icon={<Briefcase color={color.textSecondary} size={24} />}
+          title="Sotuvchi paneli (Mening biznesim)"
+          onPress={() => router.push('/seller' as never)}
           color={color}
         />
         {user?.is_admin && (

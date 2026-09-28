@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { ArrowLeft, CheckCircle2, ShieldCheck, XCircle, LogOut } from 'lucide-react-native';
 import { Colors } from '../../src/theme/colors';
@@ -15,6 +15,7 @@ export default function AdminDashboard() {
   const [pending, setPending] = useState<Branch[]>([]);
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState<number | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
 
   const fetchPending = async () => {
     try {
@@ -79,24 +80,57 @@ export default function AdminDashboard() {
           </View>
         ) : (
           pending.map((branch) => (
-            <View key={branch.id} style={[styles.card, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <TouchableOpacity 
+              key={branch.id} 
+              style={[styles.card, { backgroundColor: color.surface, borderColor: color.border }]}
+              onPress={() => setSelectedBranch(branch)}
+              activeOpacity={0.7}
+            >
               <Text style={[styles.cardTitle, { color: color.text }]}>{branch.name}</Text>
               <Text style={[styles.cardSub, { color: color.textSecondary }]}>Kategoriya: {branch.category}</Text>
               <Text style={[styles.cardSub, { color: color.textSecondary }]}>Manzil: {branch.address || 'Kiritilmagan'}</Text>
               
-              <View style={styles.actions}>
-                <TouchableOpacity 
-                  style={[styles.btnApprove, { backgroundColor: color.success }]}
-                  onPress={() => handleApprove(branch.id)}
-                  disabled={processingId === branch.id}
-                >
-                  {processingId === branch.id ? <ActivityIndicator color="#fff" size="small" /> : <Text style={styles.btnText}>Tasdiqlash</Text>}
-                </TouchableOpacity>
-              </View>
-            </View>
+              <Text style={{ color: color.primary, fontSize: 13, marginTop: 8, fontWeight: '600' }}>To'liq ma'lumotni ko'rish ➜</Text>
+            </TouchableOpacity>
           ))
         )}
       </ScrollView>
+
+      {/* --- MODAL OYNA --- */}
+      <Modal visible={!!selectedBranch} transparent animationType="slide">
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 }}>
+          <View style={{ backgroundColor: color.surface, padding: 24, borderRadius: 16 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16, color: color.text }}>Biznes ma'lumotlari</Text>
+            
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>🏢 Nomi: {selectedBranch?.name}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>🏷 Kategoriya: {selectedBranch?.category}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>📍 Manzil: {selectedBranch?.address || 'Kiritilmagan'}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>⏳ Xizmat vaqti: o'rtacha {selectedBranch?.avg_service_minutes} daqiqa</Text>
+            <Text style={{ fontSize: 16, marginBottom: 20, color: color.text }}>⏰ Ish vaqti: {selectedBranch?.working_hours}</Text>
+
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <TouchableOpacity 
+                style={{ flex: 1, backgroundColor: color.success, padding: 14, borderRadius: 10, alignItems: 'center' }}
+                onPress={() => {
+                  if (selectedBranch) {
+                    handleApprove(selectedBranch.id);
+                    setSelectedBranch(null);
+                  }
+                }}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Tasdiqlash</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={{ flex: 1, backgroundColor: '#888', padding: 14, borderRadius: 10, alignItems: 'center' }}
+                onPress={() => setSelectedBranch(null)}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Yopish</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
