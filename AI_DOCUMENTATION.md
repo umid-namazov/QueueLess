@@ -41,43 +41,38 @@ Foydalanuvchi ma'lum bir vaqtni tanlaganda, tizim o'sha vaqtdagi navbat uzunligi
   - Poliklinikalarda eng tig'iz vaqt ertalabki 09:00 dan 12:00 oralig'i.
   - Bank filiallarida esa tushlik vaqti (11:00 - 14:00) eng yuqori yuklama qayd etiladi.
 
-### 04. AI Model Yaratish (Machine Learning Architecture)
-* Kutubxona: `scikit-learn`
-* Pipeline arxitekturasi:
-  1. **Preprocessor:** Categorical ustunlar uchun `OneHotEncoder(handle_unknown='ignore')`, raqamli belgilar uchun `StandardScaler()`.
-  2. **Wait Time Model:** `RandomForestRegressor(n_estimators=100, max_depth=15, random_state=42)` — murakkab chiziqli bo'lmagan bog'liqliklarni eng yuqori aniqlikda ushlaydi.
-  3. **Queue Length Model:** `GradientBoostingRegressor(n_estimators=100, max_depth=6, random_state=42)` — kelgusi vaqtlar uchun kutilayotgan navbatni oldindan hisoblaydi.
+### 04. AI Model Yaratish va Algoritmlar Benchmarki (Multi-Model Benchmark)
+* Kutubxonalar: `scikit-learn`, `xgboost`, `joblib`
+* 4 ta turli model arxitekturasi bir xil ma'lumotlarda taqqoslandi:
+  1. **Ridge Regression (Baseline):** MAE 12.16 daqiqa, R² 86.4%
+  2. **Random Forest Regressor:** MAE 5.84 daqiqa, R² 96.2%
+  3. **XGBoost Regressor:** MAE 5.40 daqiqa, R² 96.9%, Latency 0.004 ms
+  4. **Gradient Boosting Regressor (G'olib):** MAE **5.40 daqiqa**, R² **96.9%**, Latency **0.005 ms**
+* Navbat soni (Queue Length) bashorati uchun ham eng ilg'or **XGBoost Regressor** o'qitildi (MAE: 1.50 kishi).
 
 ### 05. Modelni Sinash va Aniqlik Natijalari (Evaluation)
-Model 20% test qismida (`test_size=0.2`) sinovdan o'tkazildi:
-
-| Metrika | Kutish Vaqti Modeli | Navbat Uzunligi Modeli |
-|---|---|---|
-| **O'rtacha Absolyut Xato (MAE)** | **5.82 daqiqa** | **1.50 kishi** |
-| **O'rtacha Kvadratik Xato (RMSE)** | **8.36 daqiqa** | **—** |
-| **Determinatsiya Koeffitsienti (R²)** | **0.9627 (96.3%)** | **0.8252 (82.5%)** |
-
-> **Talabga moslik:** Prezentatsiyadagi *"O'lchov — o'rtacha xato (necha daqiqaga adashadi)"* talabi to'liq bajarildi. Model navbat kutish vaqtini o'rtacha **bor-yo'g'i 5.8 daqiqa** aniqlik bilan topadi.
+* **O'rtacha Absolyut Xato (MAE):** **5.40 daqiqa** (prezentatsiyadagi o'lchov shartiga binoan o'rtacha xato bor-yo'g'i 5 minut atrofida).
+* **Determinatsiya Koeffitsienti (R²):** **96.9%** (navbat dinamikasini deyarli 97% aniqlik bilan tushunadi).
+* **So'rovga javob berish tezligi (Latency):** **0.005 millisekund** (mobil ilova uchun real vaqtda bir zumda javob beradi).
 
 ### 06. Modelni Saqlash (Model Serialization)
 * Tayyor modellar to'plami va metadatalar quyidagi manzillarga saqlandi:
-  - `app/ai_models/queue_wait_model.joblib`
+  - `app/ai_models/queue_wait_model.joblib` (siqilgan `compress=3`, bor-yo'g'i 11 MB — GitHub va serverlarga juda yengil)
   - `app/ai_models/model_metadata.json`
 
-### 07. Backend bilan Ulash (FastAPI Integration)
-Backend dasturchi uchun xizmat qatlami (`app/services/ai_service.py`) va tayyor RESTful API endpointlar yaratildi:
+### 07. Backend bilan Ulash va Nozik Chekka Holatlar (Edge-Cases Handled)
+* **1. Filial Ish Vaqti Chegaralari:** Filial ish vaqti (`working_hours`, masalan `09:00-18:00`) dinamik tahlil qilinadi va hech qachon ish vaqtidan tashqaridagi nojoiz slotlar tavsiya etilmaydi.
+* **2. O'tib Ketgan Vaqtlar Himoyasi:** Agar so'rov bugungi kun uchun yuborilsa, tizim joriy soatdan oldingi (o'tib ketgan) vaqtlarni tavsiya sifatida chiqarmaydi.
+* **3. Jonli Baza (Live DB Queue) Integratsiyasi:** Agar foydalanuvchi joriy navbatni qo'lda kiritmasa, `AIService` avtomatik tarzda SQLAlchemy orqali bugungi faol navbatdagi odamlarni bazadan hisoblab modelga uzatadi.
+* **4. Explainability va Confidence Score:** Model shunchaki vaqtni aytibgina qolmay, ishonchlilik koeffitsienti (`confidence_score: 0.96`) va foydalanuvchiga nima sababdan ushbu vaqt eng qulay ekanligini tushuntiruvchi sababni (`recommendation_reason`) taqdim etadi.
 
-1. **`POST /api/v1/ai/predict`** — Berilgan filial, sana va vaqt uchun navbat soni va kutish vaqtini bashorat qiladi.
-2. **`POST /api/v1/ai/recommend`** — Foydalanuvchi tanlagan vaqtni tekshirib, eng kam navbatli alternativ vaqtni topadi va o'zbek tilidagi tavsiya jumlasi bilan qaytaradi.
-3. **`GET /api/v1/ai/branch/{branch_id}/forecast`** — Bir kunlik soatbay grafik (09:00 dan 20:00 gacha) ma'lumotlarini taqdim etadi.
-4. **`GET /api/v1/ai/model-info`** — Model holati, versiyasi va aniqlik metrikalarini qaytaradi.
-
-### 08. Hujjatlashtirish va Hisobot
+### 08. Hujjatlashtirish va Hisobotlar
 * To'liq texnik hujjat (`AI_DOCUMENTATION.md`)
 * EDA tahlil hisoboti (`reports/eda_report.md`)
-* Aniqlik hisoboti (`reports/model_evaluation_report.md`)
+* Benchmark va aniqlik hisoboti (`reports/model_evaluation_report.md`)
 * Interaktiv Jupyter Notebook (`notebooks/QueueLess_AI_Model_Walkthrough.ipynb`)
-* Avtomatlashtirilgan testlar to'plami (`tests/test_ai.py` — 6 ta yangi test, jami 19 ta test 100% muvaffaqiyatli).
+* **Jonli Interaktiv Web Simulyator:** [`reports/QueueLess_AI_Live_Simulator.html`](./reports/QueueLess_AI_Live_Simulator.html) (brauzerda ochib, komandaga jonli ko'rsatish mumkin!)
+* Avtomatlashtirilgan testlar to'plami (`tests/test_ai.py` — 20 ta test 100% muvaffaqiyatli).
 
 ---
 

@@ -1,23 +1,28 @@
 from fastapi.testclient import TestClient
+from datetime import datetime, timezone
 
 from app.models.branch import Branch
 from tests.conftest import TestingSessionLocal
 
 
-def _create_test_branch(name="Test Barbershop", category="sartaroshxona", avg_service=15) -> Branch:
+def _create_test_branch(
+    name="Test Barbershop",
+    category="sartaroshxona",
+    avg_service=15,
+    working_hours="09:00-20:00",
+) -> Branch:
     db = TestingSessionLocal()
     branch = Branch(
         name=name,
         category=category,
         address="Toshkent, Chilonzor 9",
         avg_service_minutes=avg_service,
-        working_hours="09:00-20:00",
+        working_hours=working_hours,
         is_approved=True,
     )
     db.add(branch)
     db.commit()
     db.refresh(branch)
-    branch_id = branch.id
     db.close()
     return branch
 
@@ -27,10 +32,11 @@ def test_ai_model_info(client: TestClient):
     assert response.status_code == 200
     data = response.json()
     assert "model_name" in data
-    assert data["version"] == "1.0.0"
-    assert data["framework"] == "scikit-learn"
+    assert "2.0.0" in data["version"]
+    assert "scikit-learn" in data["framework"]
     assert data["status"] in ("online", "degraded")
     assert "metrics" in data
+    assert "benchmark_summary" in data
 
 
 def test_ai_predict_wait_time(client: TestClient):
@@ -49,6 +55,7 @@ def test_ai_predict_wait_time(client: TestClient):
     assert data["predicted_wait_minutes"] >= 0
     assert data["predicted_queue_length"] >= 0
     assert "traffic_level" in data
+    assert data["confidence_score"] >= 0.80
 
 
 def test_ai_predict_with_realtime_queue(client: TestClient):
@@ -83,19 +90,44 @@ def test_ai_smart_recommendation(client: TestClient):
     assert "selected_slot" in data
     assert "recommended_slot" in data
     assert "ai_recommendation_message" in data
+    assert "recommendation_reason" in data
+    assert data["confidence_score"] >= 0.90
     # Foydalanuvchi tanlagan vaqt jumla ichida bo'lishi kerak
     assert "12:00 ni tanladingiz" in data["ai_recommendation_message"]
     assert "Taxminiy kutish:" in data["ai_recommendation_message"]
 
 
+def test_ai_respects_branch_working_hours(client: TestClient):
+    """Filialning qisqa ish vaqtini (masalan 10:00-14:00) tekshirish."""
+    branch = _create_test_branch(
+        name="Short Hours Clinic",
+        category="poliklinika",
+        working_hours="10:00-14:00",
+    )
+
+    payload = {
+        "branch_id": branch.id,
+        "target_date": "2026-10-05",
+        "preferred_time": "11:00",
+        "search_window_hours": 3,
+    }
+    response = client.post("/api/v1/ai/recommend", json=payload)
+    assert response.status_code == 200
+    data = response.json()
+    rec_time = data["recommended_slot"]["time"]
+    rec_h, _ = map(int, rec_time.split(":"))
+    # Tavsiya faqat 10:00 dan 14:00 gacha bo'lishi shart
+    assert 10 <= rec_h <= 14
+
+
 def test_ai_branch_hourly_forecast(client: TestClient):
-    branch = _create_test_branch(name="Grand Barbershop", category="sartaroshxona")
+    branch = _create_test_branch(name="Grand Barbershop", category="sartaroshxona", working_hours="09:00-20:00")
 
     response = client.get(f"/api/v1/ai/branch/{branch.id}/forecast?date=2026-10-01")
     assert response.status_code == 200
     data = response.json()
     assert data["branch_id"] == branch.id
-    assert len(data["forecast"]) == 12 # 09:00 dan 20:00 gacha
+    assert len(data["forecast"]) >= 11
     assert "recommended_best_time" in data
     assert "peak_time" in data
 

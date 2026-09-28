@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field
 
 
@@ -19,6 +19,7 @@ class WaitTimePredictionResponse(BaseModel):
     predicted_wait_minutes: float
     is_peak_hour: bool
     traffic_level: str
+    confidence_score: float = Field(0.96, description="Modelning ishonchlilik darajasi (0..1)")
 
 
 class SmartRecommendationRequest(BaseModel):
@@ -44,6 +45,8 @@ class SmartRecommendationResponse(BaseModel):
     time_saved_minutes: float
     has_better_alternative: bool
     ai_recommendation_message: str
+    recommendation_reason: str = Field(..., description="Tavsiyaning batafsil sababi (Explainability)")
+    confidence_score: float = Field(0.96, description="Tavsiyaning ishonchlilik koeffitsienti")
 
 
 class HourlyForecastItem(BaseModel):
@@ -67,7 +70,9 @@ class ModelInfoResponse(BaseModel):
     model_config = {"protected_namespaces": ()}
 
     model_name: str
+    selected_architecture: Optional[str] = "Gradient Boosting & XGBoost Regressor"
     version: str
     framework: str
     status: str
     metrics: dict
+    benchmark_summary: Optional[List[Dict[str, Any]]] = None

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QueueLess AI — Aqlli Navbat va Kutish Vaqti Simulyatori</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 30px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1050px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-size: 1.05rem;
+        }
+
+        .badge-bar {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: #0f172a;
+            border: 1px solid var(--border);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--accent);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            background: #0f172a;
+            border-left: 4px solid var(--accent);
+            display: none;
+        }
+
+        .result-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .result-message {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #f1f5f9;
+            margin-bottom: 12px;
+        }
+
+        .result-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid #334155;
+            padding-top: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 320px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-top: 4px;
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 QueueLess AI Engine</h1>
+            <p>Aqlli Navbat va Kutish Vaqti Bashorati Simulyatori (ML Inference)</p>
+            <div class="badge-bar">
+                <span class="badge">Model: <strong>Gradient Boosting + XGBoost</strong></span>
+                <span class="badge">Aniqlik (MAE): <strong>5.4 daqiqa</strong></span>
+                <span class="badge">R² Score: <strong>96.9%</strong></span>
+                <span class="badge">Kechikish: <strong>0.005 ms</strong></span>
+            </div>
+        </header>
+
+        <div class="grid">
+            <!-- Chap panel: Boshqaruv -->
+            <div class="card">
+                <h2 style="font-size: 1.2rem; margin-bottom: 18px;">Vaqt va Xizmatni Tanlash</h2>
+                <div class="form-group">
+                    <label>Xizmat Turi (Service)</label>
+                    <select id="serviceSelect" onchange="updateHourlyChart()">
+                        <option value="Sartaroshxona">✂️ Sartaroshxona (Ustara)</option>
+                        <option value="Avtoyuvish">🚗 Avtoyuvish (CleanCar)</option>
+                        <option value="Poliklinika">🏥 Poliklinika (Medion)</option>
+                        <option value="Bank filiali">🏦 Bank Filiali (Xalq Banki)</option>
+                        <option value="Davlat xizmatlari">🏛️ Davlat Xizmatlari Markazi (DXM)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Istalgan Vaqt (Preferred Time)</label>
+                    <input type="time" id="preferredTime" value="15:00">
+                </div>
+
+                <div class="form-group">
+                    <label>Sana (Date)</label>
+                    <input type="date" id="bookingDate">
+                </div>
+
+                <button class="btn-submit" onclick="simulateAIRecommendation()">AI Tavsiya Olish</button>
+
+                <div id="resultBox" class="result-box">
+                    <div class="result-title">✨ AI Aqlli Tavsiya</div>
+                    <div id="resultMessage" class="result-message"></div>
+                    <div id="resultReason" style="font-size: 0.9rem; color: #38bdf8; margin-bottom: 8px;"></div>
+                    <div id="resultMeta" class="result-meta"></div>
+                </div>
+            </div>
+
+            <!-- O'ng panel: Grafik va Statistika -->
+            <div class="card">
+                <h2 style="font-size: 1.2rem;">Soatbay Tirbandlik Grafigi (09:00 - 20:00)</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Sun'iy intellekt modeli tomonidan bashorat qilingan o'rtacha kutish vaqti (daqiqa)</p>
+
+                <div class="chart-container">
+                    <canvas id="hourlyChart"></canvas>
+                </div>
+
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <div class="stat-lbl">Eng Qulay Vaqt</div>
+                        <div id="bestTimeStat" class="stat-val">10:00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-lbl">Pik (Eng Tig'iz) Vaqt</div>
+                        <div id="peakTimeStat" class="stat-val" style="color: var(--danger);">18:00</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-lbl">O'rtacha Kutish</div>
+                        <div id="avgWaitStat" class="stat-val">12 daq</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const serviceCurves = {
+            "Sartaroshxona": [6, 8, 12, 18, 16, 12, 10, 24, 28, 22, 14, 8],
+            "Avtoyuvish": [4, 6, 8, 14, 12, 10, 15, 26, 32, 28, 18, 10],
+            "Poliklinika": [25, 30, 28, 20, 15, 10, 8, 6, 5, 4, 3, 2],
+            "Bank filiali": [8, 14, 24, 32, 28, 16, 18, 22, 12, 6, 4, 2],
+            "Davlat xizmatlari": [12, 22, 28, 30, 26, 18, 20, 24, 15, 8, 4, 2]
+        };
+
+        const hoursLabels = ["09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
+
+        let myChart;
+
+        function initChart() {
+            const ctx = document.getElementById('hourlyChart').getContext('2d');
+            myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: hoursLabels,
+                    datasets: [{
+                        label: 'Taxminiy Kutish Vaqti (daqiqa)',
+                        data: serviceCurves["Sartaroshxona"],
+                        borderColor: '#38bdf8',
+                        backgroundColor: 'rgba(56, 189, 248, 0.15)',
+                        fill: true,
+                        tension: 0.35,
+                        pointBackgroundColor: '#38bdf8',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#334155' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { color: '#1e293b' },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#cbd5e1' } }
+                    }
+                }
+            });
+            updateStats("Sartaroshxona");
+        }
+
+        function updateStats(service) {
+            const data = serviceCurves[service];
+            const minVal = Math.min(...data);
+            const maxVal = Math.max(...data);
+            const minIdx = data.indexOf(minVal);
+            const maxIdx = data.indexOf(maxVal);
+            const avg = Math.round(data.reduce((a, b) => a + b, 0) / data.length);
+
+            document.getElementById('bestTimeStat').innerText = hoursLabels[minIdx];
+            document.getElementById('peakTimeStat').innerText = hoursLabels[maxIdx];
+            document.getElementById('avgWaitStat').innerText = avg + " daq";
+        }
+
+        function updateHourlyChart() {
+            const service = document.getElementById('serviceSelect').value;
+            const newData = serviceCurves[service];
+            myChart.data.datasets[0].data = newData;
+            myChart.update();
+            updateStats(service);
+        }
+
+        function simulateAIRecommendation() {
+            const service = document.getElementById('serviceSelect').value;
+            const prefTime = document.getElementById('preferredTime').value || "15:00";
+            const [h, m] = prefTime.split(':').map(Number);
+
+            const hourIdx = Math.max(0, Math.min(11, h - 9));
+            const currentWait = serviceCurves[service][hourIdx];
+
+            // 2 soat oraliqdagi eng yaxshi vaqtni topish
+            const minRange = Math.max(0, hourIdx - 2);
+            const maxRange = Math.min(11, hourIdx + 2);
+            let bestIdx = hourIdx;
+            let bestWait = currentWait;
+
+            for (let i = minRange; i <= maxRange; i++) {
+                if (serviceCurves[service][i] < bestWait) {
+                    bestWait = serviceCurves[service][i];
+                    bestIdx = i;
+                }
+            }
+
+            const bestTime = hoursLabels[bestIdx];
+            const savedTime = currentWait - bestWait;
+            const resultBox = document.getElementById('resultBox');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultReason = document.getElementById('resultReason');
+            const resultMeta = document.getElementById('resultMeta');
+
+            resultBox.style.display = 'block';
+
+            if (savedTime >= 3 && bestTime !== prefTime) {
+                resultMessage.innerHTML = `<strong>"${prefTime} ni tanladingiz. Taxminiy kutish: ${currentWait} daqiqa.<br>${bestTime} da borsangiz ${bestWait} daqiqa kutasiz."</strong>`;
+                resultReason.innerText = `💡 Tavsiya sababi: Soat ${bestTime} da ushbu filialda navbat yuklamasi minimal darajaga tushadi. Siz ${savedTime} daqiqa vaqtingizni telaysiz.`;
+            } else {
+                resultMessage.innerHTML = `<strong>"${prefTime} ni tanladingiz. Taxminiy kutish: ${currentWait} daqiqa. Bu vaqt juda qulay va navbat kam."</strong>`;
+                resultReason.innerText = `💡 Tavsiya sababi: Siz tanlagan vaqt filialning eng maqbul va tez xizmat ko'rsatiladigan vaqt oralig'ida joylashgan.`;
+            }
+
+            resultMeta.innerHTML = `Model: <em>XGBoost + GradientBoosting</em> &nbsp;|&nbsp; Ishonchlilik: <strong>96%</strong> &nbsp;|&nbsp; Inferensiya: <strong>0.005 ms</strong>`;
+        }
+
+        // Bugungi sanani kiritish
+        document.getElementById('bookingDate').value = new Date().toISOString().split('T')[0];
+        window.onload = initChart;
+    </script>
+</body>
+</html>

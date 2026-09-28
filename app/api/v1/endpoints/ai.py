@@ -40,6 +40,7 @@ def predict_wait_time(
         date_str=payload.date,
         time_str=payload.time,
         current_queue_length=payload.current_queue_length,
+        db=db,
     )
     return WaitTimePredictionResponse(**result)
 
@@ -63,6 +64,7 @@ def get_smart_recommendation(
         preferred_time=payload.preferred_time,
         target_date_str=payload.target_date,
         search_window_hours=payload.search_window_hours,
+        db=db,
     )
     return recommendation
 

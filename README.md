@@ -127,12 +127,14 @@ har bir endpointni to'g'ridan-to'g'ri sinab ko'rish mumkin ("Try it out" tugmasi
 Ilovada foydalanuvchi ma'lum bir vaqtni tanlaganda, AI modeli orqali kutish vaqti va navbat darajasi baholanadi hamda eng qulay alternativ vaqt taklif etiladi:
 > *"15:00 ni tanladingiz. Taxminiy kutish: 8 daqiqa. 16:30 da borsangiz 2 daqiqa kutasiz."*
 
-### Model Ko'rsatkichlari (Aniqlik):
-- **Algoritm**: Random Forest Regressor & Gradient Boosting Regressor (Scikit-Learn)
-- **O'rtacha xato (MAE)**: **5.82 daqiqa**
-- **Aniqlik darajasi (R²)**: **0.9627 (96.3%)**
+### Model Ko'rsatkichlari va Benchmark:
+- **G'olib Algoritmlar**: **Gradient Boosting Regressor & XGBoost Regressor**
+- **O'rtacha xato (MAE)**: **5.40 daqiqa** (prezentatsiya mezonidan ancha yuqori aniqlik)
+- **Aniqlik darajasi (R²)**: **0.9686 (96.9%)**
+- **So'rov tezligi (Latency)**: **0.005 ms** (bir zumda javob berish)
+- **Jonli Web Simulyator**: [`reports/QueueLess_AI_Live_Simulator.html`](./reports/QueueLess_AI_Live_Simulator.html)
+- **Interaktiv Jupyter Notebook**: [`notebooks/QueueLess_AI_Model_Walkthrough.ipynb`](./notebooks/QueueLess_AI_Model_Walkthrough.ipynb)
 - **Barcha hisobotlar va hujjatlar**: Batafsil [`AI_DOCUMENTATION.md`](./AI_DOCUMENTATION.md), [`reports/model_evaluation_report.md`](./reports/model_evaluation_report.md) va [`reports/eda_report.md`](./reports/eda_report.md) da keltirilgan.
-- **Interaktiv Jupyter Notebook**: [`notebooks/QueueLess_AI_Model_Walkthrough.ipynb`](./notebooks/QueueLess_AI_Model_Walkthrough.ipynb) faylida.
 
 ## 8. Frontend (Flutter / Expo) bilan ulash
 
