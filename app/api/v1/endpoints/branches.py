@@ -10,6 +10,12 @@ from app.services.queue_service import estimate_wait_minutes, get_active_queue_c
 
 router = APIRouter()
 
+@router.delete("/delete_all")
+def delete_all_branches(db: Session = Depends(get_db)):
+    db.query(Booking).delete()
+    db.query(Branch).delete()
+    db.commit()
+    return {"message": "All branches deleted!"}
 
 @router.get("", response_model=list[BranchWithQueueInfo])
 def list_branches(category: str | None = None, db: Session = Depends(get_db)):
