@@ -3,12 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 
-const history = [
-  { number: 'A-023', name: 'Zarina Akbarova', service: 'Kassa xizmati', time: 'Bugun, 10:42', duration: '8 daqiqa' },
-  { number: 'A-022', name: 'Jasur Karimov', service: 'Plastik karta olish', time: 'Bugun, 10:18', duration: '14 daqiqa' },
-  { number: 'A-021', name: 'Nilufar Saidova', service: 'Hisob ochish', time: 'Bugun, 09:55', duration: '19 daqiqa' },
-  { number: 'A-020', name: 'Rustam Aliyev', service: 'Kassa xizmati', time: 'Kecha, 17:20', duration: '7 daqiqa' },
-];
+const history: any[] = [];
 
 export default function SellerHistory() {
   const theme = useSettingsStore((state) => state.theme);
@@ -22,18 +17,24 @@ export default function SellerHistory() {
         <Text style={[styles.subtitle, { color: color.textSecondary }]}>Tasdiqlangan mijozlar va bajarilgan xizmatlar</Text>
 
         <View style={styles.summaryRow}>
-          <View style={[styles.summaryCard, { backgroundColor: color.primary }]}><Text style={styles.summaryLabel}>BUGUN</Text><Text style={styles.summaryNumber}>24</Text><Text style={styles.summaryHint}>mijoz</Text></View>
-          <View style={[styles.summaryCard, { backgroundColor: color.success }]}><Text style={styles.summaryLabel}>O‘RTACHA</Text><Text style={styles.summaryNumber}>12</Text><Text style={styles.summaryHint}>daqiqa</Text></View>
+          <View style={[styles.summaryCard, { backgroundColor: color.primary }]}><Text style={styles.summaryLabel}>BUGUN</Text><Text style={styles.summaryNumber}>0</Text><Text style={styles.summaryHint}>mijoz</Text></View>
+          <View style={[styles.summaryCard, { backgroundColor: color.success }]}><Text style={styles.summaryLabel}>O‘RTACHA</Text><Text style={styles.summaryNumber}>0</Text><Text style={styles.summaryHint}>daqiqa</Text></View>
         </View>
 
         <View style={styles.listHeader}><Text style={[styles.sectionTitle, { color: color.text }]}>So‘nggi xizmatlar</Text><View style={styles.dateLabel}><CalendarDays color={color.textSecondary} size={15} /><Text style={[styles.dateText, { color: color.textSecondary }]}>Bugun</Text></View></View>
-        {history.map((item) => (
-          <View key={item.number} style={[styles.historyCard, { backgroundColor: color.surface, borderColor: color.border }]}>
-            <View style={[styles.ticket, { backgroundColor: color.success + '18' }]}><Text style={[styles.ticketText, { color: color.success }]}>{item.number}</Text></View>
-            <View style={styles.copy}><Text style={[styles.name, { color: color.text }]}>{item.name}</Text><Text style={[styles.service, { color: color.textSecondary }]}>{item.service}</Text><Text style={[styles.time, { color: color.textSecondary }]}>{item.time}</Text></View>
-            <View style={styles.result}><CheckCircle2 color={color.success} size={18} /><View style={styles.duration}><Clock3 color={color.textSecondary} size={12} /><Text style={[styles.durationText, { color: color.textSecondary }]}>{item.duration}</Text></View></View>
+        {history.length === 0 ? (
+          <View style={{ padding: 20, alignItems: 'center' }}>
+            <Text style={{ color: color.textSecondary }}>Hozircha xizmat tarixi yo'q.</Text>
           </View>
-        ))}
+        ) : (
+          history.map((item) => (
+            <View key={item.number} style={[styles.historyCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+              <View style={[styles.ticket, { backgroundColor: color.success + '18' }]}><Text style={[styles.ticketText, { color: color.success }]}>{item.number}</Text></View>
+              <View style={styles.copy}><Text style={[styles.name, { color: color.text }]}>{item.name}</Text><Text style={[styles.service, { color: color.textSecondary }]}>{item.service}</Text><Text style={[styles.time, { color: color.textSecondary }]}>{item.time}</Text></View>
+              <View style={styles.result}><CheckCircle2 color={color.success} size={18} /><View style={styles.duration}><Clock3 color={color.textSecondary} size={12} /><Text style={[styles.durationText, { color: color.textSecondary }]}>{item.duration}</Text></View></View>
+            </View>
+          ))
+        )}
       </ScrollView>
     </View>
   );

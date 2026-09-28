@@ -155,6 +155,14 @@ export default function SellerSettings() {
           <TextInput value={duration} onChangeText={setDuration} keyboardType="number-pad" style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.background }]} />
           <View style={styles.editorActions}><TouchableOpacity onPress={() => setEditingId(null)} style={[styles.cancelButton, { borderColor: color.border }]}><Text style={[styles.cancelText, { color: color.textSecondary }]}>Bekor qilish</Text></TouchableOpacity><TouchableOpacity onPress={saveService} style={[styles.saveButton, { backgroundColor: color.primary }]}><Check color="#fff" size={18} /><Text style={styles.saveText}>Saqlash</Text></TouchableOpacity></View>
         </View>}
+        <TouchableOpacity 
+          style={[styles.logoutButton, { backgroundColor: color.primary + '12', borderColor: color.primary, borderWidth: 1 }]} 
+          onPress={() => router.replace('/(tabs)/home')}
+        >
+          <Globe2 color={color.primary} size={19} />
+          <Text style={[styles.logoutText, { color: color.primary }]}>Mijoz paneliga o'tish</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={[styles.logoutButton, { backgroundColor: color.error + '12' }]} onPress={() => { logout(); router.replace('/(auth)/login'); }}>
           <LogOut color={color.error} size={19} />
           <Text style={[styles.logoutText, { color: color.error }]}>Seller accountdan chiqish</Text>

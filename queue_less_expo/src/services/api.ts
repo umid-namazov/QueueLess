@@ -61,11 +61,6 @@ async function request<T>(path: string, options: { method?: 'get' | 'post' | 'de
 }
 
 export async function apiLogin(phone: string, password: string) {
-  if (useMockApi) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return { access_token: 'mock_jwt_token_12345' };
-  }
-
   const body = new URLSearchParams({ username: phone, password });
   return request<{ access_token: string }>('/auth/login', {
     method: 'post',
@@ -74,11 +69,6 @@ export async function apiLogin(phone: string, password: string) {
 }
 
 export async function apiRegister(fullName: string, phone: string, password: string) {
-  if (useMockApi) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return { access_token: 'mock_jwt_token_12345' };
-  }
-
   await request('/auth/register', {
     method: 'post',
     data: { full_name: fullName, phone, password },
@@ -100,7 +90,6 @@ export interface Branch {
 }
 
 export async function apiGetBranches(): Promise<Branch[]> {
-  if (useMockApi) return [];
   return request<Branch[]>('/branches', { method: 'get' });
 }
 
@@ -109,7 +98,6 @@ export async function apiGetBranch(id: number): Promise<Branch> {
 }
 
 export async function apiGetBranchQueue(id: number): Promise<QueueItem[]> {
-  if (useMockApi) return [];
   return request<QueueItem[]>(`/branches/${id}/queue`, { method: 'get' });
 }
 
@@ -158,3 +146,7 @@ export async function apiBookQueue(branchId: number): Promise<any> {
 export async function apiCancelQueue(bookingId: number): Promise<any> {
   return request(`/queue/${bookingId}`, { method: 'delete' });
 }
+export async function apiGetMyBranches(): Promise<Branch[]> {
+  return request<Branch[]>('/branches/my', { method: 'get' });
+}
+

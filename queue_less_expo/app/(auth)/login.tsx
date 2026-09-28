@@ -42,7 +42,19 @@ export default function LoginScreen() {
         return;
       }
 
-      // 3. Oddiy foydalanuvchilar uchun
+      // 3. Biznesi bor-yo'qligini tekshirish
+      try {
+        const { apiGetMyBranches } = require('../../src/services/api');
+        const myBranches = await apiGetMyBranches();
+        if (myBranches && myBranches.length > 0) {
+          router.replace('/seller');
+          return;
+        }
+      } catch (e) {
+        console.log('Error checking branches', e);
+      }
+
+      // 4. Oddiy foydalanuvchilar uchun
       router.replace('/(tabs)/home');
     } catch (e) {
       setError(e instanceof Error ? e.message : t.loginError);

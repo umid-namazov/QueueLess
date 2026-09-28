@@ -9,6 +9,7 @@ import { CATEGORIES } from '../../src/constants/mockData';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { apiGetBranches, Branch, apiGetMe, User, apiGetMyQueue, QueueItem } from '../../src/services/api';
 import Toast from 'react-native-toast-message';
+import * as Location from 'expo-location';
 
 export default function HomeScreen() {
   const theme = useSettingsStore((state) => state.theme);
@@ -22,11 +23,31 @@ export default function HomeScreen() {
   const [user, setUser] = useState<User | null>(null);
   const [activeQueue, setActiveQueue] = useState<QueueItem | null>(null);
   const [loading, setLoading] = useState(true);
+  const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
   const insets = useSafeAreaInsets();
+
+  const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371; // km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
 
   const fetchData = async () => {
     try {
       setLoading(true);
+
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let location = null;
+      if (status === 'granted') {
+        location = await Location.getCurrentPositionAsync({});
+        setUserLocation(location);
+      }
+
       // Run API calls in parallel
       const [branchesData, userData, queuesData] = await Promise.all([
         apiGetBranches(),
@@ -54,9 +75,19 @@ export default function HomeScreen() {
 
   const activeCategoryStr = CATEGORIES.find(c => c.id === activeCategory)?.categoryStr || '';
 
-  const filteredBranches = activeCategory === '0' 
+  let filteredBranches = activeCategory === '0' 
     ? branches 
     : branches.filter(b => b.category === activeCategoryStr);
+
+  if (userLocation) {
+    filteredBranches = filteredBranches.map(b => {
+      if (b.latitude && b.longitude) {
+        const dist = getDistance(userLocation.coords.latitude, userLocation.coords.longitude, b.latitude, b.longitude);
+        return { ...b, calculatedDistance: dist };
+      }
+      return { ...b, calculatedDistance: Infinity };
+    }).sort((a, b) => a.calculatedDistance - b.calculatedDistance);
+  }
 
   const renderCategory = ({ item }: { item: (typeof CATEGORIES)[number] }) => {
     const isActive = activeCategory === item.id;
@@ -147,7 +178,12 @@ export default function HomeScreen() {
               <Text style={[styles.branchName, { color: color.text }]}>{branch.name}</Text>
               <View style={styles.branchAddressRow}>
                 <MapPin color={color.textSecondary} size={14} />
-                <Text style={[styles.branchAddress, { color: color.textSecondary }]}>{branch.address}</Text>
+                <Text style={[styles.branchAddress, { color: color.textSecondary }]} numberOfLines={1}>
+                  {branch.calculatedDistance && branch.calculatedDistance !== Infinity 
+                    ? `${branch.calculatedDistance.toFixed(1)} km · ` 
+                    : ''}
+                  {branch.address}
+                </Text>
               </View>
             </View>
             <View style={styles.branchStatus}>

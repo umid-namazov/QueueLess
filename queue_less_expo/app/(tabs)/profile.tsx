@@ -51,12 +51,19 @@ export default function ProfileScreen() {
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hasBusiness, setHasBusiness] = useState(false);
 
   const fetchUser = async () => {
     try {
       setLoading(true);
       const data = await apiGetMe();
       setUser(data);
+      
+      const { apiGetMyBranches } = require('../../src/services/api');
+      const branches = await apiGetMyBranches();
+      if (branches && branches.length > 0) {
+        setHasBusiness(true);
+      }
     } catch (error) {
       console.log('Error fetching user:', error);
     } finally {
@@ -124,18 +131,21 @@ export default function ProfileScreen() {
           onSwitchChange={(enabled) => setTheme(enabled ? 'dark' : 'light')}
           color={color}
         />
-        <MenuItem
-          icon={<Building2 color={color.textSecondary} size={24} />}
-          title="Biznes sifatida qo'shilish (Ariza)"
-          onPress={() => router.push('/business' as never)}
-          color={color}
-        />
-        <MenuItem
-          icon={<Briefcase color={color.textSecondary} size={24} />}
-          title="Sotuvchi paneli (Mening biznesim)"
-          onPress={() => router.push('/seller' as never)}
-          color={color}
-        />
+        {!hasBusiness ? (
+          <MenuItem
+            icon={<Building2 color={color.textSecondary} size={24} />}
+            title="Biznes sifatida qo'shilish (Ariza)"
+            onPress={() => router.push('/business' as never)}
+            color={color}
+          />
+        ) : (
+          <MenuItem
+            icon={<Briefcase color={color.textSecondary} size={24} />}
+            title="Sotuvchi paneli (Mening biznesim)"
+            onPress={() => router.push('/seller' as never)}
+            color={color}
+          />
+        )}
         {user?.is_admin && (
           <MenuItem
             icon={<ShieldCheck color={color.textSecondary} size={24} />}
