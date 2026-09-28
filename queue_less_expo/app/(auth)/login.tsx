@@ -31,8 +31,18 @@ export default function LoginScreen() {
 
     try {
       setLoading(true);
+
+      // 1. Serverdan haqiqiy tokenni olish
       const { access_token: accessToken } = await apiLogin(phone, password);
       await setToken(accessToken);
+
+      // 2. Token olingach, adminligini tekshirib admin panelga yo'naltirish
+      if (phone === '+998991234567') {
+        router.replace('/admin');
+        return;
+      }
+
+      // 3. Oddiy foydalanuvchilar uchun
       router.replace('/(tabs)/home');
     } catch (e) {
       setError(e instanceof Error ? e.message : t.loginError);

@@ -12,7 +12,7 @@ import { apiGetMe, apiGetBranch, User, Branch } from '../../src/services/api';
 type Service = { id: number; name: string; description: string; duration: string };
 
 const initialServices: Service[] = [
-  { id: 1, name: 'Kassa xizmati', description: 'Naqd pul yechish va to'lovlarni amalga oshirish', duration: '10 daqiqa' },
+  { id: 1, name: 'Kassa xizmati', description: "Naqd pul yechish va to'lovlarni amalga oshirish", duration: '10 daqiqa' },
   { id: 2, name: 'Plastik karta olish', description: 'Yangi karta ochish yoki tayyor kartani olish', duration: '15 daqiqa' },
   { id: 3, name: 'Hisob ochish', description: 'Jismoniy shaxslar uchun bank hisob raqami', duration: '20 daqiqa' },
 ];

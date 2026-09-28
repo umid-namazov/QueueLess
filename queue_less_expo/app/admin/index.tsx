@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { ArrowLeft, CheckCircle2, ShieldCheck, XCircle } from 'lucide-react-native';
+import { ArrowLeft, CheckCircle2, ShieldCheck, XCircle, LogOut } from 'lucide-react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { apiGetPendingBranches, apiApproveBranch, Branch } from '../../src/services/api';
@@ -49,8 +49,8 @@ export default function AdminDashboard() {
   return (
     <View style={[styles.container, { backgroundColor: color.background }]}>
       <View style={[styles.header, { borderBottomColor: color.border }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <ArrowLeft color={color.text} size={24} />
+        <TouchableOpacity onPress={() => router.replace('/(auth)/login')} style={styles.backButton}>
+          <LogOut color={color.error} size={24} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: color.text }]}>Admin Paneli</Text>
         <View style={styles.headerSpacer} />
