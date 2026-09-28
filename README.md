@@ -10,24 +10,22 @@ push-notification tuzilmasi va avtomatik testlar bilan.
 queueless-backend/
 ├── app/
 │   ├── main.py                 # Ilova kirish nuqtasi (FastAPI app, CORS, lifespan)
-│   ├── core/
-│   │   ├── config.py           # .env dan o'qiladigan sozlamalar (pydantic-settings)
-│   │   └── security.py         # Parol hash (bcrypt) va JWT token
-│   ├── db/
-│   │   ├── session.py          # SQLAlchemy engine/session
-│   │   ├── base_class.py       # Barcha modellar uchun Base
-│   │   └── init_db.py          # Jadval yaratish + demo ma'lumotlar bilan to'ldirish
-│   ├── models/                 # SQLAlchemy ORM modellari (User, Branch, Booking, DeviceToken)
-│   ├── schemas/                # Pydantic sxemalar (request/response validatsiya)
-│   ├── services/                # Biznes-logika qatlami
-│   │   ├── queue_service.py     # Navbat: band qilish, bekor qilish, pozitsiya hisoblash
-│   │   └── notification_service.py  # Push notification (FCM'ga ulanishga tayyor)
-│   └── api/v1/endpoints/       # HTTP endpointlar (routerlar)
-├── tests/                      # pytest testlari (auth, branches, queue)
+│   ├── core/                   # .env va xavfsizlik sozlamalari
+│   ├── db/                     # SQLAlchemy sessiya va bazani initsializatsiya qilish
+│   ├── models/                 # ORM modellari (User, Branch, Booking, DeviceToken)
+│   ├── schemas/                # Pydantic sxemalar (Auth, Branch, Queue, AI)
+│   ├── services/               # Biznes-logika va AI xizmati (ai_service.py)
+│   ├── ai_models/              # O'qitilgan ML modeli (.joblib va metadata.json)
+│   └── api/v1/endpoints/       # REST API routerlari (shu jumladan ai.py)
+├── ml/                         # ML pipeline (dataset generator, cleaner, eda, train)
+├── data/                       # Xom va tozalangan ma'lumotlar to'plami (CSV)
+├── reports/                    # EDA va Model Evaluation hisobotlari (Markdown)
+├── notebooks/                  # Interaktiv Jupyter Notebook taqdimoti (.ipynb)
+├── tests/                      # pytest avtomatik testlari (19 ta test, 100% muvaffaqiyatli)
 ├── requirements.txt
 ├── Dockerfile / docker-compose.yml
 ├── .env.example
-└── .vscode/                    # VS Code run/debug sozlamalari
+└── .vscode/                    # VS Code launch sozlamalari
 ```
 
 **Nega shunday tuzilgan?** Har bir qatlam (model → schema → service → endpoint) o'z vazifasiga
@@ -114,13 +112,29 @@ qilmaydi.
 | POST | `/api/v1/queue/confirm/{qr_code}` | QR orqali tasdiqlash | Yo'q* |
 | POST | `/api/v1/notifications/register-token` | Push token saqlash | Ha |
 | POST | `/api/v1/notifications/send-test` | Sinov push yuborish | Ha |
+| POST | `/api/v1/ai/recommend` | AI Aqlli Tavsiya (eng kam kutishli vaqtni topish) | Yo'q |
+| POST | `/api/v1/ai/predict` | Navbat uzunligi va kutish vaqtini bashorat qilish | Yo'q |
+| GET | `/api/v1/ai/branch/{id}/forecast` | Filialning bir kunlik soatbay tirbandlik prognozi | Yo'q |
+| GET | `/api/v1/ai/model-info` | AI modelining holati va aniqlik metrikalari | Yo'q |
 
 \* Real loyihada bu endpoint filial xodimi uchun alohida rol/token bilan himoyalanadi.
 
 To'liq so'rov/javob namunalari uchun `/docs` sahifasidagi Swagger UI'dan foydalaning — u yerda
 har bir endpointni to'g'ridan-to'g'ri sinab ko'rish mumkin ("Try it out" tugmasi).
 
-## 7. Frontend (Flutter) bilan ulash
+## 7. AI / ML Aqlli Tavsiya Tizimi (Smart Recommendation)
+
+Ilovada foydalanuvchi ma'lum bir vaqtni tanlaganda, AI modeli orqali kutish vaqti va navbat darajasi baholanadi hamda eng qulay alternativ vaqt taklif etiladi:
+> *"15:00 ni tanladingiz. Taxminiy kutish: 8 daqiqa. 16:30 da borsangiz 2 daqiqa kutasiz."*
+
+### Model Ko'rsatkichlari (Aniqlik):
+- **Algoritm**: Random Forest Regressor & Gradient Boosting Regressor (Scikit-Learn)
+- **O'rtacha xato (MAE)**: **5.82 daqiqa**
+- **Aniqlik darajasi (R²)**: **0.9627 (96.3%)**
+- **Barcha hisobotlar va hujjatlar**: Batafsil [`AI_DOCUMENTATION.md`](./AI_DOCUMENTATION.md), [`reports/model_evaluation_report.md`](./reports/model_evaluation_report.md) va [`reports/eda_report.md`](./reports/eda_report.md) da keltirilgan.
+- **Interaktiv Jupyter Notebook**: [`notebooks/QueueLess_AI_Model_Walkthrough.ipynb`](./notebooks/QueueLess_AI_Model_Walkthrough.ipynb) faylida.
+
+## 8. Frontend (Flutter / Expo) bilan ulash
 
 - Base URL: `http://<server-ip>:8000/api/v1`
 - Login qilingandan so'ng olingan `access_token` ni har bir so'rovda header sifatida yuboring:
@@ -129,14 +143,14 @@ har bir endpointni to'g'ridan-to'g'ri sinab ko'rish mumkin ("Try it out" tugmasi
   `username` maydoniga telefon raqami, `password` maydoniga parol yoziladi.
 - Barcha boshqa endpointlar oddiy JSON qabul qiladi/qaytaradi.
 
-## 8. Push Notification haqida
+## 9. Push Notification haqida
 
 `FCM_SERVER_KEY` .env faylida bo'sh bo'lsa, tizim **development rejimida** ishlaydi — xabarlar
 haqiqatda yuborilmaydi, faqat konsolga log qilinadi (shu bilan push oqimini FCM sozlanmasdan
 oldin ham test qilish mumkin). Haqiqiy Firebase loyihasi tayyor bo'lgach, faqat `.env` dagi
 `FCM_SERVER_KEY` ni to'ldirasiz — kodning boshqa hech bir qismini o'zgartirish shart emas.
 
-## 9. Loyihani GitHub'ga joylash
+## 10. Loyihani GitHub'ga joylash
 
 ```bash
 git init
@@ -150,7 +164,7 @@ git push -u origin main
 (Ushbu papkada `git init` va boshlang'ich commit allaqachon qilib qo'yilgan bo'lishi mumkin —
 `git log` bilan tekshiring. Faqat `git remote add origin ...` va `git push` qilsangiz yetarli.)
 
-## 10. Keyingi qadamlar (production uchun tavsiyalar)
+## 11. Keyingi qadamlar (production uchun tavsiyalar)
 
 - Alembic bilan migratsiyalarni boshqarish (hozir `Base.metadata.create_all` orqali sodda yaratiladi)
 - Rate limiting va parolni tiklash (forgot password) oqimi

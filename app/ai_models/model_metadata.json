@@ -1,0 +1,48 @@
+{
+  "model_name": "QueueLess Smart Wait & Queue Predictor",
+  "version": "1.0.0",
+  "created_at": "2026-09-28",
+  "framework": "scikit-learn",
+  "metrics": {
+    "wait_time_mae_minutes": 5.82,
+    "wait_time_rmse_minutes": 8.36,
+    "wait_time_r2_score": 0.9627,
+    "queue_length_mae_people": 1.5,
+    "queue_length_r2_score": 0.8252
+  },
+  "supported_services": [
+    "Avtoyuvish",
+    "Bank filiali",
+    "Davlat xizmatlari",
+    "Poliklinika",
+    "Sartaroshxona"
+  ],
+  "features": {
+    "categorical": [
+      "service_name"
+    ],
+    "numeric_wait": [
+      "hour",
+      "minute",
+      "day_of_week",
+      "is_weekend",
+      "is_peak_hour",
+      "service_avg_minutes",
+      "operators_count",
+      "queue_length",
+      "hour_sin",
+      "hour_cos"
+    ],
+    "numeric_queue": [
+      "hour",
+      "minute",
+      "day_of_week",
+      "is_weekend",
+      "is_peak_hour",
+      "service_avg_minutes",
+      "operators_count",
+      "hour_sin",
+      "hour_cos"
+    ]
+  }
+}
