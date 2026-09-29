@@ -24,7 +24,7 @@ export default function BusinessOnboarding() {
   const [address, setAddress] = useState('');
   const [mapUrl, setMapUrl] = useState('');
   const [customCategory, setCustomCategory] = useState('');
-  const translatedCategories = [text.barber, text.clinic, text.carwash, 'Kafe', text.other];
+  const translatedCategories = [text.barber || 'Sartaroshxona', text.clinic || 'Klinika', text.carwash || 'Avtoyuvish', 'Kafe', 'Boshqa'];
   const [category, setCategory] = useState(translatedCategories[0]);
 
   const handleSubmit = async () => {
@@ -92,7 +92,7 @@ export default function BusinessOnboarding() {
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryRow}>
           {translatedCategories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.category, { borderColor: category === item ? color.primary : color.border, backgroundColor: category === item ? color.primary + '12' : color.surface }]}><Text style={{ color: category === item ? color.primary : color.textSecondary, fontSize: 12, fontWeight: '700' }}>{item}</Text></TouchableOpacity>)}
         </ScrollView>
-        {category === text.other && <>
+        {category === 'Boshqa' && <>
           <Text style={[styles.label, { color: color.textSecondary }]}>{text.otherCategory}</Text>
           <TextInput value={customCategory} onChangeText={setCustomCategory} placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
         </>}
