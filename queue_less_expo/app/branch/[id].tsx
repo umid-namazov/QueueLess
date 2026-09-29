@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator, Image } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n/index';
 import { ArrowLeft, Clock, MapPin, Users, Heart } from 'lucide-react-native';
-import { apiGetBranch, Branch } from '../../src/services/api';
+import { apiGetBranch, apiGetBranchServices, Branch } from '../../src/services/api';
 import { useFavoriteStore } from '../../src/store/favoriteStore';
+
+type Service = { id: number; name: string; description: string; duration_minutes: number };
 
 export default function BranchDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -19,6 +21,7 @@ export default function BranchDetailsScreen() {
   const { isFavorite, toggleFavorite } = useFavoriteStore();
 
   const [branch, setBranch] = useState<Branch | null>(null);
+  const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,6 +35,9 @@ export default function BranchDetailsScreen() {
       setLoading(true);
       const data = await apiGetBranch(Number(id));
       setBranch(data);
+      
+      const srvs = await apiGetBranchServices(Number(id)).catch(() => []);
+      setServices(srvs);
     } catch (error) {
       console.log('Error fetching branch:', error);
     } finally {
@@ -73,18 +79,24 @@ export default function BranchDetailsScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
-        <View style={[styles.imagePlaceholder, { backgroundColor: color.border }]} />
+        {branch.image_url ? (
+          <Image source={{ uri: branch.image_url }} style={styles.imagePlaceholder} />
+        ) : (
+          <View style={[styles.imagePlaceholder, { backgroundColor: color.border, justifyContent: 'center', alignItems: 'center' }]}>
+            <Text style={{ color: color.textSecondary }}>Rasm yo'q</Text>
+          </View>
+        )}
         
         <Text style={[styles.title, { color: color.text }]}>{branch.name}</Text>
         
         <View style={styles.infoRow}>
           <MapPin color={color.textSecondary} size={16} />
-          <Text style={[styles.infoText, { color: color.textSecondary }]}>{branch.address}</Text>
+          <Text style={[styles.infoText, { color: color.textSecondary }]}>{branch.address || 'Manzil kiritilmagan'}</Text>
         </View>
 
         <View style={styles.infoRow}>
           <Clock color={color.textSecondary} size={16} />
-          <Text style={[styles.infoText, { color: color.textSecondary }]}>{branch.working_hours}</Text>
+          <Text style={[styles.infoText, { color: color.textSecondary }]}>{branch.working_hours || 'Ish vaqti ko\'rsatilmagan'}</Text>
         </View>
 
         <View style={[styles.statsContainer, { backgroundColor: color.surface, borderColor: color.border }]}>
@@ -103,18 +115,24 @@ export default function BranchDetailsScreen() {
 
         <Text style={[styles.sectionTitle, { color: color.text }]}>{t.services}</Text>
 
-        {[
-          { key: 'cash', label: 'Umumiy xizmat' }, // Just one generic service for MVP, or we could keep the list
-        ].map((service) => (
+        {services.length > 0 ? services.map((service) => (
           <TouchableOpacity
-            key={service.key}
+            key={service.id}
             style={[styles.serviceCard, { backgroundColor: color.surface, borderColor: color.border }]}
-            onPress={() => router.push({ pathname: '/branch/booking', params: { id: branch.id, branchName: branch.name, service: service.label } })}
+            onPress={() => router.push({ pathname: '/branch/booking', params: { id: branch.id, branchName: branch.name, service: service.name } })}
           >
-            <Text style={[styles.serviceName, { color: color.text }]}>{service.label}</Text>
+            <View style={{ flex: 1, paddingRight: 12 }}>
+              <Text style={[styles.serviceName, { color: color.text }]}>{service.name}</Text>
+              {service.description ? <Text style={[styles.serviceDesc, { color: color.textSecondary, marginTop: 4, fontSize: 13 }]} numberOfLines={2}>{service.description}</Text> : null}
+              <Text style={[styles.serviceDuration, { color: color.primary, marginTop: 6, fontSize: 12, fontWeight: '700' }]}>{service.duration_minutes} min</Text>
+            </View>
             <ArrowLeft color={color.textSecondary} size={20} style={{ transform: [{ rotate: '180deg' }] }} />
           </TouchableOpacity>
-        ))}
+        )) : (
+          <View style={[styles.serviceCard, { backgroundColor: color.surface, borderColor: color.border, justifyContent: 'center' }]}>
+            <Text style={{ color: color.textSecondary }}>Hozircha xizmatlar mavjud emas</Text>
+          </View>
+        )}
 
       </ScrollView>
     </View>
