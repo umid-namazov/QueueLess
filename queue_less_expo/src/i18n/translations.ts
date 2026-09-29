@@ -104,6 +104,16 @@ const translations = {
     applicationSuccessDesc: 'Tez orada operatorlarimiz siz bilan bog\'lanishadi va biznesingizni QueueLess platformasiga qo\'shishadi.',
     backToHome: 'Asosiy sahifaga qaytish',
     fillRequired: 'Barcha majburiy maydonlarni to\'ldiring',
+
+    // Seller Dashboard
+    scanQrCode: 'QR kodni skanerlash',
+    confirmClientTurn: 'Mijoz navbatini tasdiqlash',
+    open: 'Ochiq',
+    activeQueues: 'Faol navbatlar',
+    queueHistory: 'Navbat tarixi',
+    callClient: 'Chaqirish',
+    finishService: 'Yakunlash',
+    welcome: 'Xush kelibsiz',
   },
   ru: {
     // Auth
@@ -208,6 +218,16 @@ const translations = {
     applicationSuccessDesc: 'Скоро наши операторы свяжутся с вами и добавят ваш бизнес на платформу QueueLess.',
     backToHome: 'Вернуться на главную',
     fillRequired: 'Заполните обязательные поля',
+
+    // Seller Dashboard
+    scanQrCode: 'Сканировать QR-код',
+    confirmClientTurn: 'Подтвердить очередь клиента',
+    open: 'Открыто',
+    activeQueues: 'Активные очереди',
+    queueHistory: 'История очередей',
+    callClient: 'Вызвать',
+    finishService: 'Завершить',
+    welcome: 'Добро пожаловать',
   },
   en: {
     // Auth
@@ -312,6 +332,16 @@ const translations = {
     applicationSuccessDesc: 'Our operators will contact you shortly and add your business to the QueueLess platform.',
     backToHome: 'Back to home',
     fillRequired: 'Please fill in all required fields',
+
+    // Seller Dashboard
+    scanQrCode: 'Scan QR code',
+    confirmClientTurn: 'Confirm client turn',
+    open: 'Open',
+    activeQueues: 'Active queues',
+    queueHistory: 'Queue history',
+    callClient: 'Call',
+    finishService: 'Finish',
+    welcome: 'Welcome',
   },
 } as const;
 

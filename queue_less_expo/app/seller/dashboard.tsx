@@ -4,6 +4,7 @@ import { ArrowRight, CheckCircle2, Clock3, ScanLine, Users } from 'lucide-react-
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, RefreshControl } from 'react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n';
 import { apiGetMe, apiGetBranch, apiGetBranchQueue, apiGetMyBranches, apiCompleteQueue, User, Branch, QueueItem } from '../../src/services/api';
 import Toast from 'react-native-toast-message';
 
@@ -11,6 +12,9 @@ export default function SellerDashboard() {
   const router = useRouter();
   const theme = useSettingsStore((state) => state.theme);
   const color = Colors[theme];
+
+  const language = useSettingsStore((state) => state.language);
+  const text = useTranslation(language);
 
   const [user, setUser] = useState<User | null>(null);
   const [branch, setBranch] = useState<Branch | null>(null);
@@ -74,13 +78,13 @@ export default function SellerDashboard() {
       >
         <View style={styles.header}>
           <View>
-            <Text style={[styles.eyebrow, { color: color.primary }]}>SOTUVCHI PANELI</Text>
-            <Text style={[styles.title, { color: color.text }]}>Xush kelibsiz, {user?.full_name?.split(' ')[0] || 'Xodim'}</Text>
+            <Text style={[styles.eyebrow, { color: color.primary }]}>{text.sellerPanelMenu.split('(')[0].toUpperCase()}</Text>
+            <Text style={[styles.title, { color: color.text }]}>{text.welcome}, {user?.full_name?.split(' ')[0] || ''}</Text>
             <Text style={[styles.branch, { color: color.textSecondary }]}>{branch?.name || 'Filial'}</Text>
           </View>
           <View style={[styles.status, { backgroundColor: color.success + '18' }]}>
             <View style={[styles.statusDot, { backgroundColor: color.success }]} />
-            <Text style={[styles.statusText, { color: color.success }]}>Ochiq</Text>
+            <Text style={[styles.statusText, { color: color.success }]}>{text.open}</Text>
           </View>
         </View>
         <TouchableOpacity
@@ -88,8 +92,8 @@ export default function SellerDashboard() {
           onPress={() => router.push('/seller/scanner')}>
           <View style={styles.scanIcon}><ScanLine color="#fff" size={25} /></View>
           <View style={styles.scanCopy}>
-            <Text style={styles.scanTitle}>QR kodni skanerlash</Text>
-            <Text style={styles.scanSubtitle}>Mijoz navbatini tasdiqlash</Text>
+            <Text style={styles.scanTitle}>{text.scanQrCode}</Text>
+            <Text style={styles.scanSubtitle}>{text.confirmClientTurn}</Text>
           </View>
           <ArrowRight color="#fff" size={22} />
         </TouchableOpacity>
@@ -98,17 +102,20 @@ export default function SellerDashboard() {
           <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
             <Users color={color.primary} size={20} />
             <Text style={[styles.statNumber, { color: color.text }]}>{queue.length}</Text>
-            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Jami navbatlar</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>{text.activeQueues}</Text>
           </View>
-          <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
-            <Clock3 color={color.warning} size={20} />
-            <Text style={[styles.statNumber, { color: color.text }]}>{waitingQueue.length}</Text>
-            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Kutilmoqda</Text>
-          </View>
+          <TouchableOpacity 
+            style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}
+            onPress={() => router.push('/seller/history')}
+          >
+            <Clock3 color={color.primary} size={20} />
+            <Text style={[styles.statNumber, { color: color.text }]}>—</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>{text.queueHistory}</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.sectionHeader}>
-          <Text style={[styles.sectionTitle, { color: color.text }]}>Navbatdagi mijozlar</Text>
+          <Text style={[styles.sectionTitle, { color: color.text }]}>{text.activeQueues}</Text>
           <Text style={[styles.liveText, { color: color.success }]}>Jonli</Text>
         </View>
 

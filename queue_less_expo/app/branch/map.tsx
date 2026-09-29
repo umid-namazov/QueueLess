@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Linking, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 import { Colors } from '../../src/theme/colors';
-import { ArrowLeft, MapPin } from 'lucide-react-native';
+import { ArrowLeft } from 'lucide-react-native';
 import { useSettingsStore } from '../../src/store/settingsStore';
-import MapView, { Marker } from 'react-native-maps';
+import { WebView } from 'react-native-webview';
 import { apiGetBranches, Branch } from '../../src/services/api';
 
 export default function MapScreen() {
@@ -13,42 +13,72 @@ export default function MapScreen() {
   const color = Colors[theme];
   const router = useRouter();
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [permission, setPermission] = useState<Location.LocationPermissionResponse | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
 
   useEffect(() => {
     apiGetBranches().then(setBranches).catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    let active = true;
-    const load = async () => {
-      const perm = await Location.requestForegroundPermissionsAsync();
-      if (!active) return;
-      setPermission(perm);
-      if (!perm.granted) {
-        setLocationError(perm.canAskAgain ? "Location ruxsati kerak." : "Sozlamalardan yoqing.");
-        return;
-      }
-      try {
+    
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status === 'granted') {
         const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
-        if (active) setLocation(loc);
-      } catch {
-        if (active) setLocationError("Joylashuvni aniqlab bo'lmadi.");
+        setLocation(loc);
       }
-    };
-    load();
-    return () => { active = false; };
+    })();
   }, []);
 
-  const initialRegion = {
-    latitude: location?.coords.latitude ?? 41.311158,
-    longitude: location?.coords.longitude ?? 69.279737,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
+  const lat = location?.coords.latitude || 41.311158;
+  const lon = location?.coords.longitude || 69.279737;
+
+  const mapHtml = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+      body { padding: 0; margin: 0; }
+      html, body, #map { height: 100%; width: 100vw; }
+      .custom-marker { background: ${color.primary}; border-radius: 50%; width: 24px; height: 24px; border: 3px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.3); }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var map = L.map('map', { zoomControl: false }).setView([${lat}, ${lon}], 13);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+
+      // User location marker
+      L.marker([${lat}, ${lon}]).addTo(map).bindPopup('Siz shu yerdasiz');
+
+      // Branches
+      var branches = ${JSON.stringify(branches)};
+      
+      var bIcon = L.divIcon({
+        className: 'custom-marker',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+
+      branches.forEach(function(b) {
+        if (!b.latitude || !b.longitude) return;
+        var m = L.marker([b.latitude, b.longitude], {icon: bIcon}).addTo(map);
+        m.bindPopup("<b>" + b.name + "</b><br/>" + (b.address || ""));
+        
+        m.on("click", function() {
+          if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify(b));
+          }
+        });
+      });
+    </script>
+  </body>
+  </html>
+  `;
 
   return (
     <View style={[styles.container, { backgroundColor: color.background }]}>
@@ -60,65 +90,20 @@ export default function MapScreen() {
         <View style={{ width: 24 }} />
       </View>
 
-      <View style={styles.mapWrap}>
-        <MapView 
-          style={StyleSheet.absoluteFill} 
-          initialRegion={initialRegion}
-          showsUserLocation={true}
-          showsMyLocationButton={true}
-        >
-          {branches.map(b => {
-            if (!b.latitude || !b.longitude) return null;
-            return (
-              <Marker
-                key={b.id}
-                coordinate={{ latitude: b.latitude, longitude: b.longitude }}
-                title={b.name}
-                description={b.address || ''}
-                onPress={() => setSelectedBranch(b)}
-              >
-                <View style={[styles.markerIcon, { backgroundColor: color.primary }]}>
-                  <MapPin color="#fff" size={16} />
-                </View>
-              </Marker>
-            )
-          })}
-        </MapView>
-      </View>
-
-      {!location && (
-        <View style={[styles.notice, { backgroundColor: color.surface, borderColor: color.border }]}>
-          <Text style={{ color: color.text, fontSize: 13, lineHeight: 18 }}>
-            {locationError ?? 'Joylashuv aniqlanmoqda...'}
-          </Text>
-          {permission && !permission.granted && (
-            <TouchableOpacity
-              onPress={() => permission.canAskAgain
-                ? Location.requestForegroundPermissionsAsync()
-                : Linking.openSettings()
-              }>
-              <Text style={{ color: color.primary, fontWeight: '700', marginTop: 8 }}>
-                {permission.canAskAgain ? 'Qayta urinish' : 'Sozlamalarni ochish'}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      )}
-
-      {selectedBranch && (
-        <View style={[styles.sheet, { backgroundColor: color.surface, borderTopColor: color.border }]}>
-          <Text style={[styles.sheetTitle, { color: color.text }]}>{selectedBranch.name}</Text>
-          <Text style={{ color: color.textSecondary, fontSize: 14, marginBottom: 20 }}>
-            {selectedBranch.address}
-          </Text>
-          <TouchableOpacity
-            style={[styles.btn, { backgroundColor: color.primary }]}
-            onPress={() => router.push(`/branch/${selectedBranch.id}` as any)}
-          >
-            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Batafsil ko'rish</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <WebView
+        source={{ html: mapHtml }}
+        style={styles.map}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        onMessage={(event) => {
+          try {
+            const branch = JSON.parse(event.nativeEvent.data);
+            if (branch && branch.id) {
+              router.push('/branch/' + branch.id);
+            }
+          } catch (e) {}
+        }}
+      />
     </View>
   );
 }
@@ -126,26 +111,16 @@ export default function MapScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   header: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingTop: 60, paddingBottom: 16, paddingHorizontal: 24, borderBottomWidth: 1,
+    paddingTop: 60,
+    paddingBottom: 15,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    zIndex: 10,
   },
   backButton: { padding: 4 },
-  headerTitle: { fontSize: 18, fontWeight: 'bold' },
-  mapWrap: { flex: 1 },
-  sheet: {
-    padding: 24, borderTopWidth: 1, borderTopLeftRadius: 24, borderTopRightRadius: 24,
-    position: 'absolute', bottom: 0, left: 0, right: 0,
-  },
-  sheetTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 4 },
-  btn: { padding: 16, borderRadius: 12, alignItems: 'center' },
-  notice: {
-    position: 'absolute', top: 112, left: 24, right: 24,
-    borderWidth: 1, borderRadius: 14, padding: 14,
-  },
-  markerIcon: {
-    width: 36, height: 36, borderRadius: 18,
-    alignItems: 'center', justifyContent: 'center',
-    borderWidth: 3, borderColor: '#fff',
-    shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 3, elevation: 5,
-  }
+  headerTitle: { fontSize: 18, fontWeight: '800' },
+  map: { flex: 1 },
 });
