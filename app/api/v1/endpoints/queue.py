@@ -11,6 +11,7 @@ from app.services.queue_service import (
     create_booking,
     estimate_wait_minutes,
     get_people_ahead,
+    complete_booking,
 )
 
 router = APIRouter()
@@ -65,6 +66,12 @@ def cancel_queue(
 def confirm_queue(qr_code: str, db: Session = Depends(get_db)):
     """
     QR kod orqali navbatni tasdiqlash (filial xodimi mijoz kelganda skanerlaydi).
-    Bu endpoint ochiq qoldirilgan - real loyihada xodim uchun alohida rol/token qo'shiladi.
     """
     return confirm_booking_by_qr(db, qr_code=qr_code)
+
+@router.post("/{booking_id}/complete", response_model=BookingOut)
+def complete_queue(booking_id: int, db: Session = Depends(get_db)):
+    """
+    Xizmat yakunlanganda navbatni tugatish.
+    """
+    return complete_booking(db, booking_id=booking_id)

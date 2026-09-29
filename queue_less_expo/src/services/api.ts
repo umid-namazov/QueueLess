@@ -150,3 +150,11 @@ export async function apiGetMyBranches(): Promise<Branch[]> {
   return request<Branch[]>('/branches/my', { method: 'get' });
 }
 
+export async function apiConfirmQueue(qrCode: string): Promise<any> {
+  return request(`/queue/confirm/${qrCode}`, { method: 'post' });
+}
+
+export async function apiCompleteQueue(bookingId: number): Promise<any> {
+  return request(`/queue/${bookingId}/complete`, { method: 'post' });
+}
+
