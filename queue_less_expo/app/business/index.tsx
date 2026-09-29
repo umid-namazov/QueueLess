@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { ArrowLeft, BadgeCheck, Building2, ChevronDown, Clock3, MapPin, Send } from 'lucide-react-native';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { apiRequestBranch } from '../../src/services/api';
@@ -24,11 +24,12 @@ export default function BusinessOnboarding() {
   const [address, setAddress] = useState('');
   const [mapUrl, setMapUrl] = useState('');
   const [customCategory, setCustomCategory] = useState('');
-  const [category, setCategory] = useState(categories[0]);
+  const translatedCategories = [text.barber, text.clinic, text.carwash, 'Kafe', text.other];
+  const [category, setCategory] = useState(translatedCategories[0]);
 
   const handleSubmit = async () => {
     if (!businessName || !phone) {
-      Toast.show({ type: 'error', text1: 'Xatolik', text2: "Biznes nomi va raqamini kiritish shart" });
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: text.fillRequired });
       return;
     }
     
@@ -36,14 +37,14 @@ export default function BusinessOnboarding() {
     try {
       await apiRequestBranch({
         name: businessName,
-        category: category === 'Boshqa' ? customCategory : category,
+        category: category === text.other ? customCategory : category,
         address: address || null,
         working_hours: "09:00-18:00",
         avg_service_minutes: 15
       });
       setSubmitted(true);
     } catch (e: any) {
-      Toast.show({ type: 'error', text1: 'Xatolik', text2: e.message || 'Yuborishda xatolik yuz berdi' });
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: e.message || 'Error' });
     } finally {
       setLoading(false);
     }
@@ -56,8 +57,8 @@ export default function BusinessOnboarding() {
         <Text style={[styles.successTitle, { color: color.text }]}>{text.applicationSuccess}</Text>
         <Text style={[styles.successText, { color: color.textSecondary }]}>{text.applicationSuccessDesc}</Text>
         <View style={[styles.pendingCard, { backgroundColor: color.surface, borderColor: color.border }]}>
-          <Text style={[styles.pendingLabel, { color: color.textSecondary }]}>{text.status.toUpperCase()}</Text>
-          <Text style={[styles.pendingValue, { color: color.warning }]}>{text.upcoming}</Text>
+          <Text style={[styles.pendingLabel, { color: color.textSecondary }]}>HOLAT</Text>
+          <Text style={[styles.pendingValue, { color: color.warning }]}>Kutilmoqda</Text>
         </View>
         <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={() => router.replace('/seller/dashboard')}>
           <Text style={styles.buttonText}>{text.sellerPanelMenu}</Text>
@@ -67,13 +68,16 @@ export default function BusinessOnboarding() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: color.background }]}>
+    <KeyboardAvoidingView 
+      style={[styles.container, { backgroundColor: color.background }]} 
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
       <View style={[styles.header, { borderBottomColor: color.border }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}><ArrowLeft color={color.text} size={24} /></TouchableOpacity>
         <Text style={[styles.headerTitle, { color: color.text }]}>{text.joinBusiness.split('(')[0]}</Text>
         <View style={styles.headerSpacer} />
       </View>
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
         <View style={[styles.hero, { backgroundColor: color.primary + '12' }]}>
           <View style={[styles.heroIcon, { backgroundColor: color.primary }]}><Building2 color="#fff" size={24} /></View>
           <View style={styles.heroCopy}><Text style={[styles.heroTitle, { color: color.text }]}>{text.joinBusiness}</Text></View>
@@ -86,9 +90,9 @@ export default function BusinessOnboarding() {
           <Text style={[styles.selectText, { color: color.text }]}>{category}</Text><ChevronDown color={color.textSecondary} size={19} />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryRow}>
-          {categories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.category, { borderColor: category === item ? color.primary : color.border, backgroundColor: category === item ? color.primary + '12' : color.surface }]}><Text style={{ color: category === item ? color.primary : color.textSecondary, fontSize: 12, fontWeight: '700' }}>{item}</Text></TouchableOpacity>)}
+          {translatedCategories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.category, { borderColor: category === item ? color.primary : color.border, backgroundColor: category === item ? color.primary + '12' : color.surface }]}><Text style={{ color: category === item ? color.primary : color.textSecondary, fontSize: 12, fontWeight: '700' }}>{item}</Text></TouchableOpacity>)}
         </ScrollView>
-        {category === 'Boshqa' && <>
+        {category === text.other && <>
           <Text style={[styles.label, { color: color.textSecondary }]}>{text.otherCategory}</Text>
           <TextInput value={customCategory} onChangeText={setCustomCategory} placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
         </>}
@@ -96,12 +100,14 @@ export default function BusinessOnboarding() {
         <TextInput value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
         <Text style={[styles.label, { color: color.textSecondary }]}>{text.address}</Text>
         <View style={[styles.inputWithIcon, { borderColor: color.border, backgroundColor: color.surface }]}><MapPin color={color.textSecondary} size={18} /><TextInput value={address} onChangeText={setAddress} placeholderTextColor={color.textSecondary} style={[styles.iconInput, { color: color.text }]} /></View>
-        <View style={[styles.note, { backgroundColor: color.success + '12', marginTop: 16 }]}><BadgeCheck color={color.success} size={18} /><Text style={[styles.noteText, { color: color.textSecondary }]}>{text.applicationSuccessDesc}</Text></View>
+        
+        <View style={{ height: 40 }} />
         <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={handleSubmit} disabled={loading}>
           {loading ? <ActivityIndicator color="#fff" /> : <><Send color="#fff" size={18} /><Text style={styles.buttonText}>{text.submitApplication}</Text></>}
         </TouchableOpacity>
+        <View style={{ height: 60 }} />
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

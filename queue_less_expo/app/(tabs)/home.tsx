@@ -170,10 +170,10 @@ export default function HomeScreen() {
               style={styles.sectionHeader}
               onPress={() => setShowAllFavorites(!showAllFavorites)}
             >
-              <Text style={[styles.sectionTitle, { color: color.text }]}>Sevimli joylarim</Text>
+              <Text style={[styles.sectionTitle, { color: color.text }]}>{t.favoritePlaces}</Text>
               {favorites.length > 1 && (
                 <Text style={{ color: color.primary, fontWeight: '600' }}>
-                  {showAllFavorites ? 'Yashirish' : 'Barchasi'}
+                  {showAllFavorites ? t.hide : t.seeAll}
                 </Text>
               )}
             </TouchableOpacity>
@@ -237,12 +237,12 @@ export default function HomeScreen() {
             </View>
             <View style={styles.branchStatus}>
               <View style={[styles.statusDot, { backgroundColor: getStatusColor(branch.current_waiting_count) }]} />
-              <Text style={{ color: color.textSecondary, fontSize: 12 }}>{branch.estimated_wait_minutes} daqiqa</Text>
+              <Text style={{ color: color.textSecondary, fontSize: 12 }}>{branch.estimated_wait_minutes} min</Text>
             </View>
           </TouchableOpacity>
         )) : (
           <View style={{ padding: 20, alignItems: 'center' }}>
-            <Text style={{ color: color.textSecondary }}>Ushbu yo'nalishda yaqin filiallar topilmadi.</Text>
+            <Text style={{ color: color.textSecondary }}>{t.noNearbyBranches}</Text>
           </View>
         )}
       </ScrollView>
