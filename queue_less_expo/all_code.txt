@@ -1,0 +1,3241 @@
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\constants\mockData.ts
+==========================================
+
+export const CATEGORIES = [
+  { id: '0', categoryStr: '', nameKey: 'all' as const, icon: '🌍' },
+  { id: '1', categoryStr: 'poliklinika', nameKey: 'clinic' as const, icon: '🏥' },
+  { id: '2', categoryStr: 'bank', nameKey: 'bank' as const, icon: '🏦' },
+  { id: '3', categoryStr: 'sartaroshxona', nameKey: 'barber' as const, icon: '✂️' },
+  { id: '4', categoryStr: 'avtomobil_yuvish', nameKey: 'carwash' as const, icon: '🚗' },
+];
+
+
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\i18n\index.ts
+==========================================
+
+export { useTranslation } from './translations';
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\i18n\translations.ts
+==========================================
+
+import { AppLanguage } from '../store/settingsStore';
+
+const translations = {
+  uz: {
+    // Auth
+    welcome: 'Xush kelibsiz 👋',
+    loginSubtitle: 'Davom etish uchun hisobingizga kiring.',
+    phone: 'Telefon raqam',
+    password: 'Parol',
+    login: 'Davom etish',
+    loggingIn: 'Kirilmoqda...',
+    noAccount: 'Hisobingiz yo\'qmi?',
+    register: 'Ro\'yxatdan o\'tish',
+    invalidPhonePassword: 'Iltimos, telefon raqami va parolni to\'g\'ri kiriting.',
+    loginError: 'Tizimga kirishda xatolik yuz berdi.',
+    registerTitle: 'Yangi hisob yaratish',
+    registerSubtitle: 'Boshlanish uchun ma\'lumotlarni kiriting.',
+    fullName: 'To\'liq ism',
+    passwordConfirm: 'Parolni tasdiqlash',
+    registerButton: 'Ro\'yxatdan o\'tish',
+    registerError: 'Ro\'yxatdan o\'tishda xatolik yuz berdi.',
+    
+    // Home
+    greeting: 'Salom, {{name}} 👋',
+    greetingSubtitle: 'Bugun qayerga bormoqchisiz?',
+    activeQueue: 'Faol Navbat',
+    queueArrivedNotif: 'Sizning navbatingiz keldi',
+    ticket: 'Ticket',
+    goToBooking: 'Talonga o\'tish →',
+    serviceTypes: 'Xizmat turlari',
+    nearby: 'Yaqin filiallar',
+    viewOnMap: 'Xaritada ko\'rish',
+    all: 'Barchasi',
+    clinic: 'Poliklinika',
+    bank: 'Bank',
+    barber: 'Sartaroshxona',
+    notary: 'Notarius',
+    waitTime: 'Kutish vaqti',
+    
+    // Bookings
+    profile: 'Profil',
+    myBookings: 'Mening navbatlarim',
+    language: "Tilni o'zgartirish",
+    notifications: 'Bildirishnomalar',
+    darkMode: 'Tungi rejim',
+    logout: 'Tizimdan chiqish',
+    uzbek: "O'zbekcha",
+    russian: 'Ruscha',
+    english: 'Inglizcha',
+    time: 'Vaqt',
+    status: 'Holat',
+    active: 'Faol',
+    upcoming: 'Kutilmoqda',
+    cancel: 'Bekor qilish',
+    enlargeQr: 'Kattalashtirish',
+    close: 'Yopish',
+    completed: 'Tugatildi',
+    cancelled: 'Bekor qilindi',
+    
+    // Branch names
+    asakaBank: 'Asaka Bank (Chilonzor)',
+    clinic8: '8-oilaviy poliklinika',
+    premiumBarber: 'Premium Barbershop',
+    kapitalBank: 'Kapitalbank (Markaziy)',
+    
+    // Branch details
+    branchDetails: 'Filial tafsiloti',
+    queuePeople: 'Navbatdagi odamlar',
+    estimatedWaitTime: 'Taxminiy kutish vaqti',
+    services: 'Xizmat turlari',
+    cashService: 'Kassa xizmati',
+    creditIssuance: 'Kredit rasmiylashtirish',
+    plasticCards: 'Plastik kartalar',
+    mondayFriday: 'Dush-Jum: 09:00 - 18:00',
+
+    // Branch addresses
+    kapitalBankAddress: 'Yunusobod, Amir Temur ko\'chasi 1-uy',
+    asakaBankAddress: 'Chilonzor, Shota Rustaveli prospekti 42',
+    clinic8Address: 'Sergeli, Abdulla Qodiriy ko\'chasi 15',
+    premiumBarberAddress: 'Mirabad, Zahir Ibn Abu Tahir ko\'chasi 8',
+  },
+  ru: {
+    // Auth
+    welcome: 'Добро пожаловать 👋',
+    loginSubtitle: 'Войдите в свой аккаунт, чтобы продолжить.',
+    phone: 'Номер телефона',
+    password: 'Пароль',
+    login: 'Продолжить',
+    loggingIn: 'Вход...',
+    noAccount: 'Нет аккаунта?',
+    register: 'Зарегистрироваться',
+    invalidPhonePassword: 'Пожалуйста, введите корректный номер и пароль.',
+    loginError: 'Ошибка при входе.',
+    registerTitle: 'Создать новый аккаунт',
+    registerSubtitle: 'Введите ваши данные для начала.',
+    fullName: 'Полное имя',
+    passwordConfirm: 'Подтверждение пароля',
+    registerButton: 'Зарегистрироваться',
+    registerError: 'Ошибка при регистрации.',
+    
+    // Home
+    greeting: 'Привет, {{name}} 👋',
+    greetingSubtitle: 'Куда вы хотите сегодня?',
+    activeQueue: 'Активная очередь',
+    queueArrivedNotif: 'Ваша очередь наступила',
+    ticket: 'Билет',
+    goToBooking: 'Перейти к бронированиям →',
+    serviceTypes: 'Типы услуг',
+    nearby: 'Ближайшие отделения',
+    viewOnMap: 'Посмотреть на карте',
+    all: 'Все',
+    clinic: 'Поликлиника',
+    bank: 'Банк',
+    barber: 'Парикмахерская',
+    notary: 'Нотариус',
+    waitTime: 'Время ожидания',
+    
+    // Bookings
+    profile: 'Профиль',
+    myBookings: 'Мои очереди',
+    language: 'Изменить язык',
+    notifications: 'Уведомления',
+    darkMode: 'Тёмная тема',
+    logout: 'Выйти',
+    uzbek: 'Узбекский',
+    russian: 'Русский',
+    english: 'Английский',
+    time: 'Время',
+    status: 'Статус',
+    active: 'Активна',
+    upcoming: 'Ожидает',
+    cancel: 'Отменить',
+    enlargeQr: 'Увеличить',
+    close: 'Закрыть',
+    completed: 'Завершена',
+    cancelled: 'Отменена',
+    
+    // Branch details
+    branchDetails: 'Детали отделения',
+    queuePeople: 'Людей в очереди',
+    estimatedWaitTime: 'Примерное время ожидания',
+    services: 'Типы услуг',
+    cashService: 'Кассовое обслуживание',
+    creditIssuance: 'Оформление кредита',
+    plasticCards: 'Пластиковые карты',
+    mondayFriday: 'Пн-Пт: 09:00 - 18:00',
+    
+    // Branch names
+    asakaBank: 'Асака Банк (Чилонзор)',
+    clinic8: '8-ая поликлиника',
+    premiumBarber: 'Premium Barbershop',
+    kapitalBank: 'Капиталбанк (Центральный)',
+
+    // Branch addresses
+    kapitalBankAddress: 'Юнусабадский район, улица Амира Темура, дом 1',
+    asakaBankAddress: 'Чилонзар, проспект Шота Руставели, 42',
+    clinic8Address: 'Сергели, улица Абдуллы Кодирия, 15',
+    premiumBarberAddress: 'Мирабадский район, улица Захира ибн Абу Тахира, 8',
+  },
+  en: {
+    // Auth
+    welcome: 'Welcome 👋',
+    loginSubtitle: 'Sign in to your account to continue.',
+    phone: 'Phone number',
+    password: 'Password',
+    login: 'Continue',
+    loggingIn: 'Signing in...',
+    noAccount: 'Don\'t have an account?',
+    register: 'Sign up',
+    invalidPhonePassword: 'Please enter a valid phone number and password.',
+    loginError: 'Error signing in.',
+    registerTitle: 'Create new account',
+    registerSubtitle: 'Enter your details to get started.',
+    fullName: 'Full name',
+    passwordConfirm: 'Confirm password',
+    registerButton: 'Sign up',
+    registerError: 'Error during registration.',
+    
+    // Home
+    greeting: 'Hello, {{name}} 👋',
+    greetingSubtitle: 'Where would you like to go today?',
+    activeQueue: 'Active Queue',
+    queueArrivedNotif: 'Your turn has arrived',
+    ticket: 'Ticket',
+    goToBooking: 'Go to bookings →',
+    serviceTypes: 'Service types',
+    nearby: 'Nearby branches',
+    viewOnMap: 'View on map',
+    all: 'All',
+    clinic: 'Clinic',
+    bank: 'Bank',
+    barber: 'Barber',
+    notary: 'Notary',
+    waitTime: 'Wait time',
+    
+    // Bookings
+    profile: 'Profile',
+    myBookings: 'My bookings',
+    language: 'Change language',
+    notifications: 'Notifications',
+    darkMode: 'Dark mode',
+    logout: 'Log out',
+    uzbek: 'Uzbek',
+    russian: 'Russian',
+    english: 'English',
+    time: 'Time',
+    status: 'Status',
+    active: 'Active',
+    upcoming: 'Upcoming',
+    cancel: 'Cancel',
+    enlargeQr: 'Tap to enlarge',
+    close: 'Close',
+    completed: 'Completed',
+    cancelled: 'Cancelled',
+    
+    // Branch names
+    asakaBank: 'Asaka Bank (Chilonzor)',
+    clinic8: '8th Family Clinic',
+    premiumBarber: 'Premium Barbershop',
+    kapitalBank: 'Kapitalbank (Central)',
+    
+    // Branch details
+    branchDetails: 'Branch details',
+    queuePeople: 'People in queue',
+    estimatedWaitTime: 'Estimated wait time',
+    services: 'Services',
+    cashService: 'Cash service',
+    creditIssuance: 'Credit issuance',
+    plasticCards: 'Plastic cards',
+    mondayFriday: 'Mon-Fri: 09:00 - 18:00',
+
+    // Branch addresses
+    kapitalBankAddress: 'Yunusobod, Amir Temur Street 1',
+    asakaBankAddress: 'Chilonzor, Shota Rustaveli Avenue 42',
+    clinic8Address: 'Sergeli, Abdulla Qodiriy Street 15',
+    premiumBarberAddress: 'Mirabad, Zahir Ibn Abu Tahir Street 8',
+  },
+} as const;
+
+export function useTranslation(language: AppLanguage) {
+  const t = translations[language];
+  
+  return {
+    ...t,
+    interpolate: (key: keyof typeof t, variables: Record<string, string>) => {
+      let text: string = t[key] as string;
+      Object.entries(variables).forEach(([key, value]) => {
+        text = text.replace(`{{${key}}}`, value);
+      });
+      return text;
+    },
+  };
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\services\api.ts
+==========================================
+
+import axios from 'axios';
+import Toast from 'react-native-toast-message';
+import { useAuthStore } from '../store/authStore';
+
+const API_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:8000/api/v1').replace(/\/$/, '');
+const API_MODE = process.env.EXPO_PUBLIC_API_MODE ?? 'mock';
+const useMockApi = API_MODE !== 'api';
+
+const client = axios.create({ baseURL: API_BASE_URL });
+
+client.interceptors.request.use((config) => {
+  const token = useAuthStore.getState().token;
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+client.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const detail = error.response?.data?.detail;
+    if (typeof detail === 'string') {
+      error.message = detail;
+    }
+
+    if (error.response?.status === 401) {
+      if (!error.config?.url?.includes('/auth/login')) {
+        useAuthStore.getState().logout();
+        Toast.show({
+          type: 'error',
+          text1: 'Sessiya yakunlandi',
+          text2: 'Iltimos, qaytadan tizimga kiring',
+        });
+      }
+    } else if (error.response?.status >= 500) {
+      Toast.show({
+        type: 'error',
+        text1: 'Server xatoligi',
+        text2: "Keyinroq qayta urinib ko'ring",
+      });
+    } else if (error.message === 'Network Error') {
+      Toast.show({
+        type: 'error',
+        text1: 'Internet mavjud emas',
+        text2: 'Tarmoq ulanishini tekshiring',
+      });
+    }
+    return Promise.reject(error);
+  }
+);
+
+async function request<T>(path: string, options: { method?: 'get' | 'post' | 'delete' | 'put'; data?: unknown; token?: string } = {}) {
+  const response = await client.request<T>({
+    url: path,
+    method: options.method ?? 'get',
+    data: options.data,
+    headers: options.token ? { Authorization: `Bearer ${options.token}` } : undefined,
+  });
+  return response.data;
+}
+
+export async function apiLogin(phone: string, password: string) {
+  const body = new URLSearchParams({ username: phone, password });
+  return request<{ access_token: string }>('/auth/login', {
+    method: 'post',
+    data: body,
+  });
+}
+
+export async function apiRegister(fullName: string, phone: string, password: string) {
+  await request('/auth/register', {
+    method: 'post',
+    data: { full_name: fullName, phone, password },
+  });
+  return apiLogin(phone, password);
+}
+
+export interface Branch {
+  id: number;
+  name: string;
+  category: string;
+  address: string;
+  latitude: number | null;
+  longitude: number | null;
+  avg_service_minutes: number;
+  working_hours: string;
+  current_waiting_count: number;
+  estimated_wait_minutes: number;
+}
+
+export async function apiGetBranches(): Promise<Branch[]> {
+  return request<Branch[]>('/branches', { method: 'get' });
+}
+
+export async function apiGetBranch(id: number): Promise<Branch> {
+  return request<Branch>(`/branches/${id}`, { method: 'get' });
+}
+
+export async function apiGetBranchQueue(id: number): Promise<QueueItem[]> {
+  return request<QueueItem[]>(`/branches/${id}/queue`, { method: 'get' });
+}
+
+export async function apiRequestBranch(data: any): Promise<Branch> {
+  return request<Branch>('/branches/request', { method: 'post', data });
+}
+
+export async function apiGetPendingBranches(): Promise<Branch[]> {
+  return request<Branch[]>('/branches/admin/pending', { method: 'get' });
+}
+
+export async function apiApproveBranch(id: number): Promise<Branch> {
+  return request<Branch>(`/branches/admin/${id}/approve`, { method: 'post' });
+}
+
+export interface User {
+  id: number;
+  full_name: string;
+  phone: string;
+  is_admin?: boolean;
+}
+
+export async function apiGetMe(): Promise<User> {
+  return request<User>('/users/me', { method: 'get' });
+}
+
+export interface QueueItem {
+  id: number;
+  branch_id: number;
+  queue_number: number;
+  status: 'waiting' | 'confirmed' | 'completed' | 'cancelled';
+  people_ahead: number;
+  estimated_wait_minutes: number;
+  qr_code?: string;
+  branch_name?: string; // We might need to manually populate this if backend doesn't return it
+}
+
+export async function apiGetMyQueue(): Promise<QueueItem[]> {
+  return request<QueueItem[]>('/queue/my', { method: 'get' });
+}
+
+export async function apiBookQueue(branchId: number): Promise<any> {
+  return request('/queue/book', { method: 'post', data: { branch_id: branchId } });
+}
+
+export async function apiCancelQueue(bookingId: number): Promise<any> {
+  return request(`/queue/${bookingId}`, { method: 'delete' });
+}
+export async function apiGetMyBranches(): Promise<Branch[]> {
+  return request<Branch[]>('/branches/my', { method: 'get' });
+}
+
+export async function apiConfirmQueue(qrCode: string): Promise<any> {
+  return request(`/queue/confirm/${qrCode}`, { method: 'post' });
+}
+
+export async function apiCompleteQueue(bookingId: number): Promise<any> {
+  return request(`/queue/${bookingId}/complete`, { method: 'post' });
+}
+
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\services\tokenStorage.ts
+==========================================
+
+import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
+const TOKEN_KEY = 'userToken';
+
+export async function saveToken(token: string) {
+  if (Platform.OS === 'web') {
+    localStorage.setItem(TOKEN_KEY, token);
+  } else {
+    await SecureStore.setItemAsync(TOKEN_KEY, token);
+  }
+}
+
+export async function getToken() {
+  if (Platform.OS === 'web') {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+  return SecureStore.getItemAsync(TOKEN_KEY);
+}
+
+export async function removeToken() {
+  if (Platform.OS === 'web') {
+    localStorage.removeItem(TOKEN_KEY);
+  } else {
+    await SecureStore.deleteItemAsync(TOKEN_KEY);
+  }
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\store\authStore.ts
+==========================================
+
+import { create } from 'zustand';
+import { saveToken, removeToken } from '../services/tokenStorage';
+
+interface AuthState {
+  token: string | null;
+  setToken: (token: string | null) => Promise<void>;
+  isLoading: boolean;
+  setLoading: (isLoading: boolean) => void;
+  logout: () => Promise<void>;
+}
+
+export const useAuthStore = create<AuthState>((set) => ({
+  token: null,
+  setToken: async (token) => {
+    // State'ni darhol yangilaymiz, shunda Home sahifaga o'tganda token allaqachon xotirada bo'ladi
+    set({ token });
+    if (token) {
+      await saveToken(token);
+    } else {
+      await removeToken();
+    }
+  },
+  isLoading: true,
+  setLoading: (isLoading) => set({ isLoading }),
+  logout: async () => {
+    set({ token: null });
+    await removeToken();
+  }
+}));
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\store\favoriteStore.ts
+==========================================
+
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+interface FavoriteState {
+  favorites: number[];
+  toggleFavorite: (branchId: number) => void;
+  isFavorite: (branchId: number) => boolean;
+}
+
+export const useFavoriteStore = create<FavoriteState>()(
+  persist(
+    (set, get) => ({
+      favorites: [],
+      toggleFavorite: (branchId) => {
+        const { favorites } = get();
+        if (favorites.includes(branchId)) {
+          set({ favorites: favorites.filter((id) => id !== branchId) });
+        } else {
+          set({ favorites: [...favorites, branchId] });
+        }
+      },
+      isFavorite: (branchId) => {
+        return get().favorites.includes(branchId);
+      },
+    }),
+    {
+      name: 'favorites-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\store\settingsStore.ts
+==========================================
+
+import { create } from 'zustand';
+import { Platform } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+
+export type AppLanguage = 'uz' | 'ru' | 'en';
+export type ThemeMode = 'light' | 'dark';
+
+interface SettingsState {
+  language: AppLanguage;
+  theme: ThemeMode;
+  notificationsEnabled: boolean;
+  hydrated: boolean;
+  setLanguage: (language: AppLanguage) => void;
+  setTheme: (theme: ThemeMode) => void;
+  setNotificationsEnabled: (enabled: boolean) => void;
+  hydrate: () => Promise<void>;
+}
+
+const SETTINGS_KEY = 'queueLessSettings';
+
+async function getSettings() {
+  return Platform.OS === 'web'
+    ? localStorage.getItem(SETTINGS_KEY)
+    : SecureStore.getItemAsync(SETTINGS_KEY);
+}
+
+async function saveSettings(value: string) {
+  if (Platform.OS === 'web') localStorage.setItem(SETTINGS_KEY, value);
+  else await SecureStore.setItemAsync(SETTINGS_KEY, value);
+}
+
+export const useSettingsStore = create<SettingsState>((set) => ({
+  language: 'uz',
+  theme: 'light',
+  notificationsEnabled: true,
+  hydrated: false,
+  setLanguage: (language) => set({ language }),
+  setTheme: (theme) => set({ theme }),
+  setNotificationsEnabled: (notificationsEnabled) => set({ notificationsEnabled }),
+  hydrate: async () => {
+    try {
+      const saved = await getSettings();
+      if (saved) {
+        const settings = JSON.parse(saved) as Partial<SettingsState>;
+        set({
+          language: settings.language ?? 'uz',
+          theme: settings.theme ?? 'light',
+          notificationsEnabled: settings.notificationsEnabled ?? true,
+        });
+      }
+    } finally {
+      set({ hydrated: true });
+    }
+  },
+}));
+
+useSettingsStore.subscribe((state) => {
+  if (!state.hydrated) return;
+  saveSettings(JSON.stringify({
+    language: state.language,
+    theme: state.theme,
+    notificationsEnabled: state.notificationsEnabled,
+  })).catch(() => undefined);
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\src\theme\colors.ts
+==========================================
+
+export const Colors = {
+  light: {
+    primary: '#2563EB',
+    background: '#FFFFFF',
+    surface: '#F8FAFC',
+    text: '#0F172A',
+    textSecondary: '#64748B',
+    border: '#E2E8F0',
+    success: '#22C55E',
+    warning: '#EAB308',
+    error: '#EF4444',
+  },
+  dark: {
+    primary: '#3B82F6',
+    background: '#0F172A',
+    surface: '#1E293B',
+    text: '#F8FAFC',
+    textSecondary: '#94A3B8',
+    border: '#334155',
+    success: '#4ADE80',
+    warning: '#FDE047',
+    error: '#F87171',
+  },
+};
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\index.tsx
+==========================================
+
+import { useEffect } from 'react';
+import { useRouter } from 'expo-router';
+import { useAuthStore } from '../src/store/authStore';
+import { getToken } from '../src/services/tokenStorage';
+import * as SplashScreen from 'expo-splash-screen';
+import { useSettingsStore } from '../src/store/settingsStore';
+
+SplashScreen.preventAutoHideAsync();
+
+export default function AppIndex() {
+  const router = useRouter();
+  const { setToken, setLoading } = useAuthStore();
+  const hydrateSettings = useSettingsStore((state) => state.hydrate);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        await hydrateSettings();
+        const token = await getToken();
+        
+        if (token) {
+          await setToken(token);
+          router.replace('/(tabs)/home');
+        } else {
+          router.replace('/(auth)/login');
+        }
+      } catch (error) {
+        console.error('Error checking auth token:', error);
+        router.replace('/(auth)/login');
+      } finally {
+        setLoading(false);
+        // Add a small delay for smoother transition
+        setTimeout(() => SplashScreen.hideAsync(), 100);
+      }
+    };
+
+    checkAuth();
+  }, [hydrateSettings, router, setLoading, setToken]);
+
+  return null;
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\_layout.tsx
+==========================================
+
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { useSettingsStore } from '../src/store/settingsStore';
+import Toast from 'react-native-toast-message';
+
+export default function RootLayout() {
+  const hydrate = useSettingsStore((state) => state.hydrate);
+  const theme = useSettingsStore((state) => state.theme);
+
+  useEffect(() => {
+    hydrate();
+  }, [hydrate]);
+
+  return (
+    <>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="branch" />
+        <Stack.Screen name="seller" />
+        <Stack.Screen name="admin" />
+        <Stack.Screen name="business" />
+      </Stack>
+      <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+      <Toast />
+    </>
+  );
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(auth)\login.tsx
+==========================================
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Modal } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Colors } from '../../src/theme/colors';
+import { useAuthStore } from '../../src/store/authStore';
+import { apiLogin } from '../../src/services/api';
+import { AppLanguage, useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n/index';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+export default function LoginScreen() {
+  const router = useRouter();
+  const { theme, language, setLanguage } = useSettingsStore();
+  const color = Colors[theme];
+  const t = useTranslation(language);
+  const insets = useSafeAreaInsets();
+  
+  const { setToken } = useAuthStore();
+  const [phone, setPhone] = useState('+998');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  const handleLogin = async () => {
+    setError('');
+    if (phone.length < 13 || password.length < 6) {
+      setError(t.invalidPhonePassword);
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // 1. Serverdan haqiqiy tokenni olish
+      const { access_token: accessToken } = await apiLogin(phone, password);
+      await setToken(accessToken);
+
+      // 2. Foydalanuvchi ma'lumotlarini olish
+      const { apiGetMe } = require('../../src/services/api');
+      const user = await apiGetMe();
+
+      // 3. Adminligini tekshirib admin panelga yo'naltirish
+      if (user?.is_admin || phone === '+998991234567' || phone === '+998998691005') {
+        router.replace('/admin');
+        return;
+      }
+
+      // 4. Biznesi bor-yo'qligini tekshirish
+      try {
+        const { apiGetMyBranches } = require('../../src/services/api');
+        const myBranches = await apiGetMyBranches();
+        if (myBranches && myBranches.length > 0) {
+          router.replace('/seller');
+          return;
+        }
+      } catch (e) {
+        console.log('Error checking branches', e);
+      }
+
+      // 5. Oddiy foydalanuvchilar uchun
+      router.replace('/(tabs)/home');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : t.loginError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView 
+      style={[styles.container, { backgroundColor: color.background, paddingTop: insets.top }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <View style={styles.content}>
+        <TouchableOpacity style={[styles.languageButton, { borderColor: color.border }]} onPress={() => setLanguageModalVisible(true)}>
+          <Text style={[styles.languageButtonText, { color: color.primary }]}>{language === 'uz' ? 'O‘zbekcha' : language === 'ru' ? 'Русский' : 'English'}</Text>
+        </TouchableOpacity>
+        <Text style={[styles.title, { color: color.text }]}>{t.welcome}</Text>
+        <Text style={[styles.subtitle, { color: color.textSecondary }]}>
+          {t.loginSubtitle}
+        </Text>
+
+        {error ? (
+          <View style={[styles.errorBox, { backgroundColor: color.error + '20' }]}>
+            <Text style={[styles.errorText, { color: color.error }]}>{error}</Text>
+          </View>
+        ) : null}
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: color.textSecondary }]}>{t.phone}</Text>
+          <TextInput
+            style={[styles.input, { color: color.text, borderColor: color.border }]}
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+            placeholderTextColor={color.textSecondary}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: color.textSecondary }]}>{t.password}</Text>
+          <TextInput
+            style={[styles.input, { color: color.text, borderColor: color.border }]}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="••••••••"
+            placeholderTextColor={color.textSecondary}
+          />
+        </View>
+
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: color.primary }]}
+          onPress={handleLogin}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>{loading ? t.loggingIn : t.login}</Text>
+        </TouchableOpacity>
+
+        <View style={styles.footer}>
+          <Text style={{ color: color.textSecondary }}>{t.noAccount} </Text>
+          <TouchableOpacity onPress={() => router.push('/(auth)/register')}>
+            <Text style={{ color: color.primary, fontWeight: '600' }}>{t.register}</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal visible={languageModalVisible} transparent animationType="fade" onRequestClose={() => setLanguageModalVisible(false)}>
+          <TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setLanguageModalVisible(false)}>
+            <View style={[styles.languageModal, { backgroundColor: color.surface }]}>
+              {([['uz', t.uzbek], ['ru', t.russian], ['en', t.english]] as [AppLanguage, string][]).map(([value, label]) => (
+                <TouchableOpacity key={value} style={[styles.languageOption, { borderBottomColor: color.border }]} onPress={() => { setLanguage(value); setLanguageModalVisible(false); }}>
+                  <Text style={[styles.languageOptionText, { color: color.text }]}>{label}</Text>
+                  {language === value && <Text style={{ color: color.primary }}>✓</Text>}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </View>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 32,
+  },
+  errorBox: {
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
+  errorText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 8,
+    fontWeight: '500',
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+  },
+  button: {
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 32,
+  },
+  languageButton: { alignSelf: 'flex-end', borderWidth: 1, borderRadius: 18, paddingHorizontal: 13, paddingVertical: 7, marginBottom: 26 },
+  languageButtonText: { fontSize: 12, fontWeight: '700' },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'center', padding: 24 },
+  languageModal: { borderRadius: 16, paddingHorizontal: 20 },
+  languageOption: { paddingVertical: 18, borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' },
+  languageOptionText: { fontSize: 16, fontWeight: '500' }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(auth)\register.tsx
+==========================================
+
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Modal } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Colors } from '../../src/theme/colors';
+import { useAuthStore } from '../../src/store/authStore';
+import { apiRegister } from '../../src/services/api';
+import { AppLanguage, useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n/index';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+export default function RegisterScreen() {
+  const router = useRouter();
+  const { theme, language, setLanguage } = useSettingsStore();
+  const color = Colors[theme];
+  const t = useTranslation(language);
+  const insets = useSafeAreaInsets();
+  
+  const { setToken } = useAuthStore();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('+998');
+  const [password, setPassword] = useState('');
+  const [accountType, setAccountType] = useState<'customer' | 'seller'>('customer');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+
+  const handleRegister = async () => {
+    setError('');
+    if (!name.trim() || phone.length < 13 || password.length < 6) {
+      setError('Iltimos, barcha maydonlarni to\'g\'ri to\'ldiring.');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { access_token: accessToken } = await apiRegister(name, phone, password);
+      await setToken(accessToken);
+      router.replace(accountType === 'seller' ? ('/business' as never) : '/(tabs)/home');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : t.registerError);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView 
+      style={[styles.container, { backgroundColor: color.background, paddingTop: insets.top }]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <TouchableOpacity style={[styles.languageButton, { borderColor: color.border }]} onPress={() => setLanguageModalVisible(true)}>
+          <Text style={[styles.languageButtonText, { color: color.primary }]}>{language === 'uz' ? 'O‘zbekcha' : language === 'ru' ? 'Русский' : 'English'}</Text>
+        </TouchableOpacity>
+        <Text style={[styles.title, { color: color.text }]}>{t.registerTitle} 🚀</Text>
+        <Text style={[styles.subtitle, { color: color.textSecondary }]}>
+          {t.registerSubtitle}
+        </Text>
+
+        <Text style={[styles.label, { color: color.textSecondary }]}>{language === 'uz' ? 'Siz kim sifatida foydalanasiz?' : language === 'ru' ? 'Кем вы будете пользоваться?' : 'How will you use the app?'}</Text>
+        <View style={styles.accountTypes}>
+          {(['customer', 'seller'] as const).map((type) => (
+            <TouchableOpacity
+              key={type}
+              style={[styles.accountType, { borderColor: accountType === type ? color.primary : color.border, backgroundColor: accountType === type ? color.primary + '12' : color.surface }]}
+              onPress={() => setAccountType(type)}>
+              <Text style={[styles.accountTypeTitle, { color: accountType === type ? color.primary : color.text }]}>{type === 'customer' ? (language === 'uz' ? 'Mijoz' : language === 'ru' ? 'Клиент' : 'Customer') : 'Seller'}</Text>
+              <Text style={[styles.accountTypeText, { color: color.textSecondary }]}>{type === 'customer' ? (language === 'uz' ? 'Navbat band qilaman' : language === 'ru' ? 'Бронирую очередь' : 'I book a queue') : (language === 'uz' ? 'Biznesim bor' : language === 'ru' ? 'У меня есть бизнес' : 'I have a business')}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {error ? (
+          <View style={[styles.errorBox, { backgroundColor: color.error + '20' }]}>
+            <Text style={[styles.errorText, { color: color.error }]}>{error}</Text>
+          </View>
+        ) : null}
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: color.textSecondary }]}>{t.fullName}</Text>
+          <TextInput
+            style={[styles.input, { color: color.text, borderColor: color.border }]}
+            value={name}
+            onChangeText={setName}
+            placeholder="John Doe"
+            placeholderTextColor={color.textSecondary}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: color.textSecondary }]}>{t.phone}</Text>
+          <TextInput
+            style={[styles.input, { color: color.text, borderColor: color.border }]}
+            value={phone}
+            onChangeText={setPhone}
+            keyboardType="phone-pad"
+            placeholderTextColor={color.textSecondary}
+          />
+        </View>
+
+        <View style={styles.inputContainer}>
+          <Text style={[styles.label, { color: color.textSecondary }]}>{t.password}</Text>
+          <TextInput
+            style={[styles.input, { color: color.text, borderColor: color.border }]}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="••••••••"
+            placeholderTextColor={color.textSecondary}
+          />
+        </View>
+
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: color.primary }]}
+          onPress={handleRegister}
+          disabled={loading}
+        >
+          <Text style={styles.buttonText}>{loading ? (language === 'uz' ? "Ro'yxatdan o'tilmoqda..." : language === 'ru' ? 'Регистрация...' : 'Signing up...') : t.registerButton}</Text>
+        </TouchableOpacity>
+
+        <View style={styles.footer}>
+          <Text style={{ color: color.textSecondary }}>{language === 'uz' ? 'Hisobingiz bormi?' : language === 'ru' ? 'У вас есть аккаунт?' : 'Already have an account?'} </Text>
+          <TouchableOpacity onPress={() => router.replace('/(auth)/login')}>
+            <Text style={{ color: color.primary, fontWeight: '600' }}>{t.login}</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal visible={languageModalVisible} transparent animationType="fade" onRequestClose={() => setLanguageModalVisible(false)}>
+          <TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setLanguageModalVisible(false)}>
+            <View style={[styles.languageModal, { backgroundColor: color.surface }]}>
+              {([['uz', t.uzbek], ['ru', t.russian], ['en', t.english]] as [AppLanguage, string][]).map(([value, label]) => (
+                <TouchableOpacity key={value} style={[styles.languageOption, { borderBottomColor: color.border }]} onPress={() => { setLanguage(value); setLanguageModalVisible(false); }}>
+                  <Text style={[styles.languageOptionText, { color: color.text }]}>{label}</Text>
+                  {language === value && <Text style={{ color: color.primary }}>✓</Text>}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </Modal>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    padding: 24,
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 32,
+  },
+  errorBox: {
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 20,
+  },
+  errorText: {
+    fontSize: 14,
+    textAlign: 'center',
+  },
+  inputContainer: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    marginBottom: 8,
+    fontWeight: '500',
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+  },
+  button: {
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 32,
+  },
+  accountTypes: { flexDirection: 'row', gap: 10, marginBottom: 8 },
+  accountType: { flex: 1, borderWidth: 1, borderRadius: 13, padding: 14 },
+  accountTypeTitle: { fontSize: 15, fontWeight: '800', marginBottom: 5 },
+  accountTypeText: { fontSize: 11 }
+  ,languageButton: { alignSelf: 'flex-end', borderWidth: 1, borderRadius: 18, paddingHorizontal: 13, paddingVertical: 7, marginBottom: 26 },
+  languageButtonText: { fontSize: 12, fontWeight: '700' },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'center', padding: 24 },
+  languageModal: { borderRadius: 16, paddingHorizontal: 20 },
+  languageOption: { paddingVertical: 18, borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' },
+  languageOptionText: { fontSize: 16, fontWeight: '500' }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(auth)\_layout.tsx
+==========================================
+
+import { Stack } from 'expo-router';
+
+export default function AuthLayout() {
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+    </Stack>
+  );
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(tabs)\bookings.tsx
+==========================================
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, ActivityIndicator, Alert } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n';
+import { apiGetMyQueue, apiCancelQueue, QueueItem, apiGetBranches, Branch } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+import { useFocusEffect } from 'expo-router';
+
+export default function BookingsScreen() {
+  const { language, theme } = useSettingsStore();
+  const text = useTranslation(language);
+  const color = Colors[theme];
+  const [selectedQr, setSelectedQr] = useState<string | null>(null);
+  
+  const [queues, setQueues] = useState<QueueItem[]>([]);
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchQueues = async () => {
+    try {
+      setLoading(true);
+      const [branchesData, queuesData] = await Promise.all([
+        apiGetBranches().catch(() => []),
+        apiGetMyQueue().catch(() => [])
+      ]);
+      setBranches(branchesData);
+      setQueues(queuesData);
+    } catch (error) {
+      console.log('Error fetching queues:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchQueues();
+    }, [])
+  );
+
+  const getBranchName = (branchId: number) => {
+    return branches.find(b => b.id === branchId)?.name || 'Noma\'lum filial';
+  };
+  
+  const getBranchCategory = (branchId: number) => {
+    const cat = branches.find(b => b.id === branchId)?.category || '';
+    if (cat === 'poliklinika') return text.clinic;
+    if (cat === 'bank') return text.bank;
+    if (cat === 'sartaroshxona') return text.barber;
+    return cat;
+  };
+
+  const handleCancel = (bookingId: number) => {
+    Alert.alert(
+      'Navbatni bekor qilish',
+      'Haqiqatan ham bu navbatni bekor qilmoqchimisiz?',
+      [
+        { text: 'Yo\'q', style: 'cancel' },
+        { 
+          text: 'Ha, bekor qilish', 
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await apiCancelQueue(bookingId);
+              Toast.show({ type: 'success', text1: 'Bekor qilindi', text2: 'Navbatingiz bekor qilindi' });
+              fetchQueues();
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'waiting': return text.upcoming;
+      case 'confirmed': return text.active;
+      case 'completed': return text.completed;
+      case 'cancelled': return text.cancelled;
+      default: return status;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'waiting': return color.warning;
+      case 'confirmed': return color.success;
+      case 'completed': return color.primary;
+      case 'cancelled': return color.error;
+      default: return color.textSecondary;
+    }
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { backgroundColor: color.background, borderBottomColor: color.border }]}>
+        <Text style={[styles.headerTitle, { color: color.text }]}>{text.myBookings}</Text>
+      </View>
+
+      {loading ? (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator size="large" color={color.primary} />
+        </View>
+      ) : (
+        <ScrollView contentContainerStyle={styles.content}>
+          {queues.length === 0 ? (
+            <View style={{ padding: 40, alignItems: 'center' }}>
+              <Text style={{ color: color.textSecondary }}>Sizda hozircha navbatlar yo'q.</Text>
+            </View>
+          ) : (
+            queues.map((booking) => (
+              <View key={booking.id} style={[styles.ticketCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+                <View style={styles.ticketInfo}>
+                  <Text style={[styles.branchName, { color: color.text }]}>{getBranchName(booking.branch_id)}</Text>
+                  <Text style={[styles.serviceName, { color: color.textSecondary }]}>{getBranchCategory(booking.branch_id)}</Text>
+                  
+                  <View style={styles.timeRow}>
+                    <View style={styles.timeBlock}>
+                      <Text style={[styles.timeLabel, { color: color.textSecondary }]}>{text.time}</Text>
+                      <Text style={[styles.timeValue, { color: color.text }]}>
+                        {booking.estimated_wait_minutes} min
+                      </Text>
+                    </View>
+                    <View style={styles.timeBlock}>
+                      <Text style={[styles.timeLabel, { color: color.textSecondary }]}>{text.status}</Text>
+                      <Text style={[styles.timeValue, { color: getStatusColor(booking.status) }]}>
+                        {getStatusText(booking.status)}
+                      </Text>
+                    </View>
+                  </View>
+
+                  {(booking.status === 'waiting' || booking.status === 'confirmed') && (
+                    <TouchableOpacity style={[styles.cancelBtn, { borderColor: color.error }]} onPress={() => handleCancel(booking.id)}>
+                      <Text style={{ color: color.error, fontWeight: '600' }}>{text.cancel}</Text>
+                    </TouchableOpacity>
+                  )}
+                </View>
+
+                <View style={[styles.qrContainer, { borderLeftColor: color.border }]}>
+                  <Text style={[styles.ticketNumber, { color: color.primary }]}>{booking.queue_number}</Text>
+                  {booking.qr_code && booking.status !== 'cancelled' ? (
+                    <>
+                      <View style={styles.qrWrapper}>
+                        <TouchableOpacity onPress={() => setSelectedQr(booking.qr_code!)} accessibilityLabel={text.enlargeQr}>
+                          <Image source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${booking.qr_code}` }} style={{ width: 80, height: 80 }} />
+                        </TouchableOpacity>
+                      </View>
+                      <Text style={[styles.tapText, { color: color.textSecondary }]}>{text.enlargeQr}</Text>
+                    </>
+                  ) : (
+                    <Text style={{ color: color.textSecondary, fontSize: 12, textAlign: 'center', marginTop: 10 }}>
+                      {booking.status === 'cancelled' ? 'Bekor qilingan' : 'QR yo\'q'}
+                    </Text>
+                  )}
+                </View>
+              </View>
+            ))
+          )}
+        </ScrollView>
+      )}
+
+      <Modal visible={selectedQr !== null} transparent animationType="fade" onRequestClose={() => setSelectedQr(null)}>
+        <TouchableOpacity style={styles.qrModalBackdrop} activeOpacity={1} onPress={() => setSelectedQr(null)}>
+          <View style={[styles.qrModalCard, { backgroundColor: color.surface }]}>
+            <Image source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${selectedQr ?? ''}` }} style={styles.largeQr} />
+            <Text style={[styles.largeQrLabel, { color: color.text }]}>QR Kod</Text>
+            <Text style={[styles.closeLabel, { color: color.primary }]}>{text.close}</Text>
+          </View>
+        </TouchableOpacity>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 60, paddingBottom: 16, paddingHorizontal: 24, borderBottomWidth: 1 },
+  headerTitle: { fontSize: 24, fontWeight: 'bold' },
+  content: { padding: 24 },
+  ticketCard: { flexDirection: 'row', borderRadius: 16, borderWidth: 1, marginBottom: 20, overflow: 'hidden' },
+  ticketInfo: { flex: 2, padding: 16 },
+  branchName: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
+  serviceName: { fontSize: 14, marginBottom: 16 },
+  timeRow: { flexDirection: 'row', marginBottom: 16 },
+  timeBlock: { flex: 1 },
+  timeLabel: { fontSize: 12, marginBottom: 4 },
+  timeValue: { fontSize: 14, fontWeight: '600' },
+  cancelBtn: { borderWidth: 1, paddingVertical: 8, borderRadius: 8, alignItems: 'center', width: '80%' },
+  qrContainer: { flex: 1, borderLeftWidth: 1, borderStyle: 'dashed', alignItems: 'center', justifyContent: 'center', padding: 12 },
+  ticketNumber: { fontSize: 20, fontWeight: 'bold', marginBottom: 12 },
+  qrWrapper: { padding: 4, backgroundColor: '#fff', borderRadius: 8, marginBottom: 8 },
+  tapText: { fontSize: 10 },
+  qrModalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.7)', alignItems: 'center', justifyContent: 'center', padding: 24 },
+  qrModalCard: { borderRadius: 20, padding: 24, alignItems: 'center' },
+  largeQr: { width: 280, height: 280, backgroundColor: '#fff' },
+  largeQrLabel: { fontSize: 18, fontWeight: '700', marginTop: 14 },
+  closeLabel: { fontSize: 14, fontWeight: '600', marginTop: 12 }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(tabs)\home.tsx
+==========================================
+
+import React, { useState, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { Colors } from '../../src/theme/colors';
+import { MapPin } from 'lucide-react-native';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n/index';
+import { CATEGORIES } from '../../src/constants/mockData';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { apiGetBranches, Branch, apiGetMe, User, apiGetMyQueue, QueueItem } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+import * as Location from 'expo-location';
+import { useFavoriteStore } from '../../src/store/favoriteStore';
+
+export default function HomeScreen() {
+  const favorites = useFavoriteStore(state => state.favorites);
+  const theme = useSettingsStore((state) => state.theme);
+  const language = useSettingsStore((state) => state.language);
+  const color = Colors[theme];
+  const t = useTranslation(language);
+  const router = useRouter();
+  
+  const [activeCategory, setActiveCategory] = useState('0');
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [activeQueue, setActiveQueue] = useState<QueueItem | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
+  const insets = useSafeAreaInsets();
+
+  const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+    const R = 6371; // km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c;
+  };
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      let location = null;
+      if (status === 'granted') {
+        location = await Location.getCurrentPositionAsync({});
+        setUserLocation(location);
+      }
+
+      // Run API calls in parallel
+      const [branchesData, userData, queuesData] = await Promise.all([
+        apiGetBranches(),
+        apiGetMe().catch(() => null),
+        apiGetMyQueue().catch(() => [])
+      ]);
+      setBranches(branchesData);
+      setUser(userData);
+      
+      // Find the first waiting or confirmed queue
+      const active = queuesData.find(q => q.status === 'waiting' || q.status === 'confirmed');
+      setActiveQueue(active || null);
+    } catch (error) {
+      console.log('Error fetching home data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  const activeCategoryStr = CATEGORIES.find(c => c.id === activeCategory)?.categoryStr || '';
+
+  let filteredBranches = activeCategory === '0' 
+    ? branches 
+    : branches.filter(b => b.category === activeCategoryStr);
+
+  if (userLocation) {
+    filteredBranches = filteredBranches.map(b => {
+      if (b.latitude && b.longitude) {
+        const dist = getDistance(userLocation.coords.latitude, userLocation.coords.longitude, b.latitude, b.longitude);
+        return { ...b, calculatedDistance: dist };
+      }
+      return { ...b, calculatedDistance: Infinity };
+    }).sort((a, b) => a.calculatedDistance - b.calculatedDistance);
+  }
+
+  const renderCategory = ({ item }: { item: (typeof CATEGORIES)[number] }) => {
+    const isActive = activeCategory === item.id;
+    return (
+      <TouchableOpacity 
+        style={[
+          styles.categoryCard, 
+          { 
+            backgroundColor: isActive ? color.primary : color.surface, 
+            borderColor: isActive ? color.primary : color.border 
+          }
+        ]}
+        onPress={() => setActiveCategory(item.id)}
+      >
+        <Text style={styles.categoryIcon}>{item.icon}</Text>
+        <Text style={[styles.categoryName, { color: isActive ? '#fff' : color.text }]}>{t[item.nameKey]}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const getStatusColor = (count: number) => {
+    if (count < 5) return color.success;
+    if (count < 15) return color.warning;
+    return color.error;
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background, paddingTop: insets.top }]}>
+      <View style={[styles.header, { backgroundColor: color.primary }]}>
+        <Text style={styles.greeting}>{t.interpolate('greeting', { name: user?.full_name || 'Mehmon' })}</Text>
+        <Text style={styles.subGreeting}>{t.greetingSubtitle}</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Active Queue Card */}
+        {activeQueue && (
+          <View style={[styles.activeQueueCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <View style={styles.activeQueueHeader}>
+              <Text style={[styles.activeQueueTitle, { color: color.text }]}>{t.activeQueue}</Text>
+              <View style={[styles.badge, { backgroundColor: color.success + '20' }]}>
+                <Text style={{ color: color.success, fontSize: 12, fontWeight: 'bold' }}>
+                  Oldinda {activeQueue.people_ahead} kishi
+                </Text>
+              </View>
+            </View>
+            <Text style={[styles.activeQueueBranch, { color: color.primary }]}>
+              {branches.find(b => b.id === activeQueue.branch_id)?.name || 'Filial'}
+            </Text>
+            <View style={styles.activeQueueDetails}>
+              <Text style={{ color: color.textSecondary }}>{t.ticket}: <Text style={{ color: color.text, fontWeight: 'bold' }}>{activeQueue.queue_number}</Text></Text>
+              <TouchableOpacity onPress={() => router.push('/(tabs)/bookings')}>
+                <Text style={{ color: color.primary, fontWeight: '600' }}>{t.goToBooking}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
+        {/* Categories */}
+        <Text style={[styles.sectionTitle, { color: color.text }]}>{t.serviceTypes}</Text>
+        <FlatList
+          data={CATEGORIES}
+          renderItem={renderCategory}
+          keyExtractor={item => item.id}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriesList}
+        />
+
+        {/* Favorite Branches */}
+        {favorites.length > 0 && (
+          <>
+            <Text style={[styles.sectionTitle, { color: color.text }]}>Sevimli joylarim</Text>
+            {branches.filter(b => favorites.includes(b.id)).map(branch => (
+              <TouchableOpacity 
+                key={`fav-${branch.id}`} 
+                style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border }]}
+                onPress={() => router.push(`/branch/${branch.id}`)}
+              >
+                <View style={styles.branchInfo}>
+                  <Text style={[styles.branchName, { color: color.text }]}>{branch.name}</Text>
+                  <View style={styles.branchAddressRow}>
+                    <MapPin color={color.textSecondary} size={14} />
+                    <Text style={[styles.branchAddress, { color: color.textSecondary }]} numberOfLines={1}>
+                      {branch.address}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.branchStatus}>
+                  <View style={[styles.statusDot, { backgroundColor: getStatusColor(branch.current_waiting_count) }]} />
+                  <Text style={{ color: color.textSecondary, fontSize: 12 }}>{branch.estimated_wait_minutes} min</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
+
+        {/* Nearby Branches */}
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { color: color.text }]}>{t.nearby}</Text>
+          <TouchableOpacity onPress={() => router.push('/branch/map')}>
+            <Text style={{ color: color.primary, fontWeight: '600' }}>{t.viewOnMap}</Text>
+          </TouchableOpacity>
+        </View>
+
+        {loading ? (
+          <View style={{ padding: 40, alignItems: 'center' }}>
+            <ActivityIndicator size="large" color={color.primary} />
+          </View>
+        ) : filteredBranches.length > 0 ? filteredBranches.map(branch => (
+          <TouchableOpacity 
+            key={branch.id} 
+            style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border }]}
+            onPress={() => router.push(`/branch/${branch.id}`)}
+          >
+            <View style={styles.branchInfo}>
+              <Text style={[styles.branchName, { color: color.text }]}>{branch.name}</Text>
+              <View style={styles.branchAddressRow}>
+                <MapPin color={color.textSecondary} size={14} />
+                <Text style={[styles.branchAddress, { color: color.textSecondary }]} numberOfLines={1}>
+                  {branch.calculatedDistance && branch.calculatedDistance !== Infinity 
+                    ? `${branch.calculatedDistance.toFixed(1)} km · ` 
+                    : ''}
+                  {branch.address}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.branchStatus}>
+              <View style={[styles.statusDot, { backgroundColor: getStatusColor(branch.current_waiting_count) }]} />
+              <Text style={{ color: color.textSecondary, fontSize: 12 }}>{branch.estimated_wait_minutes} daqiqa</Text>
+            </View>
+          </TouchableOpacity>
+        )) : (
+          <View style={{ padding: 20, alignItems: 'center' }}>
+            <Text style={{ color: color.textSecondary }}>Ushbu yo'nalishda yaqin filiallar topilmadi.</Text>
+          </View>
+        )}
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 60, paddingBottom: 24, paddingHorizontal: 24, borderBottomLeftRadius: 24, borderBottomRightRadius: 24 },
+  greeting: { color: '#fff', fontSize: 24, fontWeight: 'bold', marginBottom: 4 },
+  subGreeting: { color: '#E2E8F0', fontSize: 14 },
+  content: { padding: 24 },
+  activeQueueCard: { padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 24 },
+  activeQueueHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+  activeQueueTitle: { fontWeight: 'bold', fontSize: 16 },
+  badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
+  activeQueueBranch: { fontSize: 18, fontWeight: '600', marginBottom: 16 },
+  activeQueueDetails: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
+  sectionTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 16 },
+  categoriesList: { paddingBottom: 24 },
+  categoryCard: { padding: 16, borderRadius: 16, borderWidth: 1, marginRight: 12, alignItems: 'center', minWidth: 100 },
+  categoryIcon: { fontSize: 32, marginBottom: 8 },
+  categoryName: { fontWeight: '500', fontSize: 14 },
+  branchCard: { flexDirection: 'row', justifyContent: 'space-between', padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 12 },
+  branchInfo: { flex: 1 },
+  branchName: { fontSize: 16, fontWeight: '600', marginBottom: 8 },
+  branchAddressRow: { flexDirection: 'row', alignItems: 'center' },
+  branchAddress: { fontSize: 12, marginLeft: 4 },
+  branchStatus: { alignItems: 'flex-end', justifyContent: 'center' },
+  statusDot: { width: 10, height: 10, borderRadius: 5, marginBottom: 4 }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(tabs)\profile.tsx
+==========================================
+
+import React, { ReactNode, useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Switch, Platform, Modal, ActivityIndicator } from 'react-native';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { Colors } from '../../src/theme/colors';
+import { useAuthStore } from '../../src/store/authStore';
+import * as SecureStore from 'expo-secure-store';
+import { User as UserIcon, Bell, Moon, Globe, LogOut, ChevronRight, Building2, ShieldCheck, Briefcase } from 'lucide-react-native';
+import { useSettingsStore, AppLanguage } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n';
+import { apiGetMe, User } from '../../src/services/api';
+
+function MenuItem({ icon, title, value, hasSwitch = false, switchValue = false, onPress = () => {}, onSwitchChange, color }: {
+  icon: ReactNode;
+  title: string;
+  value?: string;
+  hasSwitch?: boolean;
+  switchValue?: boolean;
+  onPress?: () => void;
+  onSwitchChange?: (value: boolean) => void;
+  color: typeof Colors.light;
+}) {
+  return (
+    <TouchableOpacity
+      style={[styles.menuItem, { borderBottomColor: color.border }]}
+      onPress={onPress}
+      disabled={hasSwitch}
+    >
+      <View style={styles.menuLeft}>
+        {icon}
+        <Text style={[styles.menuTitle, { color: color.text }]}>{title}</Text>
+      </View>
+      <View style={styles.menuRight}>
+        {value && <Text style={[styles.menuValue, { color: color.textSecondary }]}>{value}</Text>}
+        {hasSwitch ? (
+          <Switch value={switchValue} onValueChange={onSwitchChange} />
+        ) : (
+          <ChevronRight color={color.textSecondary} size={20} />
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+export default function ProfileScreen() {
+  const { language, theme, notificationsEnabled, setLanguage, setTheme, setNotificationsEnabled } = useSettingsStore();
+  const text = useTranslation(language);
+  const color = Colors[theme];
+  const router = useRouter();
+  const { setToken } = useAuthStore();
+  
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [hasBusiness, setHasBusiness] = useState(false);
+
+  const fetchUser = async () => {
+    try {
+      setLoading(true);
+      const data = await apiGetMe();
+      setUser(data);
+      
+      const { apiGetMyBranches } = require('../../src/services/api');
+      const branches = await apiGetMyBranches();
+      if (branches && branches.length > 0) {
+        setHasBusiness(true);
+      }
+    } catch (error) {
+      console.log('Error fetching user:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUser();
+    }, [])
+  );
+
+  const handleLogout = async () => {
+    if (Platform.OS === 'web') {
+      localStorage.removeItem('userToken');
+    } else {
+      await SecureStore.deleteItemAsync('userToken');
+    }
+    setToken(null);
+    router.replace('/(auth)/login');
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { backgroundColor: color.background, borderBottomColor: color.border }]}>
+        <Text style={[styles.headerTitle, { color: color.text }]}>{text.profile}</Text>
+      </View>
+
+      <View style={styles.profileHeader}>
+        <View style={[styles.avatar, { backgroundColor: color.primary + '20' }]}>
+          <UserIcon color={color.primary} size={40} />
+        </View>
+        {loading ? (
+          <ActivityIndicator size="small" color={color.primary} style={{ marginTop: 10 }} />
+        ) : (
+          <>
+            <Text style={[styles.name, { color: color.text }]}>{user?.full_name || 'Foydalanuvchi'}</Text>
+            <Text style={[styles.phone, { color: color.textSecondary }]}>{user?.phone || '+998 ** *** ** **'}</Text>
+          </>
+        )}
+      </View>
+
+      <View style={styles.section}>
+        <MenuItem 
+          icon={<Globe color={color.textSecondary} size={24} />} 
+          title={text.language}
+          value={language === 'uz' ? text.uzbek : language === 'ru' ? text.russian : text.english}
+          onPress={() => setLanguageModalVisible(true)}
+          color={color}
+        />
+        <MenuItem 
+          icon={<Bell color={color.textSecondary} size={24} />} 
+          title={text.notifications}
+          hasSwitch 
+          switchValue={notificationsEnabled}
+          onSwitchChange={setNotificationsEnabled}
+          color={color}
+        />
+        <MenuItem 
+          icon={<Moon color={color.textSecondary} size={24} />} 
+          title={text.darkMode}
+          hasSwitch 
+          switchValue={theme === 'dark'}
+          onSwitchChange={(enabled) => setTheme(enabled ? 'dark' : 'light')}
+          color={color}
+        />
+        {!hasBusiness ? (
+          <MenuItem
+            icon={<Building2 color={color.textSecondary} size={24} />}
+            title="Biznes sifatida qo'shilish (Ariza)"
+            onPress={() => router.push('/business' as never)}
+            color={color}
+          />
+        ) : (
+          <MenuItem
+            icon={<Briefcase color={color.textSecondary} size={24} />}
+            title="Sotuvchi paneli (Mening biznesim)"
+            onPress={() => router.push('/seller' as never)}
+            color={color}
+          />
+        )}
+        {user?.is_admin && (
+          <MenuItem
+            icon={<ShieldCheck color={color.textSecondary} size={24} />}
+            title="Admin paneli (Tasdiqlash)"
+            onPress={() => router.push('/admin' as never)}
+            color={color}
+          />
+        )}
+      </View>
+
+      <Modal visible={languageModalVisible} transparent animationType="fade" onRequestClose={() => setLanguageModalVisible(false)}>
+        <TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setLanguageModalVisible(false)}>
+          <View style={[styles.languageModal, { backgroundColor: color.surface }]}>
+            {([['uz', text.uzbek], ['ru', text.russian], ['en', text.english]] as [AppLanguage, string][]).map(([value, label]) => (
+              <TouchableOpacity key={value} style={[styles.languageOption, { borderBottomColor: color.border }]} onPress={() => { setLanguage(value); setLanguageModalVisible(false); }}>
+                <Text style={[styles.languageOptionText, { color: color.text }]}>{label}</Text>
+                {language === value && <Text style={{ color: color.primary }}>✓</Text>}
+              </TouchableOpacity>
+            ))}
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      <TouchableOpacity 
+        style={[styles.logoutBtn, { backgroundColor: color.error + '10' }]}
+        onPress={handleLogout}
+      >
+        <LogOut color={color.error} size={20} />
+        <Text style={[styles.logoutText, { color: color.error }]}>{text.logout}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 60, paddingBottom: 16, paddingHorizontal: 24, borderBottomWidth: 1 },
+  headerTitle: { fontSize: 24, fontWeight: 'bold' },
+  profileHeader: { alignItems: 'center', paddingVertical: 32 },
+  avatar: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center', marginBottom: 16 },
+  name: { fontSize: 20, fontWeight: 'bold', marginBottom: 4 },
+  phone: { fontSize: 14 },
+  section: { paddingHorizontal: 24 },
+  menuItem: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 16, borderBottomWidth: 1 },
+  menuLeft: { flexDirection: 'row', alignItems: 'center' },
+  menuTitle: { fontSize: 16, marginLeft: 16, fontWeight: '500' },
+  menuRight: { flexDirection: 'row', alignItems: 'center' },
+  menuValue: { fontSize: 14, marginRight: 8 },
+  logoutBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginHorizontal: 24, marginTop: 32, paddingVertical: 16, borderRadius: 12 },
+  logoutText: { fontSize: 16, fontWeight: 'bold', marginLeft: 8 },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'center', padding: 24 },
+  languageModal: { borderRadius: 16, paddingHorizontal: 20 },
+  languageOption: { paddingVertical: 18, borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' },
+  languageOptionText: { fontSize: 16, fontWeight: '500' }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\(tabs)\_layout.tsx
+==========================================
+
+import { Tabs } from 'expo-router';
+import { Platform } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { Home, Bookmark, User } from 'lucide-react-native';
+import { useSettingsStore } from '../../src/store/settingsStore';
+
+export default function TabsLayout() {
+  const theme = useSettingsStore((state) => state.theme);
+  const language = useSettingsStore((state) => state.language);
+  const color = Colors[theme];
+
+  const tabTitles = {
+    uz: { home: 'Asosiy', bookings: 'Navbatlarim', profile: 'Profil' },
+    ru: { home: 'Главная', bookings: 'Мои очереди', profile: 'Профиль' },
+    en: { home: 'Home', bookings: 'Bookings', profile: 'Profile' },
+  };
+
+  const titles = tabTitles[language];
+
+  return (
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: color.primary,
+        tabBarInactiveTintColor: color.textSecondary,
+        tabBarStyle: {
+          backgroundColor: color.background,
+          borderTopColor: color.border,
+          height: Platform.OS === 'ios' ? 88 : 68,
+          paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+          paddingTop: 12,
+        },
+      }}>
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: titles.home,
+          tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="bookings"
+        options={{
+          title: titles.bookings,
+          tabBarIcon: ({ color, size }) => <Bookmark color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: titles.profile,
+          tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+        }}
+      />
+    </Tabs>
+  );
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\admin\index.tsx
+==========================================
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Modal } from 'react-native';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { ArrowLeft, CheckCircle2, ShieldCheck, XCircle, LogOut } from 'lucide-react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { apiGetPendingBranches, apiApproveBranch, Branch } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+
+export default function AdminDashboard() {
+  const router = useRouter();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+  
+  const [pending, setPending] = useState<Branch[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [processingId, setProcessingId] = useState<number | null>(null);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+
+  const fetchPending = async () => {
+    try {
+      const data = await apiGetPendingBranches();
+      setPending(data);
+    } catch (e: any) {
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: 'Ma\'lumotlarni olishda xatolik' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchPending();
+    }, [])
+  );
+
+  const handleApprove = async (id: number) => {
+    setProcessingId(id);
+    try {
+      await apiApproveBranch(id);
+      Toast.show({ type: 'success', text1: 'Tasdiqlandi', text2: 'Biznes muvaffaqiyatli tasdiqlandi' });
+      fetchPending();
+    } catch (e: any) {
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: e.message || 'Tasdiqlashda xatolik' });
+    } finally {
+      setProcessingId(null);
+    }
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { borderBottomColor: color.border }]}>
+        <TouchableOpacity onPress={() => router.replace('/(auth)/login')} style={styles.backButton}>
+          <LogOut color={color.error} size={24} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Admin Paneli</Text>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={[styles.hero, { backgroundColor: color.primary + '12' }]}>
+          <View style={[styles.heroIcon, { backgroundColor: color.primary }]}>
+            <ShieldCheck color="#fff" size={24} />
+          </View>
+          <View style={styles.heroCopy}>
+            <Text style={[styles.heroTitle, { color: color.text }]}>Sotuvchilarni tasdiqlash</Text>
+            <Text style={[styles.heroText, { color: color.textSecondary }]}>Yangi kelib tushgan biznes arizalarini ko'rib chiqing.</Text>
+          </View>
+        </View>
+
+        <Text style={[styles.sectionTitle, { color: color.text }]}>Kutilayotgan arizalar ({pending.length})</Text>
+
+        {loading ? (
+          <ActivityIndicator size="large" color={color.primary} style={{ marginTop: 40 }} />
+        ) : pending.length === 0 ? (
+          <View style={styles.emptyState}>
+            <CheckCircle2 color={color.success} size={48} />
+            <Text style={[styles.emptyTitle, { color: color.text }]}>Hamma arizalar tasdiqlangan</Text>
+            <Text style={[styles.emptyText, { color: color.textSecondary }]}>Yangi arizalar yo'q.</Text>
+          </View>
+        ) : (
+          pending.map((branch) => (
+            <TouchableOpacity 
+              key={branch.id} 
+              style={[styles.card, { backgroundColor: color.surface, borderColor: color.border }]}
+              onPress={() => setSelectedBranch(branch)}
+              activeOpacity={0.7}
+            >
+              <Text style={[styles.cardTitle, { color: color.text }]}>{branch.name}</Text>
+              <Text style={[styles.cardSub, { color: color.textSecondary }]}>Kategoriya: {branch.category}</Text>
+              <Text style={[styles.cardSub, { color: color.textSecondary }]}>Manzil: {branch.address || 'Kiritilmagan'}</Text>
+              
+              <Text style={{ color: color.primary, fontSize: 13, marginTop: 8, fontWeight: '600' }}>To'liq ma'lumotni ko'rish ➜</Text>
+            </TouchableOpacity>
+          ))
+        )}
+      </ScrollView>
+
+      {/* --- MODAL OYNA --- */}
+      <Modal visible={!!selectedBranch} transparent animationType="slide">
+        <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', padding: 20 }}>
+          <View style={{ backgroundColor: color.surface, padding: 24, borderRadius: 16 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 16, color: color.text }}>Biznes ma'lumotlari</Text>
+            
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>🏢 Nomi: {selectedBranch?.name}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>🏷 Kategoriya: {selectedBranch?.category}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>📍 Manzil: {selectedBranch?.address || 'Kiritilmagan'}</Text>
+            <Text style={{ fontSize: 16, marginBottom: 8, color: color.text }}>⏳ Xizmat vaqti: o'rtacha {selectedBranch?.avg_service_minutes} daqiqa</Text>
+            <Text style={{ fontSize: 16, marginBottom: 20, color: color.text }}>⏰ Ish vaqti: {selectedBranch?.working_hours}</Text>
+
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <TouchableOpacity 
+                style={{ flex: 1, backgroundColor: color.success, padding: 14, borderRadius: 10, alignItems: 'center' }}
+                onPress={() => {
+                  if (selectedBranch) {
+                    handleApprove(selectedBranch.id);
+                    setSelectedBranch(null);
+                  }
+                }}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Tasdiqlash</Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={{ flex: 1, backgroundColor: '#888', padding: 14, borderRadius: 10, alignItems: 'center' }}
+                onPress={() => setSelectedBranch(null)}
+              >
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Yopish</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 58, paddingBottom: 16, paddingHorizontal: 22, borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  backButton: { padding: 4 },
+  headerTitle: { fontSize: 18, fontWeight: '800' },
+  headerSpacer: { width: 32 },
+  content: { padding: 24, paddingBottom: 40 },
+  hero: { flexDirection: 'row', alignItems: 'center', borderRadius: 18, padding: 16, marginBottom: 28 },
+  heroIcon: { width: 48, height: 48, borderRadius: 15, alignItems: 'center', justifyContent: 'center' },
+  heroCopy: { flex: 1, marginLeft: 13 },
+  heroTitle: { fontSize: 16, fontWeight: '800', marginBottom: 5 },
+  heroText: { fontSize: 12, lineHeight: 18 },
+  sectionTitle: { fontSize: 18, fontWeight: '800', marginBottom: 16 },
+  emptyState: { alignItems: 'center', justifyContent: 'center', marginTop: 40 },
+  emptyTitle: { fontSize: 16, fontWeight: '700', marginTop: 16, marginBottom: 8 },
+  emptyText: { fontSize: 14 },
+  card: { padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 12 },
+  cardTitle: { fontSize: 16, fontWeight: '700', marginBottom: 4 },
+  cardSub: { fontSize: 13, marginBottom: 4 },
+  actions: { flexDirection: 'row', marginTop: 12, gap: 8 },
+  btnApprove: { flex: 1, padding: 12, borderRadius: 10, alignItems: 'center' },
+  btnReject: { flex: 1, padding: 12, borderRadius: 10, alignItems: 'center' },
+  btnText: { color: '#fff', fontSize: 14, fontWeight: '600' },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\branch\booking.tsx
+==========================================
+
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { ArrowLeft, CheckCircle } from 'lucide-react-native';
+import { apiBookQueue } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+
+export default function BookingScreen() {
+  const { id, branchName, service } = useLocalSearchParams();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+  const router = useRouter();
+
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [ticketNumber, setTicketNumber] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleConfirm = async () => {
+    try {
+      setLoading(true);
+      const res = await apiBookQueue(Number(id));
+      setTicketNumber(res.queue_number?.toString() || 'A-001');
+      setIsSuccess(true);
+    } catch (error: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Xatolik',
+        text2: error.message || 'Navbat olishda xatolik yuz berdi'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (isSuccess) {
+    return (
+      <View style={[styles.container, styles.centerAll, { backgroundColor: color.background }]}>
+        <CheckCircle color={color.success} size={80} />
+        <Text style={[styles.successTitle, { color: color.text }]}>Muvaffaqiyatli!</Text>
+        <Text style={[styles.successSubtitle, { color: color.textSecondary }]}>
+          Navbatingiz band qilindi. Sizning taloningiz:
+        </Text>
+        <Text style={[styles.ticketNumber, { color: color.primary }]}>{ticketNumber}</Text>
+        
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: color.primary, width: '80%', marginTop: 32 }]}
+          onPress={() => router.replace('/(tabs)/bookings')}
+        >
+          <Text style={styles.buttonText}>Navbatlarimga oʻtish</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { backgroundColor: color.background, borderBottomColor: color.border }]}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <ArrowLeft color={color.text} size={24} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Tasdiqlash</Text>
+        <View style={{ width: 24 }} />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.content}>
+        <View style={[styles.summaryCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <Text style={[styles.summaryTitle, { color: color.textSecondary }]}>Filial:</Text>
+          <Text style={[styles.summaryValue, { color: color.text }]}>{branchName || 'Noma\'lum filial'}</Text>
+          
+          <View style={styles.divider} />
+          
+          <Text style={[styles.summaryTitle, { color: color.textSecondary }]}>Xizmat turi:</Text>
+          <Text style={[styles.summaryValue, { color: color.text }]}>{service || 'Umumiy xizmat'}</Text>
+
+          <View style={styles.divider} />
+          
+          <Text style={[styles.summaryTitle, { color: color.textSecondary }]}>Sana va Vaqt:</Text>
+          <Text style={[styles.summaryValue, { color: color.text }]}>Bugun, Hozir (jonli navbat)</Text>
+        </View>
+
+        <Text style={[styles.warningText, { color: color.warning }]}>
+          Eslatma: Iltimos filialga borganingizdan so'ng, xodimga taloningizni ko'rsating.
+        </Text>
+      </ScrollView>
+
+      <View style={[styles.footer, { backgroundColor: color.surface, borderTopColor: color.border }]}>
+        <TouchableOpacity 
+          style={[styles.button, { backgroundColor: color.primary }]}
+          onPress={handleConfirm}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.buttonText}>Navbat olish</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  centerAll: { justifyContent: 'center', alignItems: 'center', padding: 24 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 60, paddingBottom: 16, paddingHorizontal: 24, borderBottomWidth: 1 },
+  backButton: { padding: 4 },
+  headerTitle: { fontSize: 18, fontWeight: 'bold' },
+  content: { padding: 24 },
+  summaryCard: { padding: 20, borderRadius: 16, borderWidth: 1, marginBottom: 24 },
+  summaryTitle: { fontSize: 14, marginBottom: 4 },
+  summaryValue: { fontSize: 18, fontWeight: '600' },
+  divider: { height: 1, backgroundColor: '#E2E8F0', marginVertical: 16 },
+  warningText: { fontSize: 14, textAlign: 'center', paddingHorizontal: 16 },
+  footer: { padding: 24, borderTopWidth: 1 },
+  button: { padding: 16, borderRadius: 12, alignItems: 'center' },
+  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
+  successTitle: { fontSize: 28, fontWeight: 'bold', marginTop: 24, marginBottom: 8 },
+  successSubtitle: { fontSize: 16, textAlign: 'center', marginBottom: 24 },
+  ticketNumber: { fontSize: 48, fontWeight: 'bold' }
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\branch\map.tsx
+==========================================
+
+import React, { useEffect, useState, useMemo } from 'react';
+import { Linking, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import * as Location from 'expo-location';
+import { Colors } from '../../src/theme/colors';
+import { ArrowLeft } from 'lucide-react-native';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { WebView } from 'react-native-webview';
+import { apiGetBranches, Branch } from '../../src/services/api';
+
+export default function MapScreen() {
+  const theme = useSettingsStore((state) => state.theme);
+  const language = useSettingsStore((state) => state.language);
+  const color = Colors[theme];
+  const router = useRouter();
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const [permission, setPermission] = useState<Location.LocationPermissionResponse | null>(null);
+  const [locationError, setLocationError] = useState<string | null>(null);
+  const [branches, setBranches] = useState<Branch[]>([]);
+  const [selectedBranch, setSelectedBranch] = useState<Branch | null>(null);
+
+  useEffect(() => {
+    apiGetBranches().then(setBranches).catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      const perm = await Location.requestForegroundPermissionsAsync();
+      if (!active) return;
+      setPermission(perm);
+      if (!perm.granted) {
+        setLocationError(perm.canAskAgain ? "Location ruxsati kerak." : "Sozlamalardan yoqing.");
+        return;
+      }
+      try {
+        const loc = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
+        if (active) setLocation(loc);
+      } catch {
+        if (active) setLocationError("Joylashuvni aniqlab bo'lmadi.");
+      }
+    };
+    load();
+    return () => { active = false; };
+  }, []);
+
+  const mapHtml = useMemo(() => {
+    const bJson = JSON.stringify(branches);
+    const uLat = location?.coords.latitude ?? null;
+    const uLon = location?.coords.longitude ?? null;
+    const cLat = uLat ?? 41.311158;
+    const cLon = uLon ?? 69.279737;
+    const userMarker = uLat !== null
+      ? `L.marker([${uLat},${uLon}],{icon:L.divIcon({html:'<div style="background:#EF4444;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>',iconSize:[18,18],iconAnchor:[9,9],className:""})}).addTo(map).bindPopup("Siz bu yerdasiz");`
+      : '';
+
+    return `<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>*{margin:0;padding:0}html,body,#map{width:100%;height:100%;overflow:hidden}</style>
+</head><body><div id="map"></div><script>
+var map=L.map("map").setView([${cLat},${cLon}],14);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19}).addTo(map);
+var branches=${bJson};
+var bIcon=L.divIcon({html:'<div style="background:#3B82F6;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.4)"></div>',iconSize:[16,16],iconAnchor:[8,8],className:""});
+branches.forEach(function(b){
+  var lat=b.latitude||(41.311+(Math.random()-.5)*.04);
+  var lon=b.longitude||(69.279+(Math.random()-.5)*.04);
+  var m=L.marker([lat,lon],{icon:bIcon}).addTo(map);
+  m.bindPopup("<b>"+b.name+"</b><br/>"+(b.address||""));
+  m.on("click",function(){if(window.ReactNativeWebView)window.ReactNativeWebView.postMessage(JSON.stringify(b));});
+});
+${userMarker}
+</script></body></html>`;
+  }, [branches, location]);
+
+  const onMessage = (e: any) => {
+    try {
+      const d = JSON.parse(e.nativeEvent.data);
+      if (d?.id) setSelectedBranch(d);
+    } catch {}
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { backgroundColor: color.background, borderBottomColor: color.border }]}>
+        <TouchableOpacity onPress={() => router.replace('/(tabs)/home')} style={styles.backButton}>
+          <ArrowLeft color={color.text} size={24} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Filiallar xaritasi</Text>
+        <View style={{ width: 24 }} />
+      </View>
+
+      <View style={styles.mapWrap}>
+        <WebView
+          source={{ html: mapHtml }}
+          originWhitelist={['*']}
+          style={StyleSheet.absoluteFill}
+          onMessage={onMessage}
+          javaScriptEnabled={true}
+          domStorageEnabled={true}
+          mixedContentMode="always"
+        />
+      </View>
+
+      {!location && (
+        <View style={[styles.notice, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <Text style={{ color: color.text, fontSize: 13, lineHeight: 18 }}>
+            {locationError ?? 'Joylashuv aniqlanmoqda...'}
+          </Text>
+          {permission && !permission.granted && (
+            <TouchableOpacity
+              onPress={() => permission.canAskAgain
+                ? Location.requestForegroundPermissionsAsync()
+                : Linking.openSettings()
+              }>
+              <Text style={{ color: color.primary, fontWeight: '700', marginTop: 8 }}>
+                {permission.canAskAgain ? 'Qayta urinish' : 'Sozlamalarni ochish'}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
+
+      {selectedBranch && (
+        <View style={[styles.sheet, { backgroundColor: color.surface, borderTopColor: color.border }]}>
+          <Text style={[styles.sheetTitle, { color: color.text }]}>{selectedBranch.name}</Text>
+          <Text style={{ color: color.textSecondary, fontSize: 14, marginBottom: 20 }}>
+            {selectedBranch.address}
+          </Text>
+          <TouchableOpacity
+            style={[styles.btn, { backgroundColor: color.primary }]}
+            onPress={() => router.push(`/branch/${selectedBranch.id}` as any)}
+          >
+            <Text style={{ color: '#fff', fontSize: 16, fontWeight: '600' }}>Batafsil ko'rish</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingTop: 60, paddingBottom: 16, paddingHorizontal: 24, borderBottomWidth: 1,
+  },
+  backButton: { padding: 4 },
+  headerTitle: { fontSize: 18, fontWeight: 'bold' },
+  mapWrap: { flex: 1 },
+  sheet: {
+    padding: 24, borderTopWidth: 1, borderTopLeftRadius: 24, borderTopRightRadius: 24,
+    position: 'absolute', bottom: 0, left: 0, right: 0,
+  },
+  sheetTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 4 },
+  btn: { padding: 16, borderRadius: 12, alignItems: 'center' },
+  notice: {
+    position: 'absolute', top: 112, left: 24, right: 24,
+    borderWidth: 1, borderRadius: 14, padding: 14,
+  },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\branch\[id].tsx
+==========================================
+
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\branch\_layout.tsx
+==========================================
+
+import { Stack } from 'expo-router';
+
+export default function BranchLayout() {
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="map" />
+      <Stack.Screen name="[id]" />
+      <Stack.Screen name="booking" />
+    </Stack>
+  );
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\business\index.tsx
+==========================================
+
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { ArrowLeft, BadgeCheck, Building2, ChevronDown, Clock3, MapPin, Send } from 'lucide-react-native';
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { apiRequestBranch } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+
+const categories = ['Sartaroshxona', 'Klinika', 'Avtoyuvish', 'Kafe va restoran', 'Boshqa'];
+
+export default function BusinessOnboarding() {
+  const router = useRouter();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
+  const [businessName, setBusinessName] = useState('');
+  const [phone, setPhone] = useState('+998');
+  const [address, setAddress] = useState('');
+  const [mapUrl, setMapUrl] = useState('');
+  const [customCategory, setCustomCategory] = useState('');
+  const [category, setCategory] = useState(categories[0]);
+
+  const handleSubmit = async () => {
+    if (!businessName || !phone) {
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: "Biznes nomi va raqamini kiritish shart" });
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      await apiRequestBranch({
+        name: businessName,
+        category: category === 'Boshqa' ? customCategory : category,
+        address: address || null,
+        working_hours: "09:00-18:00",
+        avg_service_minutes: 15
+      });
+      setSubmitted(true);
+    } catch (e: any) {
+      Toast.show({ type: 'error', text1: 'Xatolik', text2: e.message || 'Yuborishda xatolik yuz berdi' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (submitted) {
+    return (
+      <View style={[styles.container, styles.center, { backgroundColor: color.background }]}>
+        <View style={[styles.statusIcon, { backgroundColor: color.warning + '20' }]}><Clock3 color={color.warning} size={34} /></View>
+        <Text style={[styles.successTitle, { color: color.text }]}>Ariza yuborildi</Text>
+        <Text style={[styles.successText, { color: color.textSecondary }]}>Biznesingiz ma’lumotlari tekshirilmoqda. Tasdiqlangach, filialingiz mijozlarga ko‘rinadi.</Text>
+        <View style={[styles.pendingCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <Text style={[styles.pendingLabel, { color: color.textSecondary }]}>HOLAT</Text>
+          <Text style={[styles.pendingValue, { color: color.warning }]}>Tekshiruvda</Text>
+          <Text style={[styles.pendingHint, { color: color.textSecondary }]}>Odatda 1 ish kuni ichida javob beramiz</Text>
+        </View>
+        <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={() => router.replace('/seller/dashboard')}>
+          <Text style={styles.buttonText}>Seller paneliga o‘tish</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { borderBottomColor: color.border }]}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}><ArrowLeft color={color.text} size={24} /></TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Biznes qo‘shish</Text>
+        <View style={styles.headerSpacer} />
+      </View>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={[styles.hero, { backgroundColor: color.primary + '12' }]}>
+          <View style={[styles.heroIcon, { backgroundColor: color.primary }]}><Building2 color="#fff" size={24} /></View>
+          <View style={styles.heroCopy}><Text style={[styles.heroTitle, { color: color.text }]}>Filialingizni QueueLess’ga qo‘shing</Text><Text style={[styles.heroText, { color: color.textSecondary }]}>Mijozlar navbatni oldindan band qilsin.</Text></View>
+        </View>
+
+        <Text style={[styles.sectionTitle, { color: color.text }]}>Asosiy ma’lumotlar</Text>
+        <Text style={[styles.label, { color: color.textSecondary }]}>Biznes nomi</Text>
+        <TextInput value={businessName} onChangeText={setBusinessName} placeholder="Masalan, Baraka Barber" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+        <Text style={[styles.label, { color: color.textSecondary }]}>Faoliyat turi</Text>
+        <View style={[styles.select, { borderColor: color.border, backgroundColor: color.surface }]}>
+          <Text style={[styles.selectText, { color: color.text }]}>{category}</Text><ChevronDown color={color.textSecondary} size={19} />
+        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryRow}>
+          {categories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.category, { borderColor: category === item ? color.primary : color.border, backgroundColor: category === item ? color.primary + '12' : color.surface }]}><Text style={{ color: category === item ? color.primary : color.textSecondary, fontSize: 12, fontWeight: '700' }}>{item}</Text></TouchableOpacity>)}
+        </ScrollView>
+        {category === 'Boshqa' && <>
+          <Text style={[styles.label, { color: color.textSecondary }]}>Faoliyat turi nomi</Text>
+          <TextInput value={customCategory} onChangeText={setCustomCategory} placeholder="Masalan, tikuvchilik" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+        </>}
+        <Text style={[styles.label, { color: color.textSecondary }]}>Telefon raqami</Text>
+        <TextInput value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+        <Text style={[styles.label, { color: color.textSecondary }]}>Manzil</Text>
+        <View style={[styles.inputWithIcon, { borderColor: color.border, backgroundColor: color.surface }]}><MapPin color={color.textSecondary} size={18} /><TextInput value={address} onChangeText={setAddress} placeholder="Toshkent shahri, ..." placeholderTextColor={color.textSecondary} style={[styles.iconInput, { color: color.text }]} /></View>
+        <Text style={[styles.label, { color: color.textSecondary }]}>Xarita havolasi</Text>
+        <TextInput value={mapUrl} onChangeText={setMapUrl} autoCapitalize="none" keyboardType="url" placeholder="Google Maps yoki Yandex Maps URL" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+        <View style={[styles.note, { backgroundColor: color.success + '12' }]}><BadgeCheck color={color.success} size={18} /><Text style={[styles.noteText, { color: color.textSecondary }]}>Ariza admin tomonidan tekshiriladi. Tasdiqlangan filiallar mijozlarga ko‘rinadi.</Text></View>
+        <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={handleSubmit} disabled={loading}>
+          {loading ? <ActivityIndicator color="#fff" /> : <><Send color="#fff" size={18} /><Text style={styles.buttonText}>Tekshiruvga yuborish</Text></>}
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 }, center: { justifyContent: 'center', alignItems: 'center', padding: 24 },
+  header: { paddingTop: 58, paddingBottom: 16, paddingHorizontal: 22, borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  backButton: { padding: 4 }, headerTitle: { fontSize: 18, fontWeight: '800' }, headerSpacer: { width: 32 },
+  content: { padding: 24, paddingBottom: 40 }, hero: { flexDirection: 'row', alignItems: 'center', borderRadius: 18, padding: 16, marginBottom: 28 }, heroIcon: { width: 48, height: 48, borderRadius: 15, alignItems: 'center', justifyContent: 'center' }, heroCopy: { flex: 1, marginLeft: 13 }, heroTitle: { fontSize: 16, fontWeight: '800', marginBottom: 5 }, heroText: { fontSize: 12, lineHeight: 18 },
+  sectionTitle: { fontSize: 20, fontWeight: '800', marginBottom: 18 }, label: { fontSize: 13, fontWeight: '700', marginBottom: 8, marginTop: 14 }, input: { borderWidth: 1, borderRadius: 13, padding: 15, fontSize: 15 }, select: { borderWidth: 1, borderRadius: 13, padding: 15, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }, selectText: { fontSize: 15 }, categoryRow: { paddingTop: 10, gap: 8 }, category: { paddingHorizontal: 12, paddingVertical: 9, borderRadius: 20, borderWidth: 1 }, inputWithIcon: { borderWidth: 1, borderRadius: 13, paddingLeft: 14, flexDirection: 'row', alignItems: 'center' }, iconInput: { flex: 1, padding: 15, paddingLeft: 10, fontSize: 15 }, note: { marginTop: 22, padding: 13, borderRadius: 12, flexDirection: 'row', alignItems: 'flex-start' }, noteText: { flex: 1, fontSize: 12, lineHeight: 18, marginLeft: 9 }, button: { marginTop: 24, minHeight: 54, borderRadius: 14, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 }, buttonText: { color: '#fff', fontSize: 15, fontWeight: '800' }, statusIcon: { width: 72, height: 72, borderRadius: 24, alignItems: 'center', justifyContent: 'center', marginBottom: 20 }, successTitle: { fontSize: 26, fontWeight: '800', marginBottom: 9 }, successText: { fontSize: 14, lineHeight: 21, textAlign: 'center', maxWidth: 330 }, pendingCard: { width: '100%', borderWidth: 1, borderRadius: 16, padding: 18, marginTop: 26, marginBottom: 4 }, pendingLabel: { fontSize: 10, fontWeight: '800', letterSpacing: 1 }, pendingValue: { fontSize: 20, fontWeight: '800', marginTop: 7, marginBottom: 4 }, pendingHint: { fontSize: 12 },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\confirm.tsx
+==========================================
+
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ArrowLeft, CheckCircle2, AlertCircle } from 'lucide-react-native';
+import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { useState, useEffect } from 'react';
+import { apiConfirmQueue } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
+
+export default function SellerConfirm() {
+  const router = useRouter();
+  const params = useLocalSearchParams();
+  const qrCode = params.data as string;
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+
+  const [loading, setLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [booking, setBooking] = useState<any>(null);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    if (qrCode) {
+      confirmCode(qrCode);
+    } else {
+      setLoading(false);
+      setErrorMsg("QR kod topilmadi");
+    }
+  }, [qrCode]);
+
+  const confirmCode = async (code: string) => {
+    try {
+      const res = await apiConfirmQueue(code);
+      setBooking(res);
+      setSuccess(true);
+    } catch (e: any) {
+      setErrorMsg(e.message || "Xatolik yuz berdi");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.replace('/seller/dashboard')} style={styles.backButton}>
+          <ArrowLeft color={color.text} size={24} />
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Mijozni tekshirish</Text>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      <View style={styles.content}>
+        {loading ? (
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" color={color.primary} />
+            <Text style={{ marginTop: 15, color: color.text }}>Tasdiqlanmoqda...</Text>
+          </View>
+        ) : success ? (
+          <>
+            <View style={[styles.successIcon, { backgroundColor: color.success + '18' }]}>
+              <CheckCircle2 color={color.success} size={30} />
+            </View>
+            <Text style={[styles.title, { color: color.text }]}>Navbat tasdiqlandi!</Text>
+            <Text style={[styles.subtitle, { color: color.textSecondary }]}>Mijoz xizmati boshlandi</Text>
+
+            <View style={[styles.ticketPanel, { backgroundColor: color.primary }]}>
+              <Text style={styles.ticketLabel}>NAVBAT RAQAMI</Text>
+              <Text style={styles.ticket}>{booking?.queue_number}</Text>
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={[styles.successIcon, { backgroundColor: color.error + '18' }]}>
+              <AlertCircle color={color.error} size={30} />
+            </View>
+            <Text style={[styles.title, { color: color.text }]}>Xatolik</Text>
+            <Text style={[styles.subtitle, { color: color.textSecondary, textAlign: 'center' }]}>{errorMsg}</Text>
+          </>
+        )}
+      </View>
+
+      <View style={[styles.footer, { borderTopColor: color.border, backgroundColor: color.background }]}>
+        <TouchableOpacity style={[styles.confirmButton, { backgroundColor: success ? color.primary : color.error }]} onPress={() => router.replace('/seller/dashboard')}>
+          <Text style={styles.confirmText}>Bosh sahifaga qaytish</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 58, paddingHorizontal: 22, paddingBottom: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  backButton: { padding: 4 },
+  headerTitle: { fontSize: 18, fontWeight: '800' },
+  headerSpacer: { width: 32 },
+  content: { flex: 1, padding: 24, alignItems: 'center', justifyContent: 'center' },
+  successIcon: { width: 60, height: 60, borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginTop: 12 },
+  title: { fontSize: 25, fontWeight: '800', marginTop: 16, marginBottom: 6 },
+  subtitle: { fontSize: 14, marginBottom: 24 },
+  ticketPanel: { width: '100%', borderRadius: 18, padding: 18, alignItems: 'center', marginTop: 14 },
+  ticketLabel: { color: '#DBEAFE', fontSize: 11, fontWeight: '800', letterSpacing: 1.2 },
+  ticket: { color: '#fff', fontSize: 40, fontWeight: '900', marginVertical: 4 },
+  footer: { borderTopWidth: 1, padding: 20, paddingBottom: 30 },
+  confirmButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 17, borderRadius: 14 },
+  confirmText: { color: '#fff', fontSize: 15, fontWeight: '800', marginLeft: 8 },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\dashboard.tsx
+==========================================
+
+import React, { useState, useEffect, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { ArrowRight, CheckCircle2, Clock3, ScanLine, Users } from 'lucide-react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, RefreshControl } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+import { apiGetMe, apiGetBranch, apiGetBranchQueue, User, Branch, QueueItem } from '../../src/services/api';
+
+export default function SellerDashboard() {
+  const router = useRouter();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+
+  const [user, setUser] = useState<User | null>(null);
+  const [branch, setBranch] = useState<Branch | null>(null);
+  const [queue, setQueue] = useState<QueueItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Sotuvchi hozircha 1-filialga biriktirilgan deb hisoblaymiz (MVP)
+  const BRANCH_ID = 1;
+
+  const fetchData = async () => {
+    try {
+      const [userData, branchData, queueData] = await Promise.all([
+        apiGetMe().catch(() => null),
+        apiGetBranch(BRANCH_ID).catch(() => null),
+        apiGetBranchQueue(BRANCH_ID).catch(() => [])
+      ]);
+      if (userData) setUser(userData);
+      if (branchData) setBranch(branchData);
+      setQueue(queueData || []);
+    } catch (e) {
+      console.log('Seller dash error:', e);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchData();
+  };
+
+  if (loading && !refreshing) {
+    return (
+      <View style={[styles.container, { backgroundColor: color.background, justifyContent: 'center', alignItems: 'center' }]}>
+        <ActivityIndicator size="large" color={color.primary} />
+      </View>
+    );
+  }
+
+  const waitingQueue = queue.filter(q => q.status === 'waiting');
+  const confirmedQueue = queue.filter(q => q.status === 'confirmed');
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <ScrollView 
+        contentContainerStyle={styles.content} 
+        showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={color.primary} />}
+      >
+        <View style={styles.header}>
+          <View>
+            <Text style={[styles.eyebrow, { color: color.primary }]}>SOTUVCHI PANELI</Text>
+            <Text style={[styles.title, { color: color.text }]}>Xush kelibsiz, {user?.full_name?.split(' ')[0] || 'Xodim'}</Text>
+            <Text style={[styles.branch, { color: color.textSecondary }]}>{branch?.name || 'Filial'}</Text>
+          </View>
+          <View style={[styles.status, { backgroundColor: color.success + '18' }]}>
+            <View style={[styles.statusDot, { backgroundColor: color.success }]} />
+            <Text style={[styles.statusText, { color: color.success }]}>Ochiq</Text>
+          </View>
+        </View>
+        <TouchableOpacity
+          style={[styles.scanButton, { backgroundColor: color.primary }]}
+          onPress={() => router.push('/seller/scanner')}>
+          <View style={styles.scanIcon}><ScanLine color="#fff" size={25} /></View>
+          <View style={styles.scanCopy}>
+            <Text style={styles.scanTitle}>QR kodni skanerlash</Text>
+            <Text style={styles.scanSubtitle}>Mijoz navbatini tasdiqlash</Text>
+          </View>
+          <ArrowRight color="#fff" size={22} />
+        </TouchableOpacity>
+
+        <View style={styles.statsRow}>
+          <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <Users color={color.primary} size={20} />
+            <Text style={[styles.statNumber, { color: color.text }]}>{queue.length}</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Jami navbatlar</Text>
+          </View>
+          <View style={[styles.statCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <Clock3 color={color.warning} size={20} />
+            <Text style={[styles.statNumber, { color: color.text }]}>{waitingQueue.length}</Text>
+            <Text style={[styles.statLabel, { color: color.textSecondary }]}>Kutilmoqda</Text>
+          </View>
+        </View>
+
+        <View style={styles.sectionHeader}>
+          <Text style={[styles.sectionTitle, { color: color.text }]}>Navbatdagi mijozlar</Text>
+          <Text style={[styles.liveText, { color: color.success }]}>Jonli</Text>
+        </View>
+
+        {queue.length === 0 ? (
+          <Text style={{ color: color.textSecondary, marginTop: 10 }}>Hozircha navbatda hech kim yo'q.</Text>
+        ) : (
+          queue.filter(q => q.status !== 'completed' && q.status !== 'cancelled').map((item) => {
+            const isActive = item.status === 'confirmed';
+            return (
+              <View key={item.id} style={[styles.queueCard, { backgroundColor: color.surface, borderColor: isActive ? color.primary : color.border, flexDirection: 'column', alignItems: 'stretch' }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={[styles.ticket, { backgroundColor: isActive ? color.primary : color.border }]}>
+                    <Text style={[styles.ticketText, { color: isActive ? '#fff' : color.text }]}>A-{(item.queue_number).toString().padStart(3, '0')}</Text>
+                  </View>
+                  <View style={styles.customerCopy}>
+                    <Text style={[styles.customerName, { color: color.text }]}>{isActive ? 'Tasdiqlangan mijoz' : 'Kutayotgan mijoz'}</Text>
+                    <Text style={[styles.service, { color: color.textSecondary }]}>Umumiy xizmat</Text>
+                  </View>
+                  <View style={styles.waitCopy}>
+                    {isActive ? <CheckCircle2 color={color.success} size={18} /> : <Clock3 color={color.textSecondary} size={17} />}
+                    <Text style={[styles.wait, { color: color.textSecondary }]}>{isActive ? 'Xizmatda' : `${item.estimated_wait_minutes} min`}</Text>
+                  </View>
+                </View>
+                
+                {isActive && (
+                  <TouchableOpacity 
+                    style={{ marginTop: 12, backgroundColor: color.success, padding: 12, borderRadius: 10, alignItems: 'center' }}
+                    onPress={async () => {
+                      try {
+                        const { apiCompleteQueue } = require('../../src/services/api');
+                        await apiCompleteQueue(item.id);
+                        fetchData();
+                        alert("Mijozga xizmat ko'rsatish yakunlandi!");
+                      } catch (e: any) {
+                        alert(e.message || "Xatolik yuz berdi");
+                      }
+                    }}
+                  >
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Tugatish (Yakunlash)</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            );
+          })
+        )}
+
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  content: { padding: 24, paddingTop: 60, paddingBottom: 100 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 },
+  eyebrow: { fontSize: 11, fontWeight: '800', letterSpacing: 1.2, marginBottom: 8 },
+  title: { fontSize: 25, fontWeight: '800', marginBottom: 6 },
+  branch: { fontSize: 13 },
+  status: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10, paddingVertical: 7, borderRadius: 20 },
+  statusDot: { width: 7, height: 7, borderRadius: 4, marginRight: 6 },
+  statusText: { fontSize: 12, fontWeight: '700' },
+  scanButton: { flexDirection: 'row', alignItems: 'center', padding: 18, borderRadius: 18, marginBottom: 18 },
+  scanIcon: { width: 46, height: 46, borderRadius: 13, backgroundColor: '#ffffff25', alignItems: 'center', justifyContent: 'center' },
+  scanCopy: { flex: 1, marginLeft: 14 },
+  scanTitle: { color: '#fff', fontSize: 17, fontWeight: '800', marginBottom: 4 },
+  scanSubtitle: { color: '#DBEAFE', fontSize: 12 },
+  statsRow: { flexDirection: 'row', gap: 12, marginBottom: 30 },
+  statCard: { flex: 1, padding: 16, borderRadius: 16, borderWidth: 1 },
+  statNumber: { fontSize: 27, fontWeight: '800', marginTop: 12, marginBottom: 2 },
+  statLabel: { fontSize: 12 },
+  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+  sectionTitle: { fontSize: 19, fontWeight: '800' },
+  liveText: { fontSize: 12, fontWeight: '700' },
+  queueCard: { flexDirection: 'row', alignItems: 'center', padding: 12, borderRadius: 16, borderWidth: 1, marginBottom: 10 },
+  ticket: { width: 57, height: 57, borderRadius: 13, alignItems: 'center', justifyContent: 'center' },
+  ticketText: { fontSize: 14, fontWeight: '800' },
+  customerCopy: { flex: 1, marginLeft: 13 },
+  customerName: { fontSize: 15, fontWeight: '700', marginBottom: 5 },
+  service: { fontSize: 12 },
+  waitCopy: { alignItems: 'flex-end', gap: 5 },
+  wait: { fontSize: 11 },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\history.tsx
+==========================================
+
+import { CalendarDays, CheckCircle2, Clock3 } from 'lucide-react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+
+const history: any[] = [];
+
+export default function SellerHistory() {
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <Text style={[styles.eyebrow, { color: color.primary }]}>SELLER PANELI</Text>
+        <Text style={[styles.title, { color: color.text }]}>Xizmat tarixi</Text>
+        <Text style={[styles.subtitle, { color: color.textSecondary }]}>Tasdiqlangan mijozlar va bajarilgan xizmatlar</Text>
+
+        <View style={styles.summaryRow}>
+          <View style={[styles.summaryCard, { backgroundColor: color.primary }]}><Text style={styles.summaryLabel}>BUGUN</Text><Text style={styles.summaryNumber}>0</Text><Text style={styles.summaryHint}>mijoz</Text></View>
+          <View style={[styles.summaryCard, { backgroundColor: color.success }]}><Text style={styles.summaryLabel}>O‘RTACHA</Text><Text style={styles.summaryNumber}>0</Text><Text style={styles.summaryHint}>daqiqa</Text></View>
+        </View>
+
+        <View style={styles.listHeader}><Text style={[styles.sectionTitle, { color: color.text }]}>So‘nggi xizmatlar</Text><View style={styles.dateLabel}><CalendarDays color={color.textSecondary} size={15} /><Text style={[styles.dateText, { color: color.textSecondary }]}>Bugun</Text></View></View>
+        {history.length === 0 ? (
+          <View style={{ padding: 20, alignItems: 'center' }}>
+            <Text style={{ color: color.textSecondary }}>Hozircha xizmat tarixi yo'q.</Text>
+          </View>
+        ) : (
+          history.map((item) => (
+            <View key={item.number} style={[styles.historyCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+              <View style={[styles.ticket, { backgroundColor: color.success + '18' }]}><Text style={[styles.ticketText, { color: color.success }]}>{item.number}</Text></View>
+              <View style={styles.copy}><Text style={[styles.name, { color: color.text }]}>{item.name}</Text><Text style={[styles.service, { color: color.textSecondary }]}>{item.service}</Text><Text style={[styles.time, { color: color.textSecondary }]}>{item.time}</Text></View>
+              <View style={styles.result}><CheckCircle2 color={color.success} size={18} /><View style={styles.duration}><Clock3 color={color.textSecondary} size={12} /><Text style={[styles.durationText, { color: color.textSecondary }]}>{item.duration}</Text></View></View>
+            </View>
+          ))
+        )}
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 }, content: { padding: 24, paddingTop: 60, paddingBottom: 30 }, eyebrow: { fontSize: 11, fontWeight: '800', letterSpacing: 1.2, marginBottom: 8 }, title: { fontSize: 27, fontWeight: '800', marginBottom: 6 }, subtitle: { fontSize: 13, marginBottom: 25 }, summaryRow: { flexDirection: 'row', gap: 12, marginBottom: 30 }, summaryCard: { flex: 1, borderRadius: 16, padding: 16 }, summaryLabel: { color: '#DBEAFE', fontSize: 10, fontWeight: '800', letterSpacing: 1 }, summaryNumber: { color: '#fff', fontSize: 30, fontWeight: '900', marginTop: 10 }, summaryHint: { color: '#E0F2FE', fontSize: 12 }, listHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }, sectionTitle: { fontSize: 19, fontWeight: '800' }, dateLabel: { flexDirection: 'row', alignItems: 'center', gap: 5 }, dateText: { fontSize: 12 }, historyCard: { flexDirection: 'row', alignItems: 'center', borderWidth: 1, borderRadius: 16, padding: 12, marginBottom: 10 }, ticket: { width: 58, height: 58, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }, ticketText: { fontSize: 13, fontWeight: '900' }, copy: { flex: 1, marginLeft: 12 }, name: { fontSize: 14, fontWeight: '800', marginBottom: 4 }, service: { fontSize: 12, marginBottom: 5 }, time: { fontSize: 11 }, result: { alignItems: 'flex-end', gap: 7 }, duration: { flexDirection: 'row', alignItems: 'center', gap: 4 }, durationText: { fontSize: 11 },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\index.tsx
+==========================================
+
+import { Redirect } from 'expo-router';
+
+export default function SellerIndex() {
+  return <Redirect href="/seller/dashboard" />;
+}
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\scanner.tsx
+==========================================
+
+import { useState } from 'react';
+import { useRouter } from 'expo-router';
+import { CameraView, type BarcodeScanningResult, useCameraPermissions } from 'expo-camera';
+import { ArrowLeft, Camera, Flashlight, ScanLine, Settings as SettingsIcon } from 'lucide-react-native';
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+
+export default function SellerScanner() {
+  const router = useRouter();
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+  const [permission, requestPermission] = useCameraPermissions();
+  const [torchEnabled, setTorchEnabled] = useState(false);
+  const [scanned, setScanned] = useState(false);
+
+  if (!permission) {
+    return <View style={styles.permissionContainer}><Text style={styles.permissionText}>Kamera tekshirilmoqda...</Text></View>;
+  }
+
+  if (!permission.granted) {
+    const openSettings = () => Linking.openSettings();
+    return (
+      <View style={[styles.permissionContainer, { backgroundColor: color.background }]}>
+        <Camera color={color.primary} size={48} />
+        <Text style={[styles.permissionTitle, { color: color.text }]}>Kamera ruxsati kerak</Text>
+        <Text style={[styles.permissionText, { color: color.textSecondary }]}>QR kodni skanerlash uchun QueueLess kameradan foydalanadi.</Text>
+        <TouchableOpacity style={[styles.permissionButton, { backgroundColor: color.primary }]} onPress={permission.canAskAgain ? requestPermission : openSettings}>
+          {permission.canAskAgain ? <Camera color="#fff" size={18} /> : <SettingsIcon color="#fff" size={18} />}
+          <Text style={styles.permissionButtonText}>{permission.canAskAgain ? 'Ruxsat berish' : 'Sozlamalarni ochish'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => router.replace('/seller/dashboard')}><Text style={[styles.backText, { color: color.textSecondary }]}>Orqaga</Text></TouchableOpacity>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[styles.container, { backgroundColor: '#101827' }]}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.replace('/seller/dashboard')} style={styles.iconButton}>
+          <ArrowLeft color="#fff" size={24} />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>QR kodni skanerlash</Text>
+        <TouchableOpacity style={styles.iconButton} onPress={() => setTorchEnabled((enabled) => !enabled)} accessibilityLabel="Chiroqni yoqish yoki o‘chirish">
+          <Flashlight color="#fff" size={21} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.scannerArea}>
+        <CameraView
+          style={StyleSheet.absoluteFill}
+          facing="back"
+          enableTorch={torchEnabled}
+          barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
+          onBarcodeScanned={scanned ? undefined : ({ data }: BarcodeScanningResult) => {
+            setScanned(true);
+            router.push({ pathname: '/seller/confirm', params: { data } });
+          }}
+        />
+        <View style={styles.scannerFrame}>
+          <View style={[styles.corner, styles.topLeft, { borderColor: color.primary }]} />
+          <View style={[styles.corner, styles.topRight, { borderColor: color.primary }]} />
+          <View style={[styles.corner, styles.bottomLeft, { borderColor: color.primary }]} />
+          <View style={[styles.corner, styles.bottomRight, { borderColor: color.primary }]} />
+          <View style={[styles.scanLine, { backgroundColor: color.primary }]} />
+        </View>
+        <ScanLine color="#ffffff70" size={54} />
+        <Text style={styles.instruction}>Mijozning QR kodini ramka ichiga joylashtiring</Text>
+      </View>
+
+      <View style={styles.bottomSheet}>
+        <View style={styles.cameraIcon}><Camera color={color.primary} size={23} /></View>
+        <Text style={[styles.sheetTitle, { color: color.text }]}>Mijoz kodini kutmoqda</Text>
+        <Text style={[styles.sheetText, { color: color.textSecondary }]}>Kod o‘qilgach, mijoz ma’lumotlari shu yerda tekshiriladi.</Text>
+        <Text style={[styles.sheetText, { color: color.textSecondary }]}>QR kod topilmasa, kamerani ramkaga yaqinroq tuting.</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  header: { paddingTop: 58, paddingHorizontal: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  iconButton: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#ffffff16', alignItems: 'center', justifyContent: 'center' },
+  headerTitle: { color: '#fff', fontSize: 17, fontWeight: '800' },
+  scannerArea: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingBottom: 90 },
+  scannerFrame: { width: 260, height: 260, marginBottom: 24, position: 'relative' },
+  corner: { position: 'absolute', width: 35, height: 35, borderWidth: 4 },
+  topLeft: { top: 0, left: 0, borderRightWidth: 0, borderBottomWidth: 0, borderTopLeftRadius: 12 },
+  topRight: { top: 0, right: 0, borderLeftWidth: 0, borderBottomWidth: 0, borderTopRightRadius: 12 },
+  bottomLeft: { bottom: 0, left: 0, borderRightWidth: 0, borderTopWidth: 0, borderBottomLeftRadius: 12 },
+  bottomRight: { bottom: 0, right: 0, borderLeftWidth: 0, borderTopWidth: 0, borderBottomRightRadius: 12 },
+  scanLine: { height: 2, position: 'absolute', left: 12, right: 12, top: 127 },
+  instruction: { color: '#D1D5DB', fontSize: 14, textAlign: 'center', marginTop: 20, paddingHorizontal: 45 },
+  bottomSheet: { backgroundColor: '#fff', borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 25, alignItems: 'center' },
+  cameraIcon: { width: 46, height: 46, borderRadius: 15, backgroundColor: '#EFF6FF', alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  sheetTitle: { fontSize: 18, fontWeight: '800', marginBottom: 7 },
+  sheetText: { fontSize: 13, textAlign: 'center', lineHeight: 19, marginBottom: 18 },
+  demoButton: { width: '100%', padding: 16, borderRadius: 14, alignItems: 'center' },
+  demoButtonText: { color: '#fff', fontSize: 15, fontWeight: '800' },
+  permissionContainer: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 28 },
+  permissionTitle: { fontSize: 22, fontWeight: '800', marginTop: 18, marginBottom: 8, textAlign: 'center' },
+  permissionText: { fontSize: 14, lineHeight: 20, textAlign: 'center', maxWidth: 320 },
+  permissionButton: { minHeight: 52, paddingHorizontal: 22, borderRadius: 14, flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 24 },
+  permissionButtonText: { color: '#fff', fontSize: 15, fontWeight: '800' },
+  backText: { marginTop: 20, fontSize: 14, fontWeight: '600' },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\settings.tsx
+==========================================
+
+import { useState, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
+import { ArrowLeft, Bell, Building2, Check, Clock3, Globe2, LogOut, Moon, Pencil, Plus, Trash2, UserRound } from 'lucide-react-native';
+import * as ImagePicker from 'expo-image-picker';
+import { Image, Modal, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import { Colors } from '../../src/theme/colors';
+import { AppLanguage, useSettingsStore } from '../../src/store/settingsStore';
+import { useTranslation } from '../../src/i18n';
+import { useAuthStore } from '../../src/store/authStore';
+import { apiGetMe, apiGetBranch, User, Branch } from '../../src/services/api';
+
+type Service = { id: number; name: string; description: string; duration: string };
+
+const initialServices: Service[] = [
+  { id: 1, name: 'Kassa xizmati', description: "Naqd pul yechish va to'lovlarni amalga oshirish", duration: '10 daqiqa' },
+  { id: 2, name: 'Plastik karta olish', description: 'Yangi karta ochish yoki tayyor kartani olish', duration: '15 daqiqa' },
+  { id: 3, name: 'Hisob ochish', description: 'Jismoniy shaxslar uchun bank hisob raqami', duration: '20 daqiqa' },
+];
+
+// Seller MVP: hozircha 1-filialga biriktirilgan
+const BRANCH_ID = 1;
+
+export default function SellerSettings() {
+  const router = useRouter();
+  const { language, theme, setLanguage, setTheme, notificationsEnabled, setNotificationsEnabled } = useSettingsStore();
+  const color = Colors[theme];
+  const text = useTranslation(language);
+  const logout = useAuthStore((state) => state.logout);
+  
+  const [user, setUser] = useState<User | null>(null);
+  const [branch, setBranch] = useState<Branch | null>(null);
+
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [languageModalVisible, setLanguageModalVisible] = useState(false);
+  const [services, setServices] = useState(initialServices);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [duration, setDuration] = useState('10');
+
+  const fetchData = async () => {
+    try {
+      const [userData, branchData] = await Promise.all([
+        apiGetMe().catch(() => null),
+        apiGetBranch(BRANCH_ID).catch(() => null),
+      ]);
+      if (userData) setUser(userData);
+      if (branchData) setBranch(branchData);
+    } catch (e) {
+      console.log('Seller settings fetch error:', e);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
+  const startEdit = (service: Service) => {
+    setEditingId(service.id);
+    setName(service.name);
+    setDescription(service.description);
+    setDuration(service.duration.replace(' daqiqa', ''));
+  };
+
+  const startAdd = () => {
+    setEditingId(0);
+    setName('');
+    setDescription('');
+    setDuration('10');
+  };
+
+  const saveService = () => {
+    if (!name.trim()) return;
+    const service = { id: editingId || Date.now(), name: name.trim(), description: description.trim(), duration: `${duration || '10'} daqiqa` };
+    setServices((current) => editingId ? current.map((item) => item.id === editingId ? service : item) : [...current, service]);
+    setEditingId(null);
+  };
+
+  const removeService = (id: number) => setServices((current) => current.filter((item) => item.id !== id));
+
+  const chooseProfileImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ['images'], allowsEditing: true, aspect: [1, 1], quality: 0.8 });
+    if (!result.canceled) setProfileImage(result.assets[0].uri);
+  };
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      <View style={[styles.header, { borderBottomColor: color.border }]}>
+        <TouchableOpacity onPress={() => router.replace('/seller/dashboard')} style={styles.backButton}><ArrowLeft color={color.text} size={24} /></TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: color.text }]}>Seller sozlamalari</Text>
+        <View style={styles.headerSpacer} />
+      </View>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <Text style={[styles.eyebrow, { color: color.primary }]}>PROFIL</Text>
+        <View style={[styles.profileCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <TouchableOpacity onPress={chooseProfileImage} style={[styles.avatar, { backgroundColor: color.primary + '18' }]}>
+            {profileImage ? <Image source={{ uri: profileImage }} style={styles.avatarImage} /> : <UserRound color={color.primary} size={31} />}
+            <View style={[styles.cameraBadge, { backgroundColor: color.primary }]}><Pencil color="#fff" size={11} /></View>
+          </TouchableOpacity>
+          <View style={styles.profileCopy}>
+            <Text style={[styles.profileName, { color: color.text }]}>{user?.full_name || 'Yuklanmoqda...'}</Text>
+            <Text style={[styles.profilePhone, { color: color.textSecondary }]}>{user?.phone || '...'}</Text>
+            <Text style={[styles.roleLabel, { color: color.primary }]}>Seller · {branch?.name || ''}</Text>
+          </View>
+        </View>
+
+        <Text style={[styles.eyebrow, { color: color.primary }]}>UMUMIY SOZLAMALAR</Text>
+        <View style={[styles.preferenceCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <View style={[styles.preferenceRow, { borderBottomColor: color.border }]}><View style={styles.preferenceIcon}><Moon color={color.textSecondary} size={19} /></View><View style={styles.preferenceCopy}><Text style={[styles.preferenceTitle, { color: color.text }]}>Tungi rejim</Text><Text style={[styles.preferenceHint, { color: color.textSecondary }]}>Ilova ko‘rinishini o‘zgartirish</Text></View><Switch value={theme === 'dark'} onValueChange={(enabled) => setTheme(enabled ? 'dark' : 'light')} /></View>
+          <View style={styles.preferenceRow}><View style={styles.preferenceIcon}><Bell color={color.textSecondary} size={19} /></View><View style={styles.preferenceCopy}><Text style={[styles.preferenceTitle, { color: color.text }]}>{text.notifications}</Text><Text style={[styles.preferenceHint, { color: color.textSecondary }]}>Navbat va mijozlar haqida xabarlar</Text></View><Switch value={notificationsEnabled} onValueChange={setNotificationsEnabled} /></View>
+          <TouchableOpacity style={styles.preferenceRow} onPress={() => setLanguageModalVisible(true)}><View style={styles.preferenceIcon}><Globe2 color={color.textSecondary} size={19} /></View><View style={styles.preferenceCopy}><Text style={[styles.preferenceTitle, { color: color.text }]}>{text.language}</Text><Text style={[styles.preferenceHint, { color: color.textSecondary }]}>{language === 'uz' ? text.uzbek : language === 'ru' ? text.russian : text.english}</Text></View><Text style={[styles.languageValue, { color: color.primary }]}>›</Text></TouchableOpacity>
+        </View>
+
+        <Modal visible={languageModalVisible} transparent animationType="fade" onRequestClose={() => setLanguageModalVisible(false)}>
+          <TouchableOpacity style={styles.modalBackdrop} activeOpacity={1} onPress={() => setLanguageModalVisible(false)}>
+            <View style={[styles.languageModal, { backgroundColor: color.surface }]}>
+              {([['uz', text.uzbek], ['ru', text.russian], ['en', text.english]] as [AppLanguage, string][]).map(([value, label]) => (
+                <TouchableOpacity key={value} style={[styles.languageOption, { borderBottomColor: color.border }]} onPress={() => { setLanguage(value); setLanguageModalVisible(false); }}>
+                  <Text style={[styles.languageOptionText, { color: color.text }]}>{label}</Text>
+                  {language === value && <Text style={{ color: color.primary }}>✓</Text>}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </Modal>
+
+        <Text style={[styles.eyebrow, { color: color.primary }]}>FILIAL MA’LUMOTLARI</Text>
+        <View style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <View style={[styles.branchIcon, { backgroundColor: color.primary + '15' }]}><Building2 color={color.primary} size={23} /></View>
+          <View style={styles.branchCopy}>
+            <Text style={[styles.branchName, { color: color.text }]}>{branch?.name || 'Yuklanmoqda...'}</Text>
+            <Text style={[styles.branchAddress, { color: color.textSecondary }]}>{branch?.address || ''}</Text>
+          </View>
+          <TouchableOpacity><Pencil color={color.textSecondary} size={18} /></TouchableOpacity>
+        </View>
+
+        <View style={styles.sectionHeader}><View><Text style={[styles.sectionTitle, { color: color.text }]}>Xizmatlar</Text><Text style={[styles.sectionSubtitle, { color: color.textSecondary }]}>Mijozlar ko‘radigan xizmatlar ro‘yxati</Text></View><Text style={[styles.count, { color: color.primary }]}>{services.length} ta</Text></View>
+        {services.map((service) => (
+          <View key={service.id} style={[styles.serviceCard, { backgroundColor: color.surface, borderColor: color.border }]}>
+            <View style={styles.serviceTop}><View style={[styles.serviceIcon, { backgroundColor: color.success + '18' }]}><Check color={color.success} size={17} /></View><View style={styles.serviceCopy}><Text style={[styles.serviceName, { color: color.text }]}>{service.name}</Text><Text style={[styles.serviceDescription, { color: color.textSecondary }]}>{service.description || 'Description kiritilmagan'}</Text></View><TouchableOpacity onPress={() => startEdit(service)} style={styles.action}><Pencil color={color.primary} size={17} /></TouchableOpacity><TouchableOpacity onPress={() => removeService(service.id)} style={styles.action}><Trash2 color={color.error} size={17} /></TouchableOpacity></View>
+            <View style={styles.duration}><Clock3 color={color.textSecondary} size={14} /><Text style={[styles.durationText, { color: color.textSecondary }]}>{service.duration}</Text></View>
+          </View>
+        ))}
+        <TouchableOpacity style={[styles.addButton, { borderColor: color.primary }]} onPress={startAdd}><Plus color={color.primary} size={20} /><Text style={[styles.addText, { color: color.primary }]}>Yangi xizmat qo‘shish</Text></TouchableOpacity>
+
+        {editingId !== null && <View style={[styles.editor, { backgroundColor: color.surface, borderColor: color.border }]}>
+          <Text style={[styles.editorTitle, { color: color.text }]}>{editingId === 0 ? 'Yangi xizmat' : 'Xizmatni tahrirlash'}</Text>
+          <Text style={[styles.label, { color: color.textSecondary }]}>Xizmat nomi</Text>
+          <TextInput value={name} onChangeText={setName} placeholder="Masalan, Kredit maslahati" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.background }]} />
+          <Text style={[styles.label, { color: color.textSecondary }]}>Qisqa description</Text>
+          <TextInput value={description} onChangeText={setDescription} multiline placeholder="Mijoz bu xizmat haqida nimani bilishi kerak?" placeholderTextColor={color.textSecondary} style={[styles.input, styles.textArea, { color: color.text, borderColor: color.border, backgroundColor: color.background }]} />
+          <Text style={[styles.label, { color: color.textSecondary }]}>Davomiyligi (daqiqa)</Text>
+          <TextInput value={duration} onChangeText={setDuration} keyboardType="number-pad" style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.background }]} />
+          <View style={styles.editorActions}><TouchableOpacity onPress={() => setEditingId(null)} style={[styles.cancelButton, { borderColor: color.border }]}><Text style={[styles.cancelText, { color: color.textSecondary }]}>Bekor qilish</Text></TouchableOpacity><TouchableOpacity onPress={saveService} style={[styles.saveButton, { backgroundColor: color.primary }]}><Check color="#fff" size={18} /><Text style={styles.saveText}>Saqlash</Text></TouchableOpacity></View>
+        </View>}
+        <TouchableOpacity 
+          style={[styles.logoutButton, { backgroundColor: color.primary + '12', borderColor: color.primary, borderWidth: 1 }]} 
+          onPress={() => router.replace('/(tabs)/home')}
+        >
+          <Globe2 color={color.primary} size={19} />
+          <Text style={[styles.logoutText, { color: color.primary }]}>Mijoz paneliga o'tish</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.logoutButton, { backgroundColor: color.error + '12' }]} onPress={() => { logout(); router.replace('/(auth)/login'); }}>
+          <LogOut color={color.error} size={19} />
+          <Text style={[styles.logoutText, { color: color.error }]}>Seller accountdan chiqish</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 }, header: { paddingTop: 58, paddingBottom: 16, paddingHorizontal: 22, borderBottomWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }, backButton: { padding: 4 }, headerTitle: { fontSize: 18, fontWeight: '800' }, headerSpacer: { width: 32 }, content: { padding: 24, paddingBottom: 45 }, eyebrow: { fontSize: 11, letterSpacing: 1.1, fontWeight: '800', marginBottom: 10 }, profileCard: { flexDirection: 'row', alignItems: 'center', padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 28 }, avatar: { width: 68, height: 68, borderRadius: 22, alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'visible' }, avatarImage: { width: 68, height: 68, borderRadius: 22 }, cameraBadge: { position: 'absolute', right: -5, bottom: -5, width: 23, height: 23, borderRadius: 8, alignItems: 'center', justifyContent: 'center' }, profileCopy: { flex: 1, marginLeft: 14 }, profileName: { fontSize: 17, fontWeight: '800', marginBottom: 4 }, profilePhone: { fontSize: 12, marginBottom: 5 }, roleLabel: { fontSize: 12, fontWeight: '800' }, preferenceCard: { borderRadius: 16, borderWidth: 1, paddingHorizontal: 15, marginBottom: 30 }, preferenceRow: { minHeight: 70, flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1 }, preferenceIcon: { width: 32, alignItems: 'center' }, preferenceCopy: { flex: 1, marginLeft: 8 }, preferenceTitle: { fontSize: 14, fontWeight: '800', marginBottom: 4 }, preferenceHint: { fontSize: 11 }, languageValue: { fontSize: 25, fontWeight: '300' }, branchCard: { flexDirection: 'row', alignItems: 'center', padding: 15, borderRadius: 16, borderWidth: 1, marginBottom: 30 }, branchIcon: { width: 44, height: 44, borderRadius: 14, alignItems: 'center', justifyContent: 'center' }, branchCopy: { flex: 1, marginLeft: 12 }, branchName: { fontSize: 16, fontWeight: '800', marginBottom: 4 }, branchAddress: { fontSize: 12 }, sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 14 }, sectionTitle: { fontSize: 21, fontWeight: '800', marginBottom: 4 }, sectionSubtitle: { fontSize: 12 }, count: { fontSize: 13, fontWeight: '800' }, serviceCard: { padding: 15, borderRadius: 16, borderWidth: 1, marginBottom: 10 }, serviceTop: { flexDirection: 'row', alignItems: 'flex-start' }, serviceIcon: { width: 30, height: 30, borderRadius: 10, alignItems: 'center', justifyContent: 'center' }, serviceCopy: { flex: 1, marginLeft: 10 }, serviceName: { fontSize: 15, fontWeight: '800', marginBottom: 5 }, serviceDescription: { fontSize: 12, lineHeight: 17 }, action: { padding: 5, marginLeft: 2 }, duration: { flexDirection: 'row', alignItems: 'center', marginTop: 12, marginLeft: 40, gap: 5 }, durationText: { fontSize: 11 }, addButton: { minHeight: 52, borderWidth: 1, borderRadius: 14, borderStyle: 'dashed', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 5 }, addText: { fontSize: 14, fontWeight: '800', marginLeft: 8 }, editor: { borderWidth: 1, borderRadius: 18, padding: 18, marginTop: 24 }, editorTitle: { fontSize: 18, fontWeight: '800', marginBottom: 3 }, label: { fontSize: 12, fontWeight: '700', marginTop: 14, marginBottom: 7 }, input: { borderWidth: 1, borderRadius: 12, padding: 13, fontSize: 14 }, textArea: { minHeight: 78, textAlignVertical: 'top' }, editorActions: { flexDirection: 'row', gap: 10, marginTop: 20 }, cancelButton: { flex: 1, borderWidth: 1, borderRadius: 12, alignItems: 'center', justifyContent: 'center', minHeight: 48 }, cancelText: { fontSize: 13, fontWeight: '700' }, saveButton: { flex: 1, borderRadius: 12, minHeight: 48, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 7 }, saveText: { color: '#fff', fontSize: 13, fontWeight: '800' }, modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'center', padding: 24 }, languageModal: { borderRadius: 16, paddingHorizontal: 20 }, languageOption: { paddingVertical: 18, borderBottomWidth: 1, flexDirection: 'row', justifyContent: 'space-between' }, languageOptionText: { fontSize: 16, fontWeight: '500' }, logoutButton: { minHeight: 52, borderRadius: 14, marginTop: 28, marginBottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }, logoutText: { fontSize: 14, fontWeight: '800', marginLeft: 8 },
+});
+
+
+==========================================
+FILE: C:\Users\user\Desktop\ai_agent_framework\QueueLess\queue_less_expo\app\seller\_layout.tsx
+==========================================
+
+import { Tabs } from 'expo-router';
+import { Platform } from 'react-native';
+import { BarChart3, Home, Settings } from 'lucide-react-native';
+import { Colors } from '../../src/theme/colors';
+import { useSettingsStore } from '../../src/store/settingsStore';
+
+export default function SellerLayout() {
+  const theme = useSettingsStore((state) => state.theme);
+  const color = Colors[theme];
+
+  return (
+    <Tabs screenOptions={{
+      headerShown: false,
+      tabBarActiveTintColor: color.primary,
+      tabBarInactiveTintColor: color.textSecondary,
+      tabBarStyle: {
+        backgroundColor: color.background,
+        borderTopColor: color.border,
+        height: Platform.OS === 'ios' ? 88 : 68,
+        paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+        paddingTop: 12,
+      },
+    }}>
+      <Tabs.Screen name="dashboard" options={{ title: 'Home', tabBarIcon: ({ color: iconColor, size }) => <Home color={iconColor} size={size} /> }} />
+      <Tabs.Screen name="history" options={{ title: 'Xizmat tarixi', tabBarIcon: ({ color: iconColor, size }) => <BarChart3 color={iconColor} size={size} /> }} />
+      <Tabs.Screen name="settings" options={{ title: 'Sozlamalar', tabBarIcon: ({ color: iconColor, size }) => <Settings color={iconColor} size={size} /> }} />
+      <Tabs.Screen name="index" options={{ href: null }} />
+      <Tabs.Screen name="scanner" options={{ href: null }} />
+      <Tabs.Screen name="confirm" options={{ href: null }} />
+    </Tabs>
+  );
+}

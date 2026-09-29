@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useRouter } from 'expo-router';
+import { useState, useCallback } from 'react';
+import { useRouter, useFocusEffect } from 'expo-router';
 import { CameraView, type BarcodeScanningResult, useCameraPermissions } from 'expo-camera';
 import { ArrowLeft, Camera, Flashlight, ScanLine, Settings as SettingsIcon } from 'lucide-react-native';
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -13,6 +13,15 @@ export default function SellerScanner() {
   const [permission, requestPermission] = useCameraPermissions();
   const [torchEnabled, setTorchEnabled] = useState(false);
   const [scanned, setScanned] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      setIsFocused(true);
+      setScanned(false);
+      return () => setIsFocused(false);
+    }, [])
+  );
 
   if (!permission) {
     return <View style={styles.permissionContainer}><Text style={styles.permissionText}>Kamera tekshirilmoqda...</Text></View>;
@@ -47,16 +56,18 @@ export default function SellerScanner() {
       </View>
 
       <View style={styles.scannerArea}>
-        <CameraView
-          style={StyleSheet.absoluteFill}
-          facing="back"
-          enableTorch={torchEnabled}
-          barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
-          onBarcodeScanned={scanned ? undefined : ({ data }: BarcodeScanningResult) => {
-            setScanned(true);
-            router.push({ pathname: '/seller/confirm', params: { data } });
-          }}
-        />
+        {isFocused && (
+          <CameraView
+            style={StyleSheet.absoluteFill}
+            facing="back"
+            enableTorch={torchEnabled}
+            barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
+            onBarcodeScanned={scanned ? undefined : ({ data }: BarcodeScanningResult) => {
+              setScanned(true);
+              router.push({ pathname: '/seller/confirm', params: { data } });
+            }}
+          />
+        )}
         <View style={styles.scannerFrame}>
           <View style={[styles.corner, styles.topLeft, { borderColor: color.primary }]} />
           <View style={[styles.corner, styles.topRight, { borderColor: color.primary }]} />

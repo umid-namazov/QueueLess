@@ -17,6 +17,12 @@ export default function BookingScreen() {
   const [ticketNumber, setTicketNumber] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const today = new Date().toLocaleDateString('uz-UZ', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   const handleConfirm = async () => {
     try {
       setLoading(true);
@@ -77,7 +83,7 @@ export default function BookingScreen() {
           <View style={styles.divider} />
           
           <Text style={[styles.summaryTitle, { color: color.textSecondary }]}>Sana va Vaqt:</Text>
-          <Text style={[styles.summaryValue, { color: color.text }]}>Bugun, Hozir (jonli navbat)</Text>
+          <Text style={[styles.summaryValue, { color: color.text }]}>{today} (jonli navbat)</Text>
         </View>
 
         <Text style={[styles.warningText, { color: color.warning }]}>

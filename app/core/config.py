@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 kun
 
-    FCM_SERVER_KEY: str = ""
+    EXPO_ACCESS_TOKEN: str = ""
 
     BACKEND_CORS_ORIGINS: List[str] = ["*"]
 

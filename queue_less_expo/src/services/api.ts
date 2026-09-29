@@ -3,8 +3,6 @@ import Toast from 'react-native-toast-message';
 import { useAuthStore } from '../store/authStore';
 
 const API_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:8000/api/v1').replace(/\/$/, '');
-const API_MODE = process.env.EXPO_PUBLIC_API_MODE ?? 'mock';
-const useMockApi = API_MODE !== 'api';
 
 const client = axios.create({ baseURL: API_BASE_URL });
 
@@ -87,6 +85,8 @@ export interface Branch {
   working_hours: string;
   current_waiting_count: number;
   estimated_wait_minutes: number;
+  image_url?: string;
+  services?: any[];
 }
 
 export async function apiGetBranches(): Promise<Branch[]> {
@@ -132,7 +132,7 @@ export interface QueueItem {
   people_ahead: number;
   estimated_wait_minutes: number;
   qr_code?: string;
-  branch_name?: string; // We might need to manually populate this if backend doesn't return it
+  branch_name?: string; // Backend /queue/my dan qaytariladi
 }
 
 export async function apiGetMyQueue(): Promise<QueueItem[]> {
@@ -152,6 +152,30 @@ export async function apiGetMyBranches(): Promise<Branch[]> {
 
 export async function apiConfirmQueue(qrCode: string): Promise<any> {
   return request(`/queue/confirm/${qrCode}`, { method: 'post' });
+}
+
+export async function apiGetBranchHistory(id: number): Promise<QueueItem[]> {
+  return request<QueueItem[]>(`/branches/${id}/history`, { method: 'get' });
+}
+
+export async function apiUpdateBranch(id: number, data: any): Promise<Branch> {
+  return request<Branch>(`/branches/${id}`, { method: 'put', data });
+}
+
+export async function apiGetBranchServices(id: number): Promise<any[]> {
+  return request<any[]>(`/branches/${id}/services`, { method: 'get' });
+}
+
+export async function apiCreateService(branchId: number, data: any): Promise<any> {
+  return request<any>(`/branches/${branchId}/services`, { method: 'post', data });
+}
+
+export async function apiUpdateService(branchId: number, serviceId: number, data: any): Promise<any> {
+  return request<any>(`/branches/${branchId}/services/${serviceId}`, { method: 'put', data });
+}
+
+export async function apiDeleteService(branchId: number, serviceId: number): Promise<any> {
+  return request<any>(`/branches/${branchId}/services/${serviceId}`, { method: 'delete' });
 }
 
 export async function apiCompleteQueue(bookingId: number): Promise<any> {

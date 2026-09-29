@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Activi
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { apiRequestBranch } from '../../src/services/api';
+import { useTranslation } from '../../src/i18n';
 import Toast from 'react-native-toast-message';
 
 const categories = ['Sartaroshxona', 'Klinika', 'Avtoyuvish', 'Kafe va restoran', 'Boshqa'];
@@ -12,6 +13,8 @@ const categories = ['Sartaroshxona', 'Klinika', 'Avtoyuvish', 'Kafe va restoran'
 export default function BusinessOnboarding() {
   const router = useRouter();
   const theme = useSettingsStore((state) => state.theme);
+  const language = useSettingsStore((state) => state.language);
+  const text = useTranslation(language);
   const color = Colors[theme];
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,15 +53,14 @@ export default function BusinessOnboarding() {
     return (
       <View style={[styles.container, styles.center, { backgroundColor: color.background }]}>
         <View style={[styles.statusIcon, { backgroundColor: color.warning + '20' }]}><Clock3 color={color.warning} size={34} /></View>
-        <Text style={[styles.successTitle, { color: color.text }]}>Ariza yuborildi</Text>
-        <Text style={[styles.successText, { color: color.textSecondary }]}>Biznesingiz ma’lumotlari tekshirilmoqda. Tasdiqlangach, filialingiz mijozlarga ko‘rinadi.</Text>
+        <Text style={[styles.successTitle, { color: color.text }]}>{text.applicationSuccess}</Text>
+        <Text style={[styles.successText, { color: color.textSecondary }]}>{text.applicationSuccessDesc}</Text>
         <View style={[styles.pendingCard, { backgroundColor: color.surface, borderColor: color.border }]}>
-          <Text style={[styles.pendingLabel, { color: color.textSecondary }]}>HOLAT</Text>
-          <Text style={[styles.pendingValue, { color: color.warning }]}>Tekshiruvda</Text>
-          <Text style={[styles.pendingHint, { color: color.textSecondary }]}>Odatda 1 ish kuni ichida javob beramiz</Text>
+          <Text style={[styles.pendingLabel, { color: color.textSecondary }]}>{text.status.toUpperCase()}</Text>
+          <Text style={[styles.pendingValue, { color: color.warning }]}>{text.upcoming}</Text>
         </View>
         <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={() => router.replace('/seller/dashboard')}>
-          <Text style={styles.buttonText}>Seller paneliga o‘tish</Text>
+          <Text style={styles.buttonText}>{text.sellerPanelMenu}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -68,19 +70,18 @@ export default function BusinessOnboarding() {
     <View style={[styles.container, { backgroundColor: color.background }]}>
       <View style={[styles.header, { borderBottomColor: color.border }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}><ArrowLeft color={color.text} size={24} /></TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: color.text }]}>Biznes qo‘shish</Text>
+        <Text style={[styles.headerTitle, { color: color.text }]}>{text.joinBusiness.split('(')[0]}</Text>
         <View style={styles.headerSpacer} />
       </View>
       <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={[styles.hero, { backgroundColor: color.primary + '12' }]}>
           <View style={[styles.heroIcon, { backgroundColor: color.primary }]}><Building2 color="#fff" size={24} /></View>
-          <View style={styles.heroCopy}><Text style={[styles.heroTitle, { color: color.text }]}>Filialingizni QueueLess’ga qo‘shing</Text><Text style={[styles.heroText, { color: color.textSecondary }]}>Mijozlar navbatni oldindan band qilsin.</Text></View>
+          <View style={styles.heroCopy}><Text style={[styles.heroTitle, { color: color.text }]}>{text.joinBusiness}</Text></View>
         </View>
 
-        <Text style={[styles.sectionTitle, { color: color.text }]}>Asosiy ma’lumotlar</Text>
-        <Text style={[styles.label, { color: color.textSecondary }]}>Biznes nomi</Text>
-        <TextInput value={businessName} onChangeText={setBusinessName} placeholder="Masalan, Baraka Barber" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
-        <Text style={[styles.label, { color: color.textSecondary }]}>Faoliyat turi</Text>
+        <Text style={[styles.label, { color: color.textSecondary }]}>{text.businessName}</Text>
+        <TextInput value={businessName} onChangeText={setBusinessName} placeholder="QueueLess Barber" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+        <Text style={[styles.label, { color: color.textSecondary }]}>{text.category}</Text>
         <View style={[styles.select, { borderColor: color.border, backgroundColor: color.surface }]}>
           <Text style={[styles.selectText, { color: color.text }]}>{category}</Text><ChevronDown color={color.textSecondary} size={19} />
         </View>
@@ -88,18 +89,16 @@ export default function BusinessOnboarding() {
           {categories.map((item) => <TouchableOpacity key={item} onPress={() => setCategory(item)} style={[styles.category, { borderColor: category === item ? color.primary : color.border, backgroundColor: category === item ? color.primary + '12' : color.surface }]}><Text style={{ color: category === item ? color.primary : color.textSecondary, fontSize: 12, fontWeight: '700' }}>{item}</Text></TouchableOpacity>)}
         </ScrollView>
         {category === 'Boshqa' && <>
-          <Text style={[styles.label, { color: color.textSecondary }]}>Faoliyat turi nomi</Text>
-          <TextInput value={customCategory} onChangeText={setCustomCategory} placeholder="Masalan, tikuvchilik" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
+          <Text style={[styles.label, { color: color.textSecondary }]}>{text.otherCategory}</Text>
+          <TextInput value={customCategory} onChangeText={setCustomCategory} placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
         </>}
-        <Text style={[styles.label, { color: color.textSecondary }]}>Telefon raqami</Text>
+        <Text style={[styles.label, { color: color.textSecondary }]}>{text.businessPhone}</Text>
         <TextInput value={phone} onChangeText={setPhone} keyboardType="phone-pad" style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
-        <Text style={[styles.label, { color: color.textSecondary }]}>Manzil</Text>
-        <View style={[styles.inputWithIcon, { borderColor: color.border, backgroundColor: color.surface }]}><MapPin color={color.textSecondary} size={18} /><TextInput value={address} onChangeText={setAddress} placeholder="Toshkent shahri, ..." placeholderTextColor={color.textSecondary} style={[styles.iconInput, { color: color.text }]} /></View>
-        <Text style={[styles.label, { color: color.textSecondary }]}>Xarita havolasi</Text>
-        <TextInput value={mapUrl} onChangeText={setMapUrl} autoCapitalize="none" keyboardType="url" placeholder="Google Maps yoki Yandex Maps URL" placeholderTextColor={color.textSecondary} style={[styles.input, { color: color.text, borderColor: color.border, backgroundColor: color.surface }]} />
-        <View style={[styles.note, { backgroundColor: color.success + '12' }]}><BadgeCheck color={color.success} size={18} /><Text style={[styles.noteText, { color: color.textSecondary }]}>Ariza admin tomonidan tekshiriladi. Tasdiqlangan filiallar mijozlarga ko‘rinadi.</Text></View>
+        <Text style={[styles.label, { color: color.textSecondary }]}>{text.address}</Text>
+        <View style={[styles.inputWithIcon, { borderColor: color.border, backgroundColor: color.surface }]}><MapPin color={color.textSecondary} size={18} /><TextInput value={address} onChangeText={setAddress} placeholderTextColor={color.textSecondary} style={[styles.iconInput, { color: color.text }]} /></View>
+        <View style={[styles.note, { backgroundColor: color.success + '12', marginTop: 16 }]}><BadgeCheck color={color.success} size={18} /><Text style={[styles.noteText, { color: color.textSecondary }]}>{text.applicationSuccessDesc}</Text></View>
         <TouchableOpacity style={[styles.button, { backgroundColor: color.primary }]} onPress={handleSubmit} disabled={loading}>
-          {loading ? <ActivityIndicator color="#fff" /> : <><Send color="#fff" size={18} /><Text style={styles.buttonText}>Tekshiruvga yuborish</Text></>}
+          {loading ? <ActivityIndicator color="#fff" /> : <><Send color="#fff" size={18} /><Text style={styles.buttonText}>{text.submitApplication}</Text></>}
         </TouchableOpacity>
       </ScrollView>
     </View>

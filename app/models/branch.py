@@ -24,6 +24,9 @@ class Branch(Base):
     # Seller tasdiqlash tizimi
     is_approved: Mapped[bool] = mapped_column(Boolean, default=True)
     owner_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"), nullable=True)
+    image_url: Mapped[str] = mapped_column(String(500), nullable=True)
 
     bookings = relationship("Booking", back_populates="branch", cascade="all, delete-orphan")
     owner = relationship("User", foreign_keys=[owner_id])
+    services = relationship("Service", back_populates="branch", cascade="all, delete-orphan")
+

@@ -59,12 +59,15 @@ def create_booking(db: Session, user_id: int, branch_id: int) -> Booking:
             detail="Siz bu filialda bugun uchun allaqachon navbatga yozilgansiz",
         )
 
-    last_number = (
-        db.query(func.max(Booking.queue_number))
+    # Use with_for_update to prevent race condition on queue_number
+    last_booking = (
+        db.query(Booking)
         .filter(Booking.branch_id == branch_id, Booking.queue_date == today)
-        .scalar()
+        .with_for_update()
+        .order_by(Booking.queue_number.desc())
+        .first()
     )
-    next_number = (last_number or 0) + 1
+    next_number = (last_booking.queue_number if last_booking else 0) + 1
 
     booking = Booking(
         user_id=user_id,

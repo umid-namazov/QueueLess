@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: queueless
-      POSTGRES_PASSWORD: queueless
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-queueless}
       POSTGRES_DB: queueless
     ports:
       - "5432:5432"
@@ -18,13 +18,12 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgresql://queueless:queueless@db:5432/queueless
-      SECRET_KEY: change_me_in_production
+      DATABASE_URL: postgresql://queueless:${DB_PASSWORD:-queueless}@db:5432/queueless
     ports:
       - "8000:8000"
-    volumes:
-      - .:/app
 
 volumes:
   queueless_pg_data:

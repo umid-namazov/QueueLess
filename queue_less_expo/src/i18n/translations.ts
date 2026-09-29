@@ -78,6 +78,32 @@ const translations = {
     asakaBankAddress: 'Chilonzor, Shota Rustaveli prospekti 42',
     clinic8Address: 'Sergeli, Abdulla Qodiriy ko\'chasi 15',
     premiumBarberAddress: 'Mirabad, Zahir Ibn Abu Tahir ko\'chasi 8',
+
+    // Seller & Extras
+    carwash: 'Avtoyuvish',
+    sellerDashboard: 'Sotuvchi paneli',
+    scanQr: 'QR Kodni Skanerlash',
+    queueHistory: 'Navbat tarixi',
+    settings: 'Sozlamalar',
+    todayQueues: 'Bugungi navbatlar',
+    avgWaitTime: 'O\'rtacha',
+    editBranch: 'Filialni tahrirlash',
+    servicesList: 'Xizmatlar ro\'yxati',
+
+    // Business
+    joinBusiness: 'Biznes sifatida qo\'shilish (Ariza)',
+    sellerPanelMenu: 'Sotuvchi paneli (Mening biznesim)',
+    adminPanelMenu: 'Admin paneli (Tasdiqlash)',
+    businessName: 'Biznes nomi',
+    businessPhone: 'Aloqa raqami',
+    address: 'Manzil',
+    category: 'Kategoriya',
+    otherCategory: 'Boshqa kategoriya nomi',
+    submitApplication: 'Arizani yuborish',
+    applicationSuccess: 'Arizangiz qabul qilindi!',
+    applicationSuccessDesc: 'Tez orada operatorlarimiz siz bilan bog\'lanishadi va biznesingizni QueueLess platformasiga qo\'shishadi.',
+    backToHome: 'Asosiy sahifaga qaytish',
+    fillRequired: 'Barcha majburiy maydonlarni to\'ldiring',
   },
   ru: {
     // Auth
@@ -156,6 +182,32 @@ const translations = {
     asakaBankAddress: 'Чилонзар, проспект Шота Руставели, 42',
     clinic8Address: 'Сергели, улица Абдуллы Кодирия, 15',
     premiumBarberAddress: 'Мирабадский район, улица Захира ибн Абу Тахира, 8',
+
+    // Seller & Extras
+    carwash: 'Автомойка',
+    sellerDashboard: 'Панель продавца',
+    scanQr: 'Сканировать QR',
+    queueHistory: 'История очередей',
+    settings: 'Настройки',
+    todayQueues: 'Очереди на сегодня',
+    avgWaitTime: 'В среднем',
+    editBranch: 'Редактировать филиал',
+    servicesList: 'Список услуг',
+
+    // Business
+    joinBusiness: 'Присоединиться как бизнес (Заявка)',
+    sellerPanelMenu: 'Панель продавца (Мой бизнес)',
+    adminPanelMenu: 'Панель админа (Одобрение)',
+    businessName: 'Название бизнеса',
+    businessPhone: 'Контактный номер',
+    address: 'Адрес',
+    category: 'Категория',
+    otherCategory: 'Другое название категории',
+    submitApplication: 'Отправить заявку',
+    applicationSuccess: 'Ваша заявка принята!',
+    applicationSuccessDesc: 'Скоро наши операторы свяжутся с вами и добавят ваш бизнес на платформу QueueLess.',
+    backToHome: 'Вернуться на главную',
+    fillRequired: 'Заполните обязательные поля',
   },
   en: {
     // Auth
@@ -234,6 +286,32 @@ const translations = {
     asakaBankAddress: 'Chilonzor, Shota Rustaveli Avenue 42',
     clinic8Address: 'Sergeli, Abdulla Qodiriy Street 15',
     premiumBarberAddress: 'Mirabad, Zahir Ibn Abu Tahir Street 8',
+
+    // Seller & Extras
+    carwash: 'Car wash',
+    sellerDashboard: 'Seller Dashboard',
+    scanQr: 'Scan QR Code',
+    queueHistory: 'Queue History',
+    settings: 'Settings',
+    todayQueues: 'Today\'s queues',
+    avgWaitTime: 'Average',
+    editBranch: 'Edit branch',
+    servicesList: 'Services list',
+
+    // Business
+    joinBusiness: 'Join as a business (Apply)',
+    sellerPanelMenu: 'Seller Dashboard (My Business)',
+    adminPanelMenu: 'Admin Panel (Approval)',
+    businessName: 'Business name',
+    businessPhone: 'Contact number',
+    address: 'Address',
+    category: 'Category',
+    otherCategory: 'Other category name',
+    submitApplication: 'Submit application',
+    applicationSuccess: 'Application submitted!',
+    applicationSuccessDesc: 'Our operators will contact you shortly and add your business to the QueueLess platform.',
+    backToHome: 'Back to home',
+    fillRequired: 'Please fill in all required fields',
   },
 } as const;
 

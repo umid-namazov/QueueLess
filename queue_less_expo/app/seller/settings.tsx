@@ -7,7 +7,7 @@ import { Colors } from '../../src/theme/colors';
 import { AppLanguage, useSettingsStore } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n';
 import { useAuthStore } from '../../src/store/authStore';
-import { apiGetMe, apiGetBranch, User, Branch } from '../../src/services/api';
+import { apiGetMe, apiGetMyBranches, User, Branch } from '../../src/services/api';
 
 type Service = { id: number; name: string; description: string; duration: string };
 
@@ -16,9 +16,6 @@ const initialServices: Service[] = [
   { id: 2, name: 'Plastik karta olish', description: 'Yangi karta ochish yoki tayyor kartani olish', duration: '15 daqiqa' },
   { id: 3, name: 'Hisob ochish', description: 'Jismoniy shaxslar uchun bank hisob raqami', duration: '20 daqiqa' },
 ];
-
-// Seller MVP: hozircha 1-filialga biriktirilgan
-const BRANCH_ID = 1;
 
 export default function SellerSettings() {
   const router = useRouter();
@@ -40,12 +37,14 @@ export default function SellerSettings() {
 
   const fetchData = async () => {
     try {
-      const [userData, branchData] = await Promise.all([
+      const [userData, myBranches] = await Promise.all([
         apiGetMe().catch(() => null),
-        apiGetBranch(BRANCH_ID).catch(() => null),
+        apiGetMyBranches().catch(() => []),
       ]);
       if (userData) setUser(userData);
-      if (branchData) setBranch(branchData);
+      if (myBranches && myBranches.length > 0) {
+        setBranch(myBranches[0]);
+      }
     } catch (e) {
       console.log('Seller settings fetch error:', e);
     }

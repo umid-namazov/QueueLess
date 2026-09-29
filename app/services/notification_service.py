@@ -1,13 +1,11 @@
 """
 Push notification xizmati.
 
-Hozircha haqiqiy Firebase Cloud Messaging (FCM) kaliti ulanmagan bo'lsa,
-xabarlar shunchaki log qilinadi (konsolga chiqadi). FCM_SERVER_KEY .env
-faylida to'ldirilgandan so'ng, `_send_via_fcm` funksiyasi haqiqiy so'rov
-yuboradi - qolgan barcha kod (endpoint, chaqiruvlar) o'zgarishsiz qoladi.
+Expo Push Notifications API ishlatiladi (Expo SDK bilan mos).
+Device tokenlar 'ExponentPushToken[xxx]' formatida bo'lishi kerak.
 
-Bu arxitektura orqali frontend/AI qismi FCM sozlanmasa ham backend bilan
-osongina test qilinadi, keyinchalik esa faqat shu bitta fayl yangilanadi.
+EXPO_ACCESS_TOKEN .env faylida to'ldirilgan bo'lsa, authenticated so'rovlar
+yuboriladi. Bo'sh bo'lsa ham ishlaydi (limited rate).
 """
 import logging
 from typing import Iterable
@@ -21,7 +19,7 @@ from app.models.device_token import DeviceToken
 logger = logging.getLogger("queueless.notifications")
 logging.basicConfig(level=logging.INFO)
 
-FCM_ENDPOINT = "https://fcm.googleapis.com/fcm/send"
+EXPO_PUSH_URL = "https://exp.host/--/api/v2/push/send"
 
 
 class NotificationService:
@@ -40,36 +38,38 @@ class NotificationService:
             logger.info("Foydalanuvchi %s uchun device token topilmadi", user_id)
             return {"sent": 0, "reason": "no_device_tokens"}
 
-        if not settings.FCM_SERVER_KEY:
-            # FCM ulanmagan - faqat log qilamiz (development rejimi)
-            logger.info(
-                "[DEV MODE] Push yuborilgan bo'lardi -> user=%s title=%r body=%r tokens=%s",
-                user_id, title, body, tokens,
-            )
-            return {"sent": len(tokens), "mode": "dev_log_only"}
+        return self._send_via_expo(tokens, title, body)
 
-        return self._send_via_fcm(tokens, title, body)
-
-    def _send_via_fcm(self, tokens: list[str], title: str, body: str) -> dict:
+    def _send_via_expo(self, tokens: list[str], title: str, body: str) -> dict:
         headers = {
-            "Authorization": f"key={settings.FCM_SERVER_KEY}",
             "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip, deflate",
         }
+        if settings.EXPO_ACCESS_TOKEN:
+            headers["Authorization"] = f"Bearer {settings.EXPO_ACCESS_TOKEN}"
+
+        messages = [
+            {"to": token, "title": title, "body": body, "sound": "default"}
+            for token in tokens
+        ]
         sent = 0
-        for token in tokens:
-            payload = {
-                "to": token,
-                "notification": {"title": title, "body": body},
-            }
-            try:
-                resp = httpx.post(FCM_ENDPOINT, json=payload, headers=headers, timeout=10)
-                if resp.status_code == 200:
-                    sent += 1
-                else:
-                    logger.warning("FCM xatolik: %s - %s", resp.status_code, resp.text)
-            except httpx.HTTPError as exc:
-                logger.warning("FCM ga ulanishda xatolik: %s", exc)
-        return {"sent": sent, "mode": "fcm"}
+        try:
+            resp = httpx.post(EXPO_PUSH_URL, json=messages, headers=headers, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                sent = sum(
+                    1 for item in data.get("data", [])
+                    if item.get("status") == "ok"
+                )
+                failed = len(messages) - sent
+                if failed:
+                    logger.warning("Expo push: %s ta yuborildi, %s ta xato", sent, failed)
+            else:
+                logger.warning("Expo push xatolik: %s - %s", resp.status_code, resp.text)
+        except httpx.HTTPError as exc:
+            logger.warning("Expo push serveriga ulanishda xatolik: %s", exc)
+        return {"sent": sent, "total": len(tokens)}
 
     def notify_turn_approaching(self, user_id: int, branch_name: str, people_ahead: int) -> dict:
         """Navbat yaqinlashganda ishlatiladigan qulay yordamchi metod."""

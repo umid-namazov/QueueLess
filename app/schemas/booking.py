@@ -18,6 +18,7 @@ class BookingOut(BaseModel):
     status: BookingStatus
     qr_code: str
     created_at: datetime
+    branch_name: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

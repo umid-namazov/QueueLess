@@ -1,16 +1,15 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Linking, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 import { Colors } from '../../src/theme/colors';
-import { ArrowLeft } from 'lucide-react-native';
+import { ArrowLeft, MapPin } from 'lucide-react-native';
 import { useSettingsStore } from '../../src/store/settingsStore';
-import { WebView } from 'react-native-webview';
+import MapView, { Marker } from 'react-native-maps';
 import { apiGetBranches, Branch } from '../../src/services/api';
 
 export default function MapScreen() {
   const theme = useSettingsStore((state) => state.theme);
-  const language = useSettingsStore((state) => state.language);
   const color = Colors[theme];
   const router = useRouter();
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
@@ -44,44 +43,11 @@ export default function MapScreen() {
     return () => { active = false; };
   }, []);
 
-  const mapHtml = useMemo(() => {
-    const bJson = JSON.stringify(branches);
-    const uLat = location?.coords.latitude ?? null;
-    const uLon = location?.coords.longitude ?? null;
-    const cLat = uLat ?? 41.311158;
-    const cLon = uLon ?? 69.279737;
-    const userMarker = uLat !== null
-      ? `L.marker([${uLat},${uLon}],{icon:L.divIcon({html:'<div style="background:#EF4444;width:18px;height:18px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.5)"></div>',iconSize:[18,18],iconAnchor:[9,9],className:""})}).addTo(map).bindPopup("Siz bu yerdasiz");`
-      : '';
-
-    return `<!DOCTYPE html>
-<html><head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>*{margin:0;padding:0}html,body,#map{width:100%;height:100%;overflow:hidden}</style>
-</head><body><div id="map"></div><script>
-var map=L.map("map").setView([${cLat},${cLon}],14);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19}).addTo(map);
-var branches=${bJson};
-var bIcon=L.divIcon({html:'<div style="background:#3B82F6;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,.4)"></div>',iconSize:[16,16],iconAnchor:[8,8],className:""});
-branches.forEach(function(b){
-  var lat=b.latitude||(41.311+(Math.random()-.5)*.04);
-  var lon=b.longitude||(69.279+(Math.random()-.5)*.04);
-  var m=L.marker([lat,lon],{icon:bIcon}).addTo(map);
-  m.bindPopup("<b>"+b.name+"</b><br/>"+(b.address||""));
-  m.on("click",function(){if(window.ReactNativeWebView)window.ReactNativeWebView.postMessage(JSON.stringify(b));});
-});
-${userMarker}
-</script></body></html>`;
-  }, [branches, location]);
-
-  const onMessage = (e: any) => {
-    try {
-      const d = JSON.parse(e.nativeEvent.data);
-      if (d?.id) setSelectedBranch(d);
-    } catch {}
+  const initialRegion = {
+    latitude: location?.coords.latitude ?? 41.311158,
+    longitude: location?.coords.longitude ?? 69.279737,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
   };
 
   return (
@@ -95,15 +61,29 @@ ${userMarker}
       </View>
 
       <View style={styles.mapWrap}>
-        <WebView
-          source={{ html: mapHtml }}
-          originWhitelist={['*']}
-          style={StyleSheet.absoluteFill}
-          onMessage={onMessage}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          mixedContentMode="always"
-        />
+        <MapView 
+          style={StyleSheet.absoluteFill} 
+          initialRegion={initialRegion}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
+        >
+          {branches.map(b => {
+            if (!b.latitude || !b.longitude) return null;
+            return (
+              <Marker
+                key={b.id}
+                coordinate={{ latitude: b.latitude, longitude: b.longitude }}
+                title={b.name}
+                description={b.address || ''}
+                onPress={() => setSelectedBranch(b)}
+              >
+                <View style={[styles.markerIcon, { backgroundColor: color.primary }]}>
+                  <MapPin color="#fff" size={16} />
+                </View>
+              </Marker>
+            )
+          })}
+        </MapView>
       </View>
 
       {!location && (
@@ -162,4 +142,10 @@ const styles = StyleSheet.create({
     position: 'absolute', top: 112, left: 24, right: 24,
     borderWidth: 1, borderRadius: 14, padding: 14,
   },
+  markerIcon: {
+    width: 36, height: 36, borderRadius: 18,
+    alignItems: 'center', justifyContent: 'center',
+    borderWidth: 3, borderColor: '#fff',
+    shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.3, shadowRadius: 3, elevation: 5,
+  }
 });

@@ -11,6 +11,16 @@ class BranchCreate(BaseModel):
     working_hours: str = "09:00-18:00"
 
 
+class BranchUpdate(BaseModel):
+    name: str | None = None
+    category: str | None = None
+    address: str | None = None
+    latitude: float | None = None
+    longitude: float | None = None
+    avg_service_minutes: int | None = None
+    working_hours: str | None = None
+    image_url: str | None = None
+
 class BranchOut(BaseModel):
     id: int
     name: str
@@ -22,6 +32,7 @@ class BranchOut(BaseModel):
     working_hours: str
     is_approved: bool
     owner_id: int | None
+    image_url: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 

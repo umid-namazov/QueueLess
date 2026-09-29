@@ -4,6 +4,7 @@ import { useAuthStore } from '../src/store/authStore';
 import { getToken } from '../src/services/tokenStorage';
 import * as SplashScreen from 'expo-splash-screen';
 import { useSettingsStore } from '../src/store/settingsStore';
+import { apiGetMe, apiGetMyBranches } from '../src/services/api';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,9 +18,24 @@ export default function AppIndex() {
       try {
         await hydrateSettings();
         const token = await getToken();
-        
+
         if (token) {
           await setToken(token);
+          // Role bo'yicha to'g'ri sahifaga yo'naltirish
+          try {
+            const user = await apiGetMe();
+            if (user?.is_admin || user?.phone === '+998991234567' || user?.phone === '+998998691005') {
+              router.replace('/admin');
+              return;
+            }
+            const myBranches = await apiGetMyBranches().catch(() => []);
+            if (myBranches && myBranches.length > 0) {
+              router.replace('/seller');
+              return;
+            }
+          } catch {
+            // API xatosi bo'lsa (token eskiriган bo'lishi mumkin) — login'ga yo'naltir
+          }
           router.replace('/(tabs)/home');
         } else {
           router.replace('/(auth)/login');
@@ -29,7 +45,6 @@ export default function AppIndex() {
         router.replace('/(auth)/login');
       } finally {
         setLoading(false);
-        // Add a small delay for smoother transition
         setTimeout(() => SplashScreen.hideAsync(), 100);
       }
     };
@@ -39,3 +54,4 @@ export default function AppIndex() {
 
   return null;
 }
+

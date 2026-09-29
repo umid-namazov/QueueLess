@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Modal, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Modal, ActivityIndicator, Alert } from 'react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n';
 import { apiGetMyQueue, apiCancelQueue, QueueItem, apiGetBranches, Branch } from '../../src/services/api';
 import Toast from 'react-native-toast-message';
 import { useFocusEffect } from 'expo-router';
+import QRCode from 'react-native-qrcode-svg';
 
 export default function BookingsScreen() {
   const { language, theme } = useSettingsStore();
@@ -48,6 +49,7 @@ export default function BookingsScreen() {
     if (cat === 'poliklinika') return text.clinic;
     if (cat === 'bank') return text.bank;
     if (cat === 'sartaroshxona') return text.barber;
+    if (cat === 'avtomobil_yuvish') return 'Avtoyuvish';
     return cat;
   };
 
@@ -145,7 +147,9 @@ export default function BookingsScreen() {
                     <>
                       <View style={styles.qrWrapper}>
                         <TouchableOpacity onPress={() => setSelectedQr(booking.qr_code!)} accessibilityLabel={text.enlargeQr}>
-                          <Image source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${booking.qr_code}` }} style={{ width: 80, height: 80 }} />
+                          <View style={styles.qrWrapper}>
+                            <QRCode value={booking.qr_code} size={76} />
+                          </View>
                         </TouchableOpacity>
                       </View>
                       <Text style={[styles.tapText, { color: color.textSecondary }]}>{text.enlargeQr}</Text>
@@ -164,8 +168,10 @@ export default function BookingsScreen() {
 
       <Modal visible={selectedQr !== null} transparent animationType="fade" onRequestClose={() => setSelectedQr(null)}>
         <TouchableOpacity style={styles.qrModalBackdrop} activeOpacity={1} onPress={() => setSelectedQr(null)}>
-          <View style={[styles.qrModalCard, { backgroundColor: color.surface }]}>
-            <Image source={{ uri: `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${selectedQr ?? ''}` }} style={styles.largeQr} />
+        <View style={[styles.qrModalCard, { backgroundColor: color.surface }]}>
+            <View style={{ padding: 16, backgroundColor: '#fff', borderRadius: 12 }}>
+              <QRCode value={selectedQr ?? 'empty'} size={260} />
+            </View>
             <Text style={[styles.largeQrLabel, { color: color.text }]}>QR Kod</Text>
             <Text style={[styles.closeLabel, { color: color.primary }]}>{text.close}</Text>
           </View>

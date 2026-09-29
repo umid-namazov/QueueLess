@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingVi
 import { useRouter } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
 import { useAuthStore } from '../../src/store/authStore';
-import { apiLogin } from '../../src/services/api';
+import { apiLogin, apiGetMe, apiGetMyBranches } from '../../src/services/api';
 import { AppLanguage, useSettingsStore } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n/index';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -37,7 +37,6 @@ export default function LoginScreen() {
       await setToken(accessToken);
 
       // 2. Foydalanuvchi ma'lumotlarini olish
-      const { apiGetMe } = require('../../src/services/api');
       const user = await apiGetMe();
 
       // 3. Adminligini tekshirib admin panelga yo'naltirish
@@ -48,7 +47,6 @@ export default function LoginScreen() {
 
       // 4. Biznesi bor-yo'qligini tekshirish
       try {
-        const { apiGetMyBranches } = require('../../src/services/api');
         const myBranches = await apiGetMyBranches();
         if (myBranches && myBranches.length > 0) {
           router.replace('/seller');

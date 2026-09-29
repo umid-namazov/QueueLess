@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
@@ -26,6 +26,7 @@ export default function HomeScreen() {
   const [activeQueue, setActiveQueue] = useState<QueueItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
+  const [showAllFavorites, setShowAllFavorites] = useState(false);
   const insets = useSafeAreaInsets();
 
   const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -39,16 +40,20 @@ export default function HomeScreen() {
     return R * c;
   };
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-
+  useEffect(() => {
+    const getLocation = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      let location = null;
       if (status === 'granted') {
-        location = await Location.getCurrentPositionAsync({});
+        const location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced });
         setUserLocation(location);
       }
+    };
+    getLocation();
+  }, []);
+
+  const fetchData = async (showLoading = false) => {
+    try {
+      if (showLoading) setLoading(true);
 
       // Run API calls in parallel
       const [branchesData, userData, queuesData] = await Promise.all([
@@ -65,14 +70,14 @@ export default function HomeScreen() {
     } catch (error) {
       console.log('Error fetching home data:', error);
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   };
 
   useFocusEffect(
     useCallback(() => {
-      fetchData();
-    }, [])
+      fetchData(branches.length === 0);
+    }, [branches.length])
   );
 
   const activeCategoryStr = CATEGORIES.find(c => c.id === activeCategory)?.categoryStr || '';
@@ -161,11 +166,25 @@ export default function HomeScreen() {
         {/* Favorite Branches */}
         {favorites.length > 0 && (
           <>
-            <Text style={[styles.sectionTitle, { color: color.text }]}>Sevimli joylarim</Text>
-            {branches.filter(b => favorites.includes(b.id)).map(branch => (
+            <TouchableOpacity 
+              style={styles.sectionHeader}
+              onPress={() => setShowAllFavorites(!showAllFavorites)}
+            >
+              <Text style={[styles.sectionTitle, { color: color.text }]}>Sevimli joylarim</Text>
+              {favorites.length > 1 && (
+                <Text style={{ color: color.primary, fontWeight: '600' }}>
+                  {showAllFavorites ? 'Yashirish' : 'Barchasi'}
+                </Text>
+              )}
+            </TouchableOpacity>
+            
+            {branches
+              .filter(b => favorites.includes(b.id))
+              .slice(0, showAllFavorites ? undefined : 1)
+              .map(branch => (
               <TouchableOpacity 
                 key={`fav-${branch.id}`} 
-                style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border }]}
+                style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border, marginBottom: 12 }]}
                 onPress={() => router.push(`/branch/${branch.id}`)}
               >
                 <View style={styles.branchInfo}>

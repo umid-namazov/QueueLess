@@ -1,16 +1,11 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
 import { useSettingsStore } from '../src/store/settingsStore';
 import Toast from 'react-native-toast-message';
 
 export default function RootLayout() {
-  const hydrate = useSettingsStore((state) => state.hydrate);
   const theme = useSettingsStore((state) => state.theme);
-
-  useEffect(() => {
-    hydrate();
-  }, [hydrate]);
+  // Hydration index.tsx da await bilan bajariladi — bu yerda ikkinchi marta chaqirish shart emas
 
   return (
     <>

@@ -4,7 +4,8 @@ import { ArrowRight, CheckCircle2, Clock3, ScanLine, Users } from 'lucide-react-
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, RefreshControl } from 'react-native';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
-import { apiGetMe, apiGetBranch, apiGetBranchQueue, User, Branch, QueueItem } from '../../src/services/api';
+import { apiGetMe, apiGetBranch, apiGetBranchQueue, apiGetMyBranches, apiCompleteQueue, User, Branch, QueueItem } from '../../src/services/api';
+import Toast from 'react-native-toast-message';
 
 export default function SellerDashboard() {
   const router = useRouter();
@@ -17,19 +18,23 @@ export default function SellerDashboard() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Sotuvchi hozircha 1-filialga biriktirilgan deb hisoblaymiz (MVP)
-  const BRANCH_ID = 1;
-
   const fetchData = async () => {
     try {
-      const [userData, branchData, queueData] = await Promise.all([
+      const [userData, myBranches] = await Promise.all([
         apiGetMe().catch(() => null),
-        apiGetBranch(BRANCH_ID).catch(() => null),
-        apiGetBranchQueue(BRANCH_ID).catch(() => [])
+        apiGetMyBranches().catch(() => [])
       ]);
       if (userData) setUser(userData);
-      if (branchData) setBranch(branchData);
-      setQueue(queueData || []);
+      
+      if (myBranches && myBranches.length > 0) {
+        const firstBranch = myBranches[0];
+        const [branchData, queueData] = await Promise.all([
+          apiGetBranch(firstBranch.id).catch(() => null),
+          apiGetBranchQueue(firstBranch.id).catch(() => [])
+        ]);
+        if (branchData) setBranch(branchData);
+        setQueue(queueData || []);
+      }
     } catch (e) {
       console.log('Seller dash error:', e);
     } finally {
@@ -110,21 +115,40 @@ export default function SellerDashboard() {
         {queue.length === 0 ? (
           <Text style={{ color: color.textSecondary, marginTop: 10 }}>Hozircha navbatda hech kim yo'q.</Text>
         ) : (
-          queue.map((item) => {
+          queue.filter(q => q.status !== 'completed' && q.status !== 'cancelled').map((item) => {
             const isActive = item.status === 'confirmed';
             return (
-              <View key={item.id} style={[styles.queueCard, { backgroundColor: color.surface, borderColor: isActive ? color.primary : color.border }]}>
-                <View style={[styles.ticket, { backgroundColor: isActive ? color.primary : color.border }]}>
-                  <Text style={[styles.ticketText, { color: isActive ? '#fff' : color.text }]}>A-{(item.queue_number).toString().padStart(3, '0')}</Text>
+              <View key={item.id} style={[styles.queueCard, { backgroundColor: color.surface, borderColor: isActive ? color.primary : color.border, flexDirection: 'column', alignItems: 'stretch' }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View style={[styles.ticket, { backgroundColor: isActive ? color.primary : color.border }]}>
+                    <Text style={[styles.ticketText, { color: isActive ? '#fff' : color.text }]}>A-{(item.queue_number).toString().padStart(3, '0')}</Text>
+                  </View>
+                  <View style={styles.customerCopy}>
+                    <Text style={[styles.customerName, { color: color.text }]}>{isActive ? 'Tasdiqlangan mijoz' : 'Kutayotgan mijoz'}</Text>
+                    <Text style={[styles.service, { color: color.textSecondary }]}>Umumiy xizmat</Text>
+                  </View>
+                  <View style={styles.waitCopy}>
+                    {isActive ? <CheckCircle2 color={color.success} size={18} /> : <Clock3 color={color.textSecondary} size={17} />}
+                    <Text style={[styles.wait, { color: color.textSecondary }]}>{isActive ? 'Xizmatda' : `${item.estimated_wait_minutes} min`}</Text>
+                  </View>
                 </View>
-                <View style={styles.customerCopy}>
-                  <Text style={[styles.customerName, { color: color.text }]}>{isActive ? 'Tasdiqlangan mijoz' : 'Kutayotgan mijoz'}</Text>
-                  <Text style={[styles.service, { color: color.textSecondary }]}>Umumiy xizmat</Text>
-                </View>
-                <View style={styles.waitCopy}>
-                  {isActive ? <CheckCircle2 color={color.success} size={18} /> : <Clock3 color={color.textSecondary} size={17} />}
-                  <Text style={[styles.wait, { color: color.textSecondary }]}>{item.estimated_wait_minutes} daqiqa</Text>
-                </View>
+                
+                {isActive && (
+                  <TouchableOpacity 
+                    style={{ marginTop: 12, backgroundColor: color.success, padding: 12, borderRadius: 10, alignItems: 'center' }}
+                    onPress={async () => {
+                      try {
+                        await apiCompleteQueue(item.id);
+                        fetchData();
+                        Toast.show({ type: 'success', text1: 'Yakunlandi', text2: "Mijozga xizmat ko'rsatish yakunlandi!" });
+                      } catch (e: any) {
+                        Toast.show({ type: 'error', text1: 'Xatolik', text2: e.message || "Xatolik yuz berdi" });
+                      }
+                    }}
+                  >
+                    <Text style={{ color: '#fff', fontWeight: 'bold' }}>Tugatish (Yakunlash)</Text>
+                  </TouchableOpacity>
+                )}
               </View>
             );
           })

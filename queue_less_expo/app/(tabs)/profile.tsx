@@ -3,11 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Switch, Platform, Modal, Acti
 import { useRouter, useFocusEffect } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
 import { useAuthStore } from '../../src/store/authStore';
-import * as SecureStore from 'expo-secure-store';
 import { User as UserIcon, Bell, Moon, Globe, LogOut, ChevronRight, Building2, ShieldCheck, Briefcase } from 'lucide-react-native';
 import { useSettingsStore, AppLanguage } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n';
-import { apiGetMe, User } from '../../src/services/api';
+import { apiGetMe, apiGetMyBranches, User } from '../../src/services/api';
 
 function MenuItem({ icon, title, value, hasSwitch = false, switchValue = false, onPress = () => {}, onSwitchChange, color }: {
   icon: ReactNode;
@@ -46,7 +45,7 @@ export default function ProfileScreen() {
   const text = useTranslation(language);
   const color = Colors[theme];
   const router = useRouter();
-  const { setToken } = useAuthStore();
+  const logout = useAuthStore((state) => state.logout);
   
   const [languageModalVisible, setLanguageModalVisible] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -59,7 +58,6 @@ export default function ProfileScreen() {
       const data = await apiGetMe();
       setUser(data);
       
-      const { apiGetMyBranches } = require('../../src/services/api');
       const branches = await apiGetMyBranches();
       if (branches && branches.length > 0) {
         setHasBusiness(true);
@@ -78,12 +76,7 @@ export default function ProfileScreen() {
   );
 
   const handleLogout = async () => {
-    if (Platform.OS === 'web') {
-      localStorage.removeItem('userToken');
-    } else {
-      await SecureStore.deleteItemAsync('userToken');
-    }
-    setToken(null);
+    await logout();
     router.replace('/(auth)/login');
   };
 
@@ -134,14 +127,14 @@ export default function ProfileScreen() {
         {!hasBusiness ? (
           <MenuItem
             icon={<Building2 color={color.textSecondary} size={24} />}
-            title="Biznes sifatida qo'shilish (Ariza)"
+            title={text.joinBusiness}
             onPress={() => router.push('/business' as never)}
             color={color}
           />
         ) : (
           <MenuItem
             icon={<Briefcase color={color.textSecondary} size={24} />}
-            title="Sotuvchi paneli (Mening biznesim)"
+            title={text.sellerPanelMenu}
             onPress={() => router.push('/seller' as never)}
             color={color}
           />
@@ -149,7 +142,7 @@ export default function ProfileScreen() {
         {user?.is_admin && (
           <MenuItem
             icon={<ShieldCheck color={color.textSecondary} size={24} />}
-            title="Admin paneli (Tasdiqlash)"
+            title={text.adminPanelMenu}
             onPress={() => router.push('/admin' as never)}
             color={color}
           />
