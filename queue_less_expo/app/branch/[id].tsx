@@ -4,8 +4,9 @@ import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Colors } from '../../src/theme/colors';
 import { useSettingsStore } from '../../src/store/settingsStore';
 import { useTranslation } from '../../src/i18n/index';
-import { ArrowLeft, Clock, MapPin, Users } from 'lucide-react-native';
+import { ArrowLeft, Clock, MapPin, Users, Heart } from 'lucide-react-native';
 import { apiGetBranch, Branch } from '../../src/services/api';
+import { useFavoriteStore } from '../../src/store/favoriteStore';
 
 export default function BranchDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -14,6 +15,8 @@ export default function BranchDetailsScreen() {
   const color = Colors[theme];
   const t = useTranslation(language);
   const router = useRouter();
+  
+  const { isFavorite, toggleFavorite } = useFavoriteStore();
 
   const [branch, setBranch] = useState<Branch | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,6 +58,8 @@ export default function BranchDetailsScreen() {
     );
   }
 
+  const isFav = isFavorite(branch.id);
+
   return (
     <View style={[styles.container, { backgroundColor: color.background }]}>
       <View style={[styles.header, { backgroundColor: color.background, borderBottomColor: color.border }]}>
@@ -62,7 +67,9 @@ export default function BranchDetailsScreen() {
           <ArrowLeft color={color.text} size={24} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: color.text }]}>{t.branchDetails}</Text>
-        <View style={{ width: 24 }} />
+        <TouchableOpacity onPress={() => toggleFavorite(branch.id)} style={styles.backButton}>
+          <Heart color={isFav ? color.error : color.textSecondary} fill={isFav ? color.error : 'none'} size={24} />
+        </TouchableOpacity>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>

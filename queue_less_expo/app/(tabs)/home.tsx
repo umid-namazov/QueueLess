@@ -10,8 +10,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { apiGetBranches, Branch, apiGetMe, User, apiGetMyQueue, QueueItem } from '../../src/services/api';
 import Toast from 'react-native-toast-message';
 import * as Location from 'expo-location';
+import { useFavoriteStore } from '../../src/store/favoriteStore';
 
 export default function HomeScreen() {
+  const favorites = useFavoriteStore(state => state.favorites);
   const theme = useSettingsStore((state) => state.theme);
   const language = useSettingsStore((state) => state.language);
   const color = Colors[theme];
@@ -155,6 +157,34 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.categoriesList}
         />
+
+        {/* Favorite Branches */}
+        {favorites.length > 0 && (
+          <>
+            <Text style={[styles.sectionTitle, { color: color.text }]}>Sevimli joylarim</Text>
+            {branches.filter(b => favorites.includes(b.id)).map(branch => (
+              <TouchableOpacity 
+                key={`fav-${branch.id}`} 
+                style={[styles.branchCard, { backgroundColor: color.surface, borderColor: color.border }]}
+                onPress={() => router.push(`/branch/${branch.id}`)}
+              >
+                <View style={styles.branchInfo}>
+                  <Text style={[styles.branchName, { color: color.text }]}>{branch.name}</Text>
+                  <View style={styles.branchAddressRow}>
+                    <MapPin color={color.textSecondary} size={14} />
+                    <Text style={[styles.branchAddress, { color: color.textSecondary }]} numberOfLines={1}>
+                      {branch.address}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.branchStatus}>
+                  <View style={[styles.statusDot, { backgroundColor: getStatusColor(branch.current_waiting_count) }]} />
+                  <Text style={{ color: color.textSecondary, fontSize: 12 }}>{branch.estimated_wait_minutes} min</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </>
+        )}
 
         {/* Nearby Branches */}
         <View style={styles.sectionHeader}>

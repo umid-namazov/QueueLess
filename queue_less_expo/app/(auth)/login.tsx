@@ -36,13 +36,17 @@ export default function LoginScreen() {
       const { access_token: accessToken } = await apiLogin(phone, password);
       await setToken(accessToken);
 
-      // 2. Token olingach, adminligini tekshirib admin panelga yo'naltirish
-      if (phone === '+998991234567') {
+      // 2. Foydalanuvchi ma'lumotlarini olish
+      const { apiGetMe } = require('../../src/services/api');
+      const user = await apiGetMe();
+
+      // 3. Adminligini tekshirib admin panelga yo'naltirish
+      if (user?.is_admin || phone === '+998991234567' || phone === '+998998691005') {
         router.replace('/admin');
         return;
       }
 
-      // 3. Biznesi bor-yo'qligini tekshirish
+      // 4. Biznesi bor-yo'qligini tekshirish
       try {
         const { apiGetMyBranches } = require('../../src/services/api');
         const myBranches = await apiGetMyBranches();
@@ -54,7 +58,7 @@ export default function LoginScreen() {
         console.log('Error checking branches', e);
       }
 
-      // 4. Oddiy foydalanuvchilar uchun
+      // 5. Oddiy foydalanuvchilar uchun
       router.replace('/(tabs)/home');
     } catch (e) {
       setError(e instanceof Error ? e.message : t.loginError);
