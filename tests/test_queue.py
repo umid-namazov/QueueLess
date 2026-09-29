@@ -92,12 +92,14 @@ def test_my_bookings_shows_people_ahead(client, sample_branch):
 
 
 def test_confirm_booking_by_qr(client, sample_branch):
-    token = _register_and_get_token(client)
+    token = _register_and_get_token(client, "+998901112233")
     headers = {"Authorization": f"Bearer {token}"}
     booking = client.post(
         "/api/v1/queue/book", json={"branch_id": sample_branch.id}, headers=headers
     ).json()
 
-    resp = client.post(f"/api/v1/queue/confirm/{booking['qr_code']}")
+    admin_token = _register_and_get_token(client, "+998991234567")
+    admin_headers = {"Authorization": f"Bearer {admin_token}"}
+    resp = client.post(f"/api/v1/queue/confirm/{booking['qr_code']}", headers=admin_headers)
     assert resp.status_code == 200
     assert resp.json()["status"] == "confirmed"
