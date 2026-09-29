@@ -177,14 +177,11 @@ def get_branch_history(branch_id: int, db: Session = Depends(get_db), current_us
     result = []
     for b in bookings:
         ahead = get_people_ahead(db, b) if b.status in (BookingStatus.waiting, BookingStatus.confirmed) else 0
-        result.append(
-            BookingWithPosition(
-                **BookingOut.model_validate(b).model_dump(),
-                people_ahead=ahead,
-                estimated_wait_minutes=estimate_wait_minutes(branch, ahead),
-                branch_name=branch.name,
-            )
-        )
+        b_dict = BookingOut.model_validate(b).model_dump()
+        b_dict["people_ahead"] = ahead
+        b_dict["estimated_wait_minutes"] = estimate_wait_minutes(branch, ahead)
+        b_dict["branch_name"] = branch.name
+        result.append(BookingWithPosition(**b_dict))
     return result
 
 @router.get("/{branch_id}/services", response_model=list[ServiceOut])
@@ -262,12 +259,10 @@ def get_branch_queue(branch_id: int, db: Session = Depends(get_db), current_user
     result = []
     for b in bookings:
         ahead = get_people_ahead(db, b)
-        result.append(
-            BookingWithPosition(
-                **BookingOut.model_validate(b).model_dump(),
-                people_ahead=ahead,
-                estimated_wait_minutes=estimate_wait_minutes(b.branch, ahead),
-                branch_name=b.branch.name if b.branch else None,
-            )
-        )
+        b_dict = BookingOut.model_validate(b).model_dump()
+        b_dict["people_ahead"] = ahead
+        b_dict["estimated_wait_minutes"] = estimate_wait_minutes(b.branch, ahead)
+        if b.branch and not b_dict.get("branch_name"):
+            b_dict["branch_name"] = b.branch.name
+        result.append(BookingWithPosition(**b_dict))
     return result
