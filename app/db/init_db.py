@@ -22,14 +22,14 @@ DEMO_BRANCHES = [
 
 def init_db() -> None:
     Base.metadata.create_all(bind=engine)
-    db: Session = SessionLocal()
-    try:
-        if db.query(Branch).count() == 0:
-            for data in DEMO_BRANCHES:
-                db.add(Branch(**data))
-            db.commit()
-    finally:
-        db.close()
+    # db: Session = SessionLocal()
+    # try:
+    #     if db.query(Branch).count() == 0:
+    #         for data in DEMO_BRANCHES:
+    #             db.add(Branch(**data))
+    #         db.commit()
+    # finally:
+    #     db.close()
 
 
 if __name__ == "__main__":
