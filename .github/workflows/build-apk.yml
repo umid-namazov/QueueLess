@@ -1,0 +1,42 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: queue_less_expo/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Install dependencies
+        working-directory: queue_less_expo
+        run: npm ci
+
+      - name: Expo Prebuild
+        working-directory: queue_less_expo
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Build APK
+        working-directory: queue_less_expo/android
+        run: ./gradlew assembleRelease
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: queueless-app-release.apk
+          path: queue_less_expo/android/app/build/outputs/apk/release/app-release.apk
