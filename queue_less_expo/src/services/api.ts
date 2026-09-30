@@ -2,7 +2,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useAuthStore } from '../store/authStore';
 
-const API_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? 'http://localhost:8000/api/v1').replace(/\/$/, '');
+const API_BASE_URL = (process.env.EXPO_PUBLIC_API_BASE_URL ?? 'https://queueless-p7r3.onrender.com/api/v1').replace(/\/$/, '');
 
 const client = axios.create({ baseURL: API_BASE_URL });
 
